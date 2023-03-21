@@ -36,8 +36,11 @@
   <button title="submit" type="submit" class="sign-in_btn" [disabled]="!loginForm.form.valid">
     <span>Sign In</span>
   </button>
-  <a routerLink="/register" class="register" style="color: blue;">Register</a>
-  <a routerLink="/register" class="register" style="color: red;">Forgot password ?</a>
+  <div class="link_container">
+    <a routerLink="/register" class="register" style="color: blue;">Register</a>
+    <a routerLink="/register" class="register" style="color: red;">Forgot password ?</a>
+  </div>
+
 
   <div class="separator">
     <hr class="line">
