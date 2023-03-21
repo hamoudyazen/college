@@ -1,0 +1,12 @@
+<ul style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center;">
+  <li *ngFor="let course of courses" style="flex: 0 0 calc(25% - 20px); margin: 10px;">
+    <div class="card">
+      <div class="card-details">
+        <p class="text-title">Name: {{course.course_name | titlecase}}</p>
+        <p class="text-body">ID: {{course.course_id}}</p>
+        <p class="text-body">Current capacity :  {{course.students_array.length}} /{{course.course_capacity}}</p>
+      </div>
+      <button class="card-button">More info</button>
+    </div>
+  </li>
+</ul>
