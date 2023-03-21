@@ -4,7 +4,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
-import { UserListComponent } from './user-list/user-list.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
@@ -30,7 +29,6 @@ import { CoursesComponent } from './dashboards/teacher/courses/courses.component
   declarations: [
     AppComponent,
     LoginComponent,
-    UserListComponent,
     RegisterComponent,
     AdminComponent,
     TeacherComponent,

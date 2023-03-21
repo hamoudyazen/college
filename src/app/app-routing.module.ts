@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
-import { UserListComponent } from './user-list/user-list.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { AdminComponent } from './dashboards/admin/admin.component';
@@ -13,7 +12,6 @@ import { CoursesComponent } from './dashboards/teacher/courses/courses.component
 const routes: Routes = [
   {path: '', redirectTo:'login', pathMatch:'full'},
   {path:"login",component:LoginComponent},
-  {path:"list",component:UserListComponent},
   {path:"register",component:RegisterComponent},
   {path:"admin",component:AdminComponent},
   {path:"teacher",component:TeacherComponent},
