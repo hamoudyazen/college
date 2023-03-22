@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { User } from './user';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
@@ -17,11 +17,7 @@ export class AuthService {
   private baseUrl = 'http://localhost:8080';
 
   constructor(
-    private http: HttpClient,
-    private fireauth: AngularFireAuth,
-    private firestore: AngularFirestore,
-    private router: Router
-  ) {
+    private http: HttpClient, private fireauth: AngularFireAuth, private firestore: AngularFirestore, private router: Router) {
     this.getAllUsers().subscribe(users => {
       this.users = users;
     });
@@ -69,6 +65,19 @@ export class AuthService {
 
   loginn(loginRequest: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/login`, loginRequest);
+  }
+
+
+  getUserName(email: string) {
+    const url = `${this.baseUrl}/username?email=${email}`;
+    return this.http.get<string>(url).pipe(
+      map(response => response === "User not found or multiple users found" ? "" : response)
+    );
+  }
+
+  addCourse(course: Course): Observable<any> {
+    console.log('Sending add course request:', course);
+    return this.http.post(`${this.baseUrl}/addcourses`, course);
   }
 
 }

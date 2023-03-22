@@ -27,9 +27,16 @@
       <span class="spacer" *ngIf="!isSmallScreen"></span>
       <ng-container *ngIf="!isSmallScreen">
         <a [routerLink]="[ '/courses' ]" routerLinkActive="active" mat-button>name
-        <mat-icon>menu_book</mat-icon>
-          My Courses
-        </a>
+          <mat-icon>menu_book</mat-icon>
+            My Courses
+          </a>
+
+          <a [routerLink]="[ '/register course' ]" routerLinkActive="active" mat-button>name
+            <mat-icon>menu_book</mat-icon>
+              Register Courses
+            </a>
+
+
         <a href="https://example.com/settings" mat-button>
           <mat-icon>cloud</mat-icon>
           Assignments
@@ -49,7 +56,7 @@
         <button mat-menu-item>Notification 2</button>
         <!-- Add more notifications here -->
       </mat-menu>
-      <span class="account-username" style="font-size: 13px;">{{name}}</span>
+      <span class="account-username" style="font-size: 13px;">Welcome {{name | titlecase}}</span>
       <button mat-icon-button [matMenuTriggerFor]="profileMenu">
         <mat-icon>expand_more</mat-icon>
       </button>

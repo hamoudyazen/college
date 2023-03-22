@@ -16,6 +16,7 @@ export class TeacherComponent  {
   name: any;
 
   constructor(private breakpointObserver: BreakpointObserver , private router : Router) {
+    this.name = localStorage.getItem('name');
     this.breakpointObserver
       .observe([Breakpoints.Small, Breakpoints.XSmall])
       .subscribe((state) => {

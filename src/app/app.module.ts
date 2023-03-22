@@ -22,6 +22,7 @@ import { MatListModule } from '@angular/material/list';
 import { LayoutModule } from '@angular/cdk/layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoursesComponent } from './dashboards/teacher/courses/courses.component';
+import { RegisterCourseComponent } from './dashboards/teacher/register-course/register-course.component';
 
 
 
@@ -35,6 +36,7 @@ import { CoursesComponent } from './dashboards/teacher/courses/courses.component
     StudentComponent,
     ForgotPasswordComponent,
     CoursesComponent,
+    RegisterCourseComponent,
     ],
   imports: [
     BrowserModule,

@@ -1,0 +1,34 @@
+<div class="container">
+  <h2>Register Course</h2>
+  <form (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="name">Course Name:</label>
+      <input type="text" class="form-control" id="name" required [(ngModel)]="course.course_name">
+    </div>
+    <div class="form-group">
+      <label for="description">Course Description:</label>
+      <textarea class="form-control" id="description" rows="3" required [(ngModel)]="course.course_description"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="teacher">Teacher Name:</label>
+      <input type="text" class="form-control" id="teacher" required [(ngModel)]="course.course_teacher">
+    </div>
+    <div class="form-group">
+      <label for="startDate">Start Date:</label>
+      <input type="date" class="form-control" id="startDate" required [(ngModel)]="course.course_start_date">
+    </div>
+    <div class="form-group">
+      <label for="duration">Duration:</label>
+      <input type="text" class="form-control" id="duration" required [(ngModel)]="course.course_duration">
+    </div>
+    <div class="form-group">
+      <label for="credits">Credits:</label>
+      <input type="text" class="form-control" id="credits" required [(ngModel)]="course.course_credits">
+    </div>
+    <div class="form-group">
+      <label for="capacity">Capacity:</label>
+      <input type="text" class="form-control" id="capacity" required [(ngModel)]="course.course_capacity">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
