@@ -1,27 +1,65 @@
-# CollegeWebsite
+#College Application Manager
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.7.
+College Application Manager Logo
+Welcome to the College Application Manager! This project aims to simplify and streamline the college application process, making it easier for students to find their dream school and stay organized throughout the journey.
 
-## Development server
+License: MIT
+Contributions welcome
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Table of Contents
 
-## Code scaffolding
+Introduction
+Features
+Installation
+Usage
+Contributing
+License
+Introduction
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Applying to college can be a daunting and time-consuming process. With countless schools to choose from and numerous deadlines to keep track of, it's easy to feel overwhelmed. The College Application Manager is designed to alleviate these challenges by offering a user-friendly interface and useful features to make the process more manageable and efficient.
 
-## Build
+Features
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Search and filter colleges based on criteria such as location, tuition, majors, and more
+Keep track of application deadlines, requirements, and progress
+Organize and store important documents like transcripts, essays, and letters of recommendation
+Receive reminders and notifications for upcoming deadlines
+Export application data in a well-structured format for easy sharing and archiving
+Collaborate with others on your application process and receive feedback
+Installation
 
-## Running unit tests
+To get started with the College Application Manager, simply follow these steps:
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Clone the repository:
+bash
+Copy code
+git clone https://github.com/hamoudyazen/college.git
+Change into the project directory:
+bash
+Copy code
+cd college
+Install the required dependencies:
+Copy code
+npm install
+Start the development server:
+sql
+Copy code
+npm start
+Open your browser and navigate to http://localhost:3000 to access the application.
+Usage
 
-## Running end-to-end tests
+Detailed instructions and examples for using the College Application Manager can be found in the Wiki.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Contributing
 
-## Further help
+We welcome contributions from the community! If you're interested in helping improve the College Application Manager, please follow these steps:
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Fork the repository
+Create a new branch with a descriptive name (e.g., feature/new-search-filter)
+Make your changes and commit them to your branch
+Create a pull request and describe the changes you've made
+For more information on how to contribute, please check the Contributing Guide.
+
+License
+
+This project is licensed under the MIT License. See the LICENSE file for details.
