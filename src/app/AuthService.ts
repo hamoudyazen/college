@@ -6,7 +6,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { Course } from './courses';
-
+import {ForgotPasswordResponse} from './ForgotPasswordResponse';
 @Injectable({
   providedIn: 'root'
 })
@@ -15,6 +15,7 @@ export class AuthService {
   courses: Course[] | undefined;
   role: string | undefined;
   private baseUrl = 'http://localhost:8080';
+  errorMessage: string | undefined;
 
   constructor(
     private http: HttpClient, private fireauth: AngularFireAuth, private firestore: AngularFirestore, private router: Router) {
@@ -40,16 +41,17 @@ export class AuthService {
     return this.http.post(`${this.baseUrl}/register`, user);
   }
 
-  forgotPassword(email: string) {
-    this.fireauth
-      .sendPasswordResetEmail(email)
-      .then(() => {
-        this.router.navigate(['/verify-email']);
-      })
-      .catch(err => {
-        alert('Something went wrong');
-      });
+  resetPassword(email: string): Observable<ForgotPasswordResponse> {
+    return this.http.post<ForgotPasswordResponse>(`${this.baseUrl}/forgot-password?email=${email}`, {});
   }
+
+  verifyEmail(email: string): Observable<ForgotPasswordResponse> {
+    return this.http.post<ForgotPasswordResponse>(`${this.baseUrl}/email-verification?email=${email}`, {});
+  }
+
+
+
+
 
   logout() {
     this.fireauth

@@ -23,6 +23,7 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoursesComponent } from './dashboards/teacher/courses/courses.component';
 import { RegisterCourseComponent } from './dashboards/teacher/register-course/register-course.component';
+import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
 
 
 
@@ -37,6 +38,7 @@ import { RegisterCourseComponent } from './dashboards/teacher/register-course/re
     ForgotPasswordComponent,
     CoursesComponent,
     RegisterCourseComponent,
+    VerifyEmailComponent,
     ],
   imports: [
     BrowserModule,

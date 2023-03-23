@@ -1,19 +1,39 @@
-<h1>Register</h1>
-<form (ngSubmit)="onSubmit()" #registerForm="ngForm">
-  <label>
-    Name
-    <input type="text" name="name" [(ngModel)]="user.name" required>
-  </label>
+<form (ngSubmit)="onSubmit()" class="form_container" #registerForm="ngForm">
+  <div class="logo_container"></div>
+  <div class="title_container">
+    <p class="title">Register</p>
+    <span class="subtitle">Registering role is "Student" by default , to change role to teacher or else please contact the admin </span>
+  </div>
+  <div *ngIf="errorMessage" class="error_message" style="color: red;">{{ errorMessage }}</div>
   <br>
-  <label>
-    Email
-    <input type="email" name="email" [(ngModel)]="user.email" required>
-  </label>
-  <br>
-  <label>
-    Password
-    <input type="password" name="password" [(ngModel)]="user.password" required>
-  </label>
-  <br>
-  <button type="submit" [disabled]="registerForm.invalid">Register</button>
+  <div class="input_container">
+    <label class="input_label" for="name">Name</label>
+    <input placeholder="John Doe" title="input title" name="name" type="text" class="input_field" id="name" required [(ngModel)]="user.name">
+  </div>
+  <div class="input_container">
+    <label class="input_label" for="email">Email</label>
+    <input placeholder="name@mail.com" title="input title" name="email" type="email" class="input_field" id="email" required [(ngModel)]="user.email">
+  </div>
+  <div class="input_container">
+    <label class="input_label" for="password">Password</label>
+    <input placeholder="Password" title="input title" name="password" type="password" class="input_field" id="password" required [(ngModel)]="user.password">
+  </div>
+  <button  style="height: 10%;" title="submit" type="submit" class="sign-in_btn" [disabled]="!registerForm.form.valid">
+
+    <span>Register</span>
+  </button>
+  <div class="separator">
+    <hr class="line">
+    <span>Or</span>
+    <hr class="line">
+  </div>
+    <button title="Sign In" class="sign-in_ggl" [routerLink]="['/login']" style="height: 10%;">
+
+    <span>Login</span>
+
+  </button>
+
+
+  <p class="note">Hogwarts University ©</p>
 </form>
+

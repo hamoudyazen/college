@@ -9,17 +9,19 @@ import { User } from 'src/app/user';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
+  errorMessage: string | undefined;
   users: User[] | undefined;
   email: string | undefined;
   password: string | undefined;
   name: string | undefined;
+  counter: number = 5;
+  isRedirecting: boolean = false;
 
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.authService.getAllUsers().subscribe(
       response => {
-        console.log('Got all users:', response);
         this.users = response;
       },
       error => console.log('Failed to get users:', error)
@@ -34,14 +36,29 @@ export class LoginComponent {
 
     this.authService.loginn(loginRequest).subscribe(
       response => {
-        console.log('Login successful', response);
+        console.log('Login successful');
         this.router.navigate(['/teacher']);
         this.name = this.getNameFromEmail();
-        this.name = this.getNameFromEmail();
-        console.log('Name:', this.name);
         localStorage.setItem('name', this.name || '');
       },
-      error => console.log('Login failed', error, this.email, this.password)
+      error => {
+        if (error.error && error.error.message && error.error.message === 'Email is not verified') {
+          this.errorMessage = 'Email is not verified';
+          this.isRedirecting = true;
+          // Redirect to verify email page after 5 seconds
+          const intervalId = setInterval(() => {
+            this.counter--;
+            if (this.counter === 0) {
+              clearInterval(intervalId);
+              this.router.navigate(['/verify-email']);
+            }
+          }, 1000);
+          // Reset the countdown
+          this.counter = 5;
+        } else {
+          this.errorMessage = 'An error occurred during Login , Please try again later..';
+        }
+      }
     );
   }
 
