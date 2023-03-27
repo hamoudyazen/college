@@ -1,3 +1,4 @@
+import { Course } from './Course';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
@@ -5,54 +6,50 @@ import { User } from './user';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
-import { Course } from './courses';
-import {ForgotPasswordResponse} from './ForgotPasswordResponse';
+import { ForgotPasswordResponse } from './ForgotPasswordResponse';
+
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-  users: User[] | undefined;
-  courses: Course[] | undefined;
   role: string | undefined;
   private baseUrl = 'http://localhost:8080';
   errorMessage: string | undefined;
+  coursesarr: Course[] = [];
 
   constructor(
-    private http: HttpClient, private fireauth: AngularFireAuth, private firestore: AngularFirestore, private router: Router) {
-    this.getAllUsers().subscribe(users => {
-      this.users = users;
-    });
+    private http: HttpClient,
+    private fireauth: AngularFireAuth,
+    private firestore: AngularFirestore,
+    private router: Router
+  ) { }
 
-    this.getAllCourses().subscribe(courses => {
-      this.courses = courses;
-    });
+  addCourse(course: Course) {
+    return this.http.post(`${this.baseUrl}/add-course`, course);
   }
-
-  getAllUsers(): Observable<User[]> {
-    return this.http.get<User[]>(`${this.baseUrl}/users`);
-  }
-
-  getAllCourses(): Observable<Course[]> {
-    return this.http.get<Course[]>(`${this.baseUrl}/courses`);
-  }
-
+  //register a new user
   register(user: User): Observable<any> {
     console.log('Sending register request:', user);
     return this.http.post(`${this.baseUrl}/register`, user);
   }
 
+  //sends a rest password
   resetPassword(email: string): Observable<ForgotPasswordResponse> {
-    return this.http.post<ForgotPasswordResponse>(`${this.baseUrl}/forgot-password?email=${email}`, {});
+    return this.http.post<ForgotPasswordResponse>(
+      `${this.baseUrl}/forgot-password?email=${email}`,
+      {}
+    );
   }
 
+  //sends a verify email
   verifyEmail(email: string): Observable<ForgotPasswordResponse> {
-    return this.http.post<ForgotPasswordResponse>(`${this.baseUrl}/email-verification?email=${email}`, {});
+    return this.http.post<ForgotPasswordResponse>(
+      `${this.baseUrl}/email-verification?email=${email}`,
+      {}
+    );
   }
 
-
-
-
-
+  //logs the user out (not complete)
   logout() {
     this.fireauth
       .signOut()
@@ -60,27 +57,28 @@ export class AuthService {
         localStorage.removeItem('token');
         this.router.navigate(['/login']);
       })
-      .catch(err => {
+      .catch((err) => {
         alert(err.message);
       });
   }
 
+  //logs the user in
   loginn(loginRequest: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/login`, loginRequest);
   }
 
 
-  getUserName(email: string) {
-    const url = `${this.baseUrl}/username?email=${email}`;
-    return this.http.get<string>(url).pipe(
-      map(response => response === "User not found or multiple users found" ? "" : response)
+  //get the username of the logged in user
+  getName(email: string): Observable<{ name: string }> {
+    return this.http.get<{ name: string }>(
+      `${this.baseUrl}/getName?email=${email}`
     );
   }
 
-  addCourse(course: Course): Observable<any> {
-    console.log('Sending add course request:', course);
-    return this.http.post(`${this.baseUrl}/addcourses`, course);
+
+
+  getCourses(): Observable<Course[]> {
+    return this.http.get<Course[]>(`${this.baseUrl}/courses`);
   }
 
 }
-

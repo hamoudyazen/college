@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/AuthService';
-import { Course } from 'src/app/courses';
+import { Course } from 'src/app/Course';
 
 @Component({
   selector: 'app-register-course',
@@ -8,33 +8,27 @@ import { Course } from 'src/app/courses';
   styleUrls: ['./register-course.component.css']
 })
 export class RegisterCourseComponent implements OnInit {
-  course: Course = {
-    course_name: '',
-    course_description: '',
-    course_teacher: '',
-    course_start_date: '',
-    course_duration: '',
-    course_credits: '',
-    course_capacity: '',
-    students_array: []
 
+  course: Course = {
+    capacity: '',
+    credits: '',
+    description: '',
+    duration: '',
+    name: '',
+    teacher: '',
+    studentsArray: []
   };
 
-  constructor(private authService: AuthService) { }
+  constructor(private courseService: AuthService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
   }
 
   onSubmit() {
-    this.authService.addCourse(this.course).subscribe(
-      response => {
-        console.log('Course added successfully:', response);
-        // do something on success
-      },
-      error => {
-        console.log('Error adding course:', error);
-        // do something on error
-      }
+    this.courseService.addCourse(this.course).subscribe(
+      response => console.log('Course added successfully'),
+      error => console.log('Failed to add course')
     );
   }
+
 }

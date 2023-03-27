@@ -11,7 +11,7 @@ import { AdminComponent } from './dashboards/admin/admin.component';
 import { TeacherComponent } from './dashboards/teacher/teacher.component';
 import { StudentComponent } from './dashboards/student/student.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
-import { AngularFireModule } from '@angular/fire/compat'
+import { AngularFireModule } from '@angular/fire/compat';
 import { environment } from 'src/environments/environment';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -24,7 +24,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoursesComponent } from './dashboards/teacher/courses/courses.component';
 import { RegisterCourseComponent } from './dashboards/teacher/register-course/register-course.component';
 import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
-
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MainComponent } from './main/main.component';
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import { VerifyEmailComponent } from './components/verify-email/verify-email.com
     CoursesComponent,
     RegisterCourseComponent,
     VerifyEmailComponent,
-    ],
+    MainComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -54,9 +56,9 @@ import { VerifyEmailComponent } from './components/verify-email/verify-email.com
     MatSidenavModule,
     MatListModule,
     LayoutModule,
-
+    NgbModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

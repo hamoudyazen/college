@@ -13,7 +13,7 @@
     <label for="menu-toggle" class="menu-icon">&#9776;</label>
     <ul class="menu">
       <div class="menu-links-left">
-        <li><a (click)="showRegisterCourse = true"> Register Course</a></li>
+        <li><a> Register Course</a></li>
         <li><a href="#">Courses</a></li>
         <li><a href="#">Degrees</a></li>
         <li><a href="#">Projects</a></li>
@@ -22,7 +22,7 @@
         <img src="assets/logo.png" style="width: 100%;">
       </div>
       <div class="menu-links-right">
-        <li><a (click)="showRegisterCourse = true"> Register Course</a></li>
+        <li><a> Register Course</a></li>
         <li><a href="#">Campus</a></li>
         <li><a href="#">Projects</a></li>
         <li><a href="#">Connect</a></li>
@@ -50,7 +50,7 @@
     <label for="menu-toggle" class="menu-icon">&#9776;</label>
     <ul class="menu-2">
       <div class="menu-links-left-2">
-        <li><a (click)="showRegisterCourse = true"> Register Course</a></li>
+        <li><a> Register Course</a></li>
         <li><a href="#">Skills</a></li>
         <li><a href="#">Projects</a></li>
       </div>
@@ -58,7 +58,7 @@
 
       </div>
       <div class="menu-links-right-2">
-        <li><a (click)="showRegisterCourse = true"> Register Course</a></li>
+        <li><a> Register Course</a></li>
         <li><a href="#">Projects</a></li>
         <li><a href="#">Connect</a></li>
       </div>
@@ -80,8 +80,6 @@
 
 <body>
   <div class="register-course-container">
-    <ng-container *ngIf="showRegisterCourse">
-      <app-register-course></app-register-course>
-    </ng-container>
+
   </div>
 </body>

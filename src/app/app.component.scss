@@ -1,36 +1,3 @@
-@import '~@angular/material/theming';
-
-// Set your primary color
-$primary: mat-palette($mat-indigo);
-
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.spacer {
-  flex: 1;
-}
-
-.logo {
-  height: 40px;
-  padding: 0 16px;
-}
-
-.account-username {
-  margin-right: 8px;
-}
-
-mat-sidenav-container {
-  height: 100%;
-}
-
-mat-sidenav {
-  width: 250px;
-}
-
-mat-nav-list {
-  padding-top: 0;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

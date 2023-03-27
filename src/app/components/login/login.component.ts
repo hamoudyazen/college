@@ -6,11 +6,10 @@ import { User } from 'src/app/user';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
   errorMessage: string | undefined;
-  users: User[] | undefined;
   email: string | undefined;
   password: string | undefined;
   name: string | undefined;
@@ -19,30 +18,27 @@ export class LoginComponent {
 
   constructor(private authService: AuthService, private router: Router) {}
 
-  ngOnInit(): void {
-    this.authService.getAllUsers().subscribe(
-      response => {
-        this.users = response;
-      },
-      error => console.log('Failed to get users:', error)
-    );
-  }
+  ngOnInit(): void {}
 
   login() {
     const loginRequest = {
       email: this.email,
-      password: this.password
+      password: this.password,
     };
 
     this.authService.loginn(loginRequest).subscribe(
-      response => {
+      (response) => {
         console.log('Login successful');
+        localStorage.setItem('email', this.email || '');
         this.router.navigate(['/teacher']);
-        this.name = this.getNameFromEmail();
-        localStorage.setItem('name', this.name || '');
+        // localStorage.setItem('name', this.name || '');
       },
-      error => {
-        if (error.error && error.error.message && error.error.message === 'Email is not verified') {
+      (error) => {
+        if (
+          error.error &&
+          error.error.message &&
+          error.error.message === 'Email is not verified'
+        ) {
           this.errorMessage = 'Email is not verified';
           this.isRedirecting = true;
           // Redirect to verify email page after 5 seconds
@@ -56,19 +52,10 @@ export class LoginComponent {
           // Reset the countdown
           this.counter = 5;
         } else {
-          this.errorMessage = 'An error occurred during Login , Please try again later..';
+          this.errorMessage =
+            'An error occurred during Login , Please try again later..';
         }
       }
     );
-  }
-
-  getNameFromEmail(): string | undefined {
-    if (this.email && this.users) {
-      const user = this.users.find(u => u.email === this.email);
-      if (user) {
-        return user.name;
-      }
-    }
-    return undefined;
   }
 }

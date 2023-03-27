@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent {
   errorMessage: string | undefined;
@@ -14,21 +14,21 @@ export class RegisterComponent {
     name: '',
     email: '',
     password: '',
-    role: ''
+    role: '',
   };
 
-  constructor(private authService: AuthService , private router : Router) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   onSubmit(): void {
     this.authService.register(this.user).subscribe(
       () => {
-        console.log('registration completed successfully')
+        console.log('registration completed successfully');
         this.router.navigateByUrl('/login');
-            },
+      },
       (error) => {
-        this.errorMessage = 'An error occurred during registration , Please try again later..';
-        console.log('registration failed ')
-
+        this.errorMessage =
+          'An error occurred during registration , Please try again later..';
+        console.log('registration failed ');
       }
     );
   }

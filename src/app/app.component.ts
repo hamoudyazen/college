@@ -9,11 +9,31 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
+  yazen: any;
   title(title: any) {
     throw new Error('Method not implemented.');
   }
+  showDropdown = false;
+
+  showRegisterCourse: boolean = false;
+  toggleShowAllAddCourse(): void {
+    this.showRegisterCourse = !this.showRegisterCourse;
+  }
 
 
-  constructor(private breakpointObserver: BreakpointObserver , private router : Router) {
+
+
+  toggleComponent(component: string): void {
+    this.showRegisterCourse = false;
+
+    if (component === 'AddCourse') {
+      this.showRegisterCourse = true;
+    }
+  }
+  constructor(
+    private breakpointObserver: BreakpointObserver,
+    private router: Router
+  ) {
+    this.yazen = 'yazen'
   }
 }
