@@ -8,27 +8,61 @@ import { Course } from 'src/app/Course';
   styleUrls: ['./register-course.component.css']
 })
 export class RegisterCourseComponent implements OnInit {
-
+  id: string | undefined;
+  errorMessage: string | undefined;
   course: Course = {
-    capacity: '',
+    capacity: '20',
     credits: '',
     description: '',
     duration: '',
     name: '',
-    teacher: '',
-    studentsArray: []
+    teacherID: '',
+    studentsArray: [],
+    semester: ''
   };
 
-  constructor(private courseService: AuthService) { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
+    //to call the getName function
+    const email = localStorage.getItem('email');
+    console.log('email', email);
+    if (email) {
+      this.authService.getID(email).subscribe(
+        response => this.id = response.id,
+        error => console.log('Failed to get teacher id:', error)
+      );
+    }
+  } onSubmit(): void {
+    const email = localStorage.getItem('email');
+    if (email) {
+      this.authService.getID(email).subscribe(
+        response => {
+          this.id = response.id;
+          // Set the teacherID field to the ID of the logged-in user, if available
+          if (this.id !== undefined) {
+            this.course.teacherID = this.id;
+          }
+          this.authService.registerCourse(this.course).subscribe(
+            () => {
+              console.log('registration completed successfully');
+              alert('register complete ')
+            },
+            (error) => {
+              if (error.error && error.error.message && error.error.message === 'User Already Exist') {
+                this.errorMessage = 'User with this email already exist';
+              }
+              else if (error.error && error.error.message && error.error.message === 'Password Short') {
+                this.errorMessage = 'Password Short';
+              }
+              else {
+                this.errorMessage = 'An error occurred during registration, Please try again later..';
+              }
+            }
+          );
+        },
+        error => console.log('Failed to get teacher id:', error)
+      );
+    }
   }
-
-  onSubmit() {
-    this.courseService.addCourse(this.course).subscribe(
-      response => console.log('Course added successfully'),
-      error => console.log('Failed to add course')
-    );
-  }
-
 }

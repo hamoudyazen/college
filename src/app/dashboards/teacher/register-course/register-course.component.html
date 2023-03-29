@@ -1,39 +1,58 @@
-<form class="form" (ngSubmit)="onSubmit()" #registerForm="ngForm">
-  <p class="title">Register Course</p>
-  <p class="message">Signup now and get full access to our app.</p>
-  <div class="flex">
+<form (ngSubmit)="onSubmit()" class="form_container" #registerForm="ngForm">
+  <img src="assets/logo.png" style="width: 120px" />
+  <div class="title_container">
+    <p class="title">Register Course</p>
+    <span class="subtitle">Course Registering .
+    </span>
   </div>
-  <label>
-    <input required placeholder="" type="text" class="input" [(ngModel)]="course.name">
-    <span>Course Name</span>
-  </label>
-
-  <label>
-    <input required placeholder="" type="text" class="input" [(ngModel)]="course.teacher">
-    <span>Teacher Name</span>
-  </label>
-
-
-  <label>
-    <input class="input" id="description" rows="3" required [(ngModel)]="course.description">
-    <span>Course Description</span>
-  </label>
+  <div *ngIf="errorMessage" class="error_message" style="color: red">
+    {{ errorMessage }}
+  </div>
+  <br />
+  <div class="input_container">
+    <label class="input_label" for="name">Credits</label>
+    <input placeholder="5" title="input title" name="credits" type="text" class="input_field" id="name" required
+      [(ngModel)]="course.credits" />
+  </div>
 
 
-  <label>
-    <input required placeholder="" type="text" class="input" [(ngModel)]="course.duration">
-    <span>Duration</span>
-  </label>
+  <div class="input_container">
+    <label class="input_label" for="name">Description</label>
+    <input placeholder="Doe" title="input title" name="description" type="text" class="input_field" id="name" required
+      [(ngModel)]="course.description" />
+  </div>
 
-  <label>
-    <input required placeholder="" type="text" class="input" [(ngModel)]="course.credits">
-    <span>Credits</span>
-  </label>
 
-  <label>
-    <input required placeholder="" type="text" class="input" [(ngModel)]="course.capacity">
-    <span>Capacity</span>
-  </label>
+  <div class="input_container">
+    <label class="input_label" for="major">Semester</label>
+    <select name="major" id="major" class="input_field" required [(ngModel)]="course.semester">
+      <option value="" disabled selected>Select semester</option>
+      <option value="Fall 2023">Fall 2023</option>
+      <option value="Summer 2023">Summer 2023</option>
+      <option value="Spring 2023">Spring 2023</option>
+      <option value="Winter 2023">Winter 2023</option>
+    </select>
+  </div>
 
-  <button type="submit" class="submit">Submit</button>
+
+  <div class="input_container">
+    <label class="input_label" for="name">duration</label>
+    <input placeholder="Doe" title="input title" name="duration" type="text" class="input_field" id="name" required
+      [(ngModel)]="course.duration" />
+  </div>
+
+
+
+
+
+  <div class="input_container">
+    <label class="input_label" for="name">name</label>
+    <input placeholder="Doe" title="input title" name="name" type="text" class="input_field" id="name" required
+      [(ngModel)]="course.name" />
+  </div>
+
+
+  <button style="height: 10%" title="submit" type="submit" class="button" [disabled]="!registerForm.form.valid">
+    <span>Register course</span>
+  </button>
 </form>

@@ -16,9 +16,9 @@ export class LoginComponent {
   counter: number = 5;
   isRedirecting: boolean = false;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   login() {
     const loginRequest = {
@@ -34,11 +34,7 @@ export class LoginComponent {
         // localStorage.setItem('name', this.name || '');
       },
       (error) => {
-        if (
-          error.error &&
-          error.error.message &&
-          error.error.message === 'Email is not verified'
-        ) {
+        if (error.error && error.error.message && error.error.message === 'Email is not verified') {
           this.errorMessage = 'Email is not verified';
           this.isRedirecting = true;
           // Redirect to verify email page after 5 seconds
@@ -51,7 +47,14 @@ export class LoginComponent {
           }, 1000);
           // Reset the countdown
           this.counter = 5;
-        } else {
+        }
+        else if (error.error && error.error.message && error.error.message === 'Wrong Password') {
+          this.errorMessage = 'Wrong Password';
+        }
+        else if (error.error && error.error.message && error.error.message === 'User Not Registered') {
+          this.errorMessage = 'User Not Registered';
+        }
+        else {
           this.errorMessage =
             'An error occurred during Login , Please try again later..';
         }

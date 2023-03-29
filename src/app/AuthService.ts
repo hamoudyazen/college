@@ -75,10 +75,21 @@ export class AuthService {
     );
   }
 
+  getID(email: string): Observable<{ id: string }> {
+    return this.http.get<{ id: string }>(
+      `${this.baseUrl}/getId?email=${email}`
+    );
+  }
+
 
 
   getCourses(): Observable<Course[]> {
     return this.http.get<Course[]>(`${this.baseUrl}/courses`);
   }
 
+
+  registerCourse(course: Course): Observable<any> {
+    console.log('Sending register request:', course);
+    return this.http.post(`${this.baseUrl}/registercourse`, course);
+  }
 }

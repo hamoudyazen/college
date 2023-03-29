@@ -5,6 +5,7 @@ export interface Course {
   description: string;
   duration: string;
   name: string;
-  teacher: string;
+  teacherID: string;
   studentsArray: string[];
+  semester: string;
 }
