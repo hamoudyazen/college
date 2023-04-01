@@ -11,6 +11,7 @@ import { CoursesComponent } from './dashboards/teacher/courses/courses.component
 import { RegisterCourseComponent } from './dashboards/teacher/register-course/register-course.component';
 import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
 import { TeacherMyCoursesComponent } from './dashboards/teacher-my-courses/teacher-my-courses.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -24,6 +25,7 @@ const routes: Routes = [
   { path: 'courses', component: CoursesComponent },
   { path: 'register course', component: RegisterCourseComponent },
   { path: 'teacher courses', component: TeacherMyCoursesComponent },
+  { path: 'profile', component: ProfileComponent },
 ];
 
 @NgModule({

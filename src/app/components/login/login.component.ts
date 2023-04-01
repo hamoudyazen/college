@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AuthService } from 'src/app/AuthService';
 import { Router } from '@angular/router';
 import { User } from 'src/app/user';
+import { Toast } from 'bootstrap';
 
 @Component({
   selector: 'app-login',
@@ -15,8 +16,17 @@ export class LoginComponent {
   name: string | undefined;
   counter: number = 5;
   isRedirecting: boolean = false;
+  loginForm: any;
+  successMessage: any;
 
   constructor(private authService: AuthService, private router: Router) { }
+  showLiveToast() {
+    const liveToastEl = document.getElementById('liveToast');
+    if (liveToastEl) {
+      const liveToast = new Toast(liveToastEl);
+      liveToast.show();
+    }
+  }
 
   ngOnInit(): void { }
 
@@ -28,7 +38,7 @@ export class LoginComponent {
 
     this.authService.loginn(loginRequest).subscribe(
       (response) => {
-        console.log('Login successful');
+        this.successMessage = 'Login successfully';
         localStorage.setItem('email', this.email || '');
         this.router.navigate(['/teacher']);
         // localStorage.setItem('name', this.name || '');

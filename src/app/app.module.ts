@@ -29,6 +29,7 @@ import { VerifyEmailComponent } from './components/verify-email/verify-email.com
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MainComponent } from './main/main.component';
 import { TeacherMyCoursesComponent } from './dashboards/teacher-my-courses/teacher-my-courses.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 
 @NgModule({
@@ -45,6 +46,7 @@ import { TeacherMyCoursesComponent } from './dashboards/teacher-my-courses/teach
     VerifyEmailComponent,
     MainComponent,
     TeacherMyCoursesComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,

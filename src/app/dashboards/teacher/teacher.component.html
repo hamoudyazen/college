@@ -10,10 +10,10 @@
   <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script> <!-- Updated script -->
 </head>
 
-<body class="p-3 m-0 border-0 bd-example">
-
+<body class="p-3 m-0 border-0 bd-example fade-in">
   <!-- Example Code -->
-  <nav class="navbar navbar-expand-lg bg-light">
+  <!-- This is the navigation bar. It is a bootstrap component that is styled with custom css. -->
+  <nav class="navbar navbar-expand-lg" style="background-color: #A41D30;">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">Navbar</a>
       <button class="navbar-toggler" type="button" (click)="navbarCollapsed = !navbarCollapsed"
@@ -21,39 +21,53 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" [ngbCollapse]="navbarCollapsed" id="navbarSupportedContent">
+
+        <!-- Navigation links -->
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
+          <li class="nav-item" style="color: white;">
+            <a style="color: white;" class="nav-link" (click)="toggleComponent('TeacherCourse')"
+              [ngClass]="{'active-link': activeLink === 'TeacherCourse'}">My Courses</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Dropdown
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li>
-                <hr class="dropdown-divider">
-              </li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled">Disabled</a>
+          <li class="nav-item" style="color: white;">
+            <a style="color: white;" class="nav-link" (click)="toggleComponent('AddCourse')"
+              [ngClass]="{'active-link': activeLink === 'AddCourse'}">Add Course</a>
           </li>
         </ul>
-        <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
+        <!-- Profile -->
+        <div class="dropdown-center">
+          <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+            aria-expanded="false" style="background-color: black; border: 1px solid black;">
+            <img
+              src="https://marketplace.canva.com/EAFEits4-uw/1/0/800w/canva-boy-cartoon-gamer-animated-twitch-profile-photo-r0bPCSjUqg0.jpg"
+              class="rounded" alt="..." style="width: 30px;">
+            {{name}}
+          </button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" (click)="toggleComponent('Profile')"
+                [ngClass]="{'active-link': activeLink === 'Profile'}">Profile</a></li>
+            <li><a class="dropdown-item" href="#">Action two</a></li>
+            <li><a class="dropdown-item" href="#">Action three</a></li>
+          </ul>
+        </div>
       </div>
     </div>
   </nav>
+  <!-- This is the title of the page. It is styled with custom css. -->
+  <div style="padding: 10px; font-weight: 700;"> {{pagename}}</div>
   <!-- End Example Code -->
+  <!-- This is the container for the component that we want to show.-->
+  <ng-container *ngIf="showTeacherCourse">
+    <app-teacher-my-courses></app-teacher-my-courses>
+  </ng-container>
+
+  <ng-container *ngIf="showRegisterCourse">
+    <app-register-course></app-register-course>
+  </ng-container>
+
+  <ng-container *ngIf="showProfile">
+    <app-profile></app-profile>
+  </ng-container>
+
 </body>
 
 </html>
-<app-teacher-my-courses></app-teacher-my-courses>

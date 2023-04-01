@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Toast } from 'bootstrap';
 import { AuthService } from 'src/app/AuthService';
 import { Course } from 'src/app/Course';
 
@@ -24,8 +25,15 @@ export class RegisterCourseComponent implements OnInit {
   };
 
   constructor(private authService: AuthService) { }
-
+  showLiveToast() {
+    const liveToastEl = document.getElementById('liveToast');
+    if (liveToastEl) {
+      const liveToast = new Toast(liveToastEl);
+      liveToast.show();
+    }
+  }
   ngOnInit(): void {
+
     //to call the getName function
     const email = localStorage.getItem('email');
     console.log('email', email);

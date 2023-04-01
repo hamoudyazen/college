@@ -10,93 +10,77 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 
-<body class="p-3 m-0 border-0 bd-example">
+<body class="p-10 m-0  fade-in">
+  <div class="form-container d-flex justify-content-center">
+    <div class="card p-2" style="width: 450px;">
 
-  <!-- Example Code -->
+      <img src="./assets/logo.png" class="rounded mx-auto d-block" alt="..." style="width: 150px;">
 
-  <form class="row g-3" (ngSubmit)="onSubmit()" #registerForm="ngForm">
+      <form class="row g-3 col-10 mx-auto justify-content-center" (ngSubmit)="onSubmit()" #registerForm="ngForm">
+        <div class="col-md-10">
+          <label for="validationServer01" class="form-label">Name</label>
+          <input type="text" class="form-control is-valid" id="validationServer01" value="Mark" required=""
+            [(ngModel)]="course.name" name="name">
+        </div>
 
-    <div class="col-md-5">
-      <label for="validationServer01" class="form-label">Credits</label>
-      <input type="text" class="form-control is-valid" id="validationServer01" value="Mark" required=""
-        [(ngModel)]="course.credits" name="credits">
-      <div class="valid-feedback">
-        Looks good!
-      </div>
+        <div class="col-md-10 ">
+          <label for="validationServer02" class="form-label">Credits</label>
+          <input type="credits" class="form-control is-valid" id="validationServer02" value="Otto" required=""
+            [(ngModel)]="course.credits" name="credits">
+        </div>
+
+        <div class="col-md-10 ">
+          <label for="validationServer02" class="form-label">Description</label>
+          <input type="description" class="form-control is-valid" id="validationServer02" value="Otto" required=""
+            [(ngModel)]="course.description" name="description">
+        </div>
+
+        <div class="col-md-10 ">
+          <label for="validationServer02" class="form-label">Duration</label>
+          <input type="duration" class="form-control is-valid" id="validationServer02" value="Otto" required=""
+            [(ngModel)]="course.duration" name="duration">
+        </div>
+
+
+        <div class="col-md-5">
+          <label for="validationServer02" class="form-label">Semester</label>
+          <select class="form-select" aria-label="Semester" [(ngModel)]="course.semester" name="semester" required>
+            <option selected disabled value="">Select a semester</option>
+            <option value="Spring">Spring 2023</option>
+            <option value="Summer">Summer 2023</option>
+            <option value="Fall">Fall 2023</option>
+            <option value="Winter">Winter 2023</option>
+          </select>
+        </div>
+
+
+        <!--sadas-->
+        <div class="col-md-10">
+          <button class="btn btn-primary form-control"
+            style=" background-color:#A41D30; border: 1px #A41D30 solid; border-radius: 0px; color: white;"
+            type="submit" [disabled]="!registerForm.form.valid" id="liveToastBtn" (click)="showLiveToast()">Add
+            Course</button>
+        </div>
+
+        <div class="toast-container position-fixed bottom-0 end-0 p-3" fade-in>
+          <div id="liveToast" class="toast" [ngClass]="{'bg-danger': errorMessage, 'bg-success': successMessage}"
+            role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+              <strong class="me-auto" style="font-weight: 700; color: black;">Error</strong>
+
+              <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body" style="color: black;">
+              {{errorMessage}}
+              {{successMessage}}
+            </div>
+          </div>
+        </div>
+      </form>
+
+
     </div>
-
-
-    <div class="col-md-5">
-      <label for="validationServer02" class="form-label">Description</label>
-      <input type="text" class="form-control is-valid" id="validationServer02" value="Otto" required=""
-        [(ngModel)]="course.description" name="description">
-      <div class="valid-feedback">
-        Looks good!
-      </div>
-    </div>
-
-
-    <div class="col-md-5">
-      <label for="validationServer02" class="form-label">Duration</label>
-      <input type="text" class="form-control is-valid" id="validationServer02" value="Otto" required=""
-        [(ngModel)]="course.duration" name="duration">
-      <div class="valid-feedback">
-        Looks good!
-      </div>
-    </div>
-
-    <div class="col-md-5">
-      <label for="validationServer02" class="form-label">Course Name</label>
-      <input type="text" class="form-control is-valid" id="validationServer02" value="Otto" required=""
-        [(ngModel)]="course.name" name="name">
-      <div class="valid-feedback">
-        Looks good!
-      </div>
-    </div>
-
-    <div class="col-md-5">
-      <label for="validationServer02" class="form-label">Semester</label>
-      <select class="form-select" aria-label="Semester" [(ngModel)]="course.semester" name="semester" required>
-        <option selected disabled value="">Select a semester</option>
-        <option value="Spring">Spring 2023</option>
-        <option value="Summer">Summer 2023</option>
-        <option value="Fall">Fall 2023</option>
-        <option value="Winter">Winter 2023</option>
-      </select>
-      <div class="valid-feedback">
-        Looks good!
-      </div>
-      <div class="invalid-feedback">
-        Please select a semester.
-      </div>
-    </div>
-
-
-    <div class="col-12">
-      <button class="btn btn-primary" type="submit" [disabled]="!registerForm.form.valid">Add Course</button>
-
-    </div>
-
-    <div *ngIf="errorMessage" class="alert alert-danger d-flex align-items-center" role="alert">
-      <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Danger:">
-        <use xlink:href="#exclamation-triangle-fill" />
-      </svg>
-      <div>
-        {{errorMessage}}
-      </div>
-    </div>
-
-    <div *ngIf="successMessage" class="alert alert-success d-flex align-items-center" role="alert">
-      <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Success:">
-        <use xlink:href="#check-circle-fill" />
-      </svg>
-      <div>
-        An example success alert with an icon
-      </div>
-    </div>
-  </form>
-
-  <!-- End Example Code -->
+  </div>
 </body>
 
 </html>

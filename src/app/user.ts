@@ -6,4 +6,5 @@ export interface User {
   password: string;
   role: string;
   major: string;
+  image?: string; // add a new property called "image"
 }

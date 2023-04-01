@@ -67,14 +67,6 @@ export class AuthService {
     return this.http.post(`${this.baseUrl}/login`, loginRequest);
   }
 
-
-  //get the username of the logged in user
-  getName(email: string): Observable<{ name: string }> {
-    return this.http.get<{ name: string }>(
-      `${this.baseUrl}/getName?email=${email}`
-    );
-  }
-
   getID(email: string): Observable<{ id: string }> {
     return this.http.get<{ id: string }>(
       `${this.baseUrl}/getId?email=${email}`
@@ -85,6 +77,10 @@ export class AuthService {
 
   getTeacherCourses(id: string): Observable<Course[]> {
     return this.http.get<Course[]>(`${this.baseUrl}/getTeacherCourses?id=${id}`);
+  }
+
+  getUserDetails(id: string): Observable<User[]> {
+    return this.http.get<User[]>(`${this.baseUrl}/getUserDetails?id=${id}`);
   }
 
 
@@ -118,4 +114,11 @@ export class AuthService {
     };
     return this.http.post(`${this.baseUrl}/addStudent`, request);
   }
+
+  getName(email: string): Observable<{ firstname: string }> {
+    return this.http.get<{ firstname: string }>(
+      `${this.baseUrl}/getName?email=${email}`
+    );
+  }
+
 }
