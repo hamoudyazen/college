@@ -10,6 +10,8 @@ import { Course } from 'src/app/Course';
 export class RegisterCourseComponent implements OnInit {
   id: string | undefined;
   errorMessage: string | undefined;
+  successMessage: string | undefined;
+
   course: Course = {
     capacity: '20',
     credits: '',
@@ -47,6 +49,7 @@ export class RegisterCourseComponent implements OnInit {
             () => {
               console.log('registration completed successfully');
               alert('register complete ')
+              this.successMessage = 'Courses added successfully';
             },
             (error) => {
               if (error.error && error.error.message && error.error.message === 'User Already Exist') {

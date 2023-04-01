@@ -1,87 +1,59 @@
-<!DOCTYPE html>
-<html lang="en" style="height: fit-content; ">
-
-
-
-
-<!--START OF HEADER NAV-->
-
-
-<header class="header">
-  <nav>
-    <input type="checkbox" id="menu-toggle">
-    <label for="menu-toggle" class="menu-icon">&#9776;</label>
-    <ul class="menu">
-      <div class="menu-links-left">
-        <li><a (click)="showRegisterCourse = true"> Register Course</a></li>
-        <li><a href="#">Courses</a></li>
-        <li><a href="#">Degrees</a></li>
-        <li><a href="#">Projects</a></li>
-      </div>
-      <div class="logo">
-        <img src="assets/logo.png" style="width: 100%;">
-      </div>
-      <div class="menu-links-right">
-        <li><a (click)="showRegisterCourse = true"> Register Course</a></li>
-        <li><a href="#">Campus</a></li>
-        <li><a href="#">Projects</a></li>
-        <li><a href="#">Connect</a></li>
-      </div>
-
-
-      <li class="dropdown-toggle">
-        <a class="profile" href="#">
-          <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
-            alt="Profile picture" style="width: 20px;">
-        </a>
-        <ul class="dropdown">
-          <li><a href="#">Profile</a></li>
-          <li><a href="#">Logout</a></li>
-        </ul>
-      </li>
-    </ul>
-  </nav>
-</header>
-
-<!--HEADER 2-->
-<header class="header2">
-  <nav class="nav-2">
-    <input type="checkbox" id="menu-toggle">
-    <label for="menu-toggle" class="menu-icon">&#9776;</label>
-    <ul class="menu-2">
-      <div class="menu-links-left-2">
-        <li><a (click)="showRegisterCourse = true"> Register Course</a></li>
-        <li><a href="#">Skills</a></li>
-        <li><a href="#">Projects</a></li>
-      </div>
-      <div class="logo-2">
-
-      </div>
-      <div class="menu-links-right-2">
-        <li><a (click)="showRegisterCourse = true"> Register Course</a></li>
-        <li><a href="#">Projects</a></li>
-        <li><a href="#">Connect</a></li>
-      </div>
-
-
-
-
-    </ul>
-  </nav>
-</header>
-
-<!--END OF HEADER NAV-->
+<!doctype html>
+<html lang="en">
 
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="node_modules/bootstrap/dist/css/bootstrap.min.css"> <!-- Updated link -->
+  <title>Bootstrap Example</title>
+  <script src="node_modules/@popperjs/core/dist/umd/popper.min.js"></script> <!-- Added Popper.js -->
+  <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script> <!-- Updated script -->
 </head>
 
-</html>
+<body class="p-3 m-0 border-0 bd-example">
 
-<body>
-  <div class="register-course-container">
-    <ng-container *ngIf="showRegisterCourse">
-      <app-register-course></app-register-course>
-    </ng-container>
-  </div>
+  <!-- Example Code -->
+  <nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Navbar</a>
+      <button class="navbar-toggler" type="button" (click)="navbarCollapsed = !navbarCollapsed"
+        [attr.aria-expanded]="!navbarCollapsed" aria-controls="navbarSupportedContent" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" [ngbCollapse]="navbarCollapsed" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Dropdown
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled">Disabled</a>
+          </li>
+        </ul>
+        <form class="d-flex" role="search">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+  <!-- End Example Code -->
 </body>
+
+</html>
+<app-teacher-my-courses></app-teacher-my-courses>

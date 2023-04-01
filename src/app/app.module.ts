@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+import 'bootstrap';
+import '@popperjs/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
@@ -26,6 +28,7 @@ import { RegisterCourseComponent } from './dashboards/teacher/register-course/re
 import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MainComponent } from './main/main.component';
+import { TeacherMyCoursesComponent } from './dashboards/teacher-my-courses/teacher-my-courses.component';
 
 
 @NgModule({
@@ -41,9 +44,11 @@ import { MainComponent } from './main/main.component';
     RegisterCourseComponent,
     VerifyEmailComponent,
     MainComponent,
+    TeacherMyCoursesComponent,
   ],
   imports: [
     BrowserModule,
+    NgbModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,

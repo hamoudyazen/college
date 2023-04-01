@@ -11,23 +11,33 @@ import { AuthService } from 'src/app/AuthService';
 })
 export class TeacherComponent implements OnInit {
   @ViewChild('sidenav') sidenav!: MatSidenav;
+  navbarCollapsed = true; // Add this line
   name: string | undefined;
   //used for css
   pagename: string = '';
   isSmallScreen!: boolean;
-  showRegisterCourse: boolean = true;
-  activeLink: string = 'courses'; // added property to keep track of active link
-  toggleShowAllAddCourse(): void {
-    this.showRegisterCourse = !this.showRegisterCourse;
-  }
+  showRegisterCourse: boolean = false;
+  showTeacherCourse: boolean = false;
+  activeLink: string = 'courses';
+  ///////////
   toggleComponent(component: string): void {
     this.showRegisterCourse = false;
+    this.showTeacherCourse = false;
 
     if (component === 'AddCourse') {
       this.showRegisterCourse = true;
+      this.showTeacherCourse = false;
       this.pagename = 'AddCourse';
       this.activeLink = 'AddCourse'; // set active link to courses
     }
+
+    else if (component === 'TeacherCourse') {
+      this.showTeacherCourse = true;
+      this.showRegisterCourse = false;
+      this.pagename = 'TeacherCourse';
+      this.activeLink = 'TeacherCourse'; // set active link to courses
+    }
+
   }
 
 
@@ -39,12 +49,15 @@ export class TeacherComponent implements OnInit {
     console.log('email', email);
     if (email) {
       this.authService.getName(email).subscribe(
-        response => this.name = response.name,
+        response => {
+          this.name = response.name;
+          console.log('name', this.name);
+        },
         error => console.log('Failed to get user name:', error)
       );
     }
-    console.log('name', name);
   }
+
 
 
   //to log user out (not complete needs fixing)

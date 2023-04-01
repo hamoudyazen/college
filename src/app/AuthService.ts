@@ -15,7 +15,7 @@ export class AuthService {
   role: string | undefined;
   private baseUrl = 'http://localhost:8080';
   errorMessage: string | undefined;
-  coursesarr: Course[] = [];
+  teacherCourses: Course[] = [];
 
   constructor(
     private http: HttpClient,
@@ -83,13 +83,39 @@ export class AuthService {
 
 
 
-  getCourses(): Observable<Course[]> {
-    return this.http.get<Course[]>(`${this.baseUrl}/courses`);
+  getTeacherCourses(id: string): Observable<Course[]> {
+    return this.http.get<Course[]>(`${this.baseUrl}/getTeacherCourses?id=${id}`);
   }
+
 
 
   registerCourse(course: Course): Observable<any> {
     console.log('Sending register request:', course);
     return this.http.post(`${this.baseUrl}/registercourse`, course);
+  }
+
+
+  updateEmail(courseId: string, oldEmail: string, newEmail: string): Observable<any> {
+    const request = {
+      courseId: courseId,
+      originalEmail: oldEmail,
+      updatedEmail: newEmail
+    };
+    return this.http.put(`${this.baseUrl}/updateEmail?courseId=${courseId}&originalEmail=${oldEmail}&updatedEmail=${newEmail}`, null);
+  }
+  deleteEmail(courseId: string, email: string): Observable<any> {
+    const request = {
+      courseId: courseId,
+      email: email
+    };
+    return this.http.delete(`${this.baseUrl}/deleteEmail?courseId=${courseId}&email=${email}`);
+  }
+
+  addStudent(courseId: string, newEmail: string): Observable<any> {
+    const request = {
+      courseId: courseId,
+      newEmail: newEmail
+    };
+    return this.http.post(`${this.baseUrl}/addStudent`, request);
   }
 }

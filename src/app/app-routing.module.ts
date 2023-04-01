@@ -10,7 +10,7 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
 import { CoursesComponent } from './dashboards/teacher/courses/courses.component';
 import { RegisterCourseComponent } from './dashboards/teacher/register-course/register-course.component';
 import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
-import { MainComponent } from './main/main.component';
+import { TeacherMyCoursesComponent } from './dashboards/teacher-my-courses/teacher-my-courses.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -23,6 +23,7 @@ const routes: Routes = [
   { path: 'verify-email', component: VerifyEmailComponent },
   { path: 'courses', component: CoursesComponent },
   { path: 'register course', component: RegisterCourseComponent },
+  { path: 'teacher courses', component: TeacherMyCoursesComponent },
 ];
 
 @NgModule({
