@@ -121,4 +121,18 @@ export class AuthService {
     );
   }
 
+
+  //PROFILE
+
+  updateProfileEmail(newEmail: any, oldEmail: any, userId: any): Observable<any> {
+    return this.http.put(`${this.baseUrl}/updateProfileEmail?newEmail=${newEmail}&oldEmail=${oldEmail}&userId=${userId}`, {}, { responseType: 'text' });
+  }
+
+  updateProfileFirstName(oldFirstname: string, newFirstname: string, userId: string): Observable<any> {
+    return this.http.put(`${this.baseUrl}/updateProfileFirstName?oldFirstname=${oldFirstname}&newFirstname=${newFirstname}&userId=${userId}`, {}, { responseType: 'text' });
+  }
+
+
+
+  //
 }
