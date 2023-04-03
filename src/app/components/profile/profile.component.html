@@ -39,16 +39,41 @@
       <h4> </h4>
       <div *ngFor="let user of userDetails">
 
-        <form #updateEmailForm="ngForm" (submit)="updateProfileEmail(updateEmailForm.value, user.email, user.id)">
+        <form #updateEmailForm="ngForm" (submit)="updateProfileLastname(updateEmailForm2.value, user.email, user.id)">
           <div class="container">
             <div class="form-group">
               <label for="email">Email:</label>
               <div class="input-group">
                 <input type="text" class="form-control" placeholder="{{ user.email }}" name="email" ngModel
                   #emailInput="ngModel" id="email">
-                <input type="hidden" name="originalEmail" [value]="user" ngModel #originalEmailInput="ngModel">
+                <input type="hidden" name="originalEmail" [value]="user.email" ngModel #originalEmailInput="ngModel">
                 <div class="input-group-append">
-                  <button class="btn btn-outline-success" type="submit">
+                  <button class="btn btn-outline-success" type="submit"
+                    [disabled]="!isValidEmail({email: emailInput.value, originalEmail: user.email})">
+                    <i class="bi bi-check2"></i>
+                  </button>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+
+
+
+        <form #updateEmailForm2="ngForm"
+          (submit)="updateProfileLastname(updateEmailForm2.value, user.firstname, user.id)">
+          <div class="container">
+            <div class="form-group">
+              <label for="email">Firstname:</label>
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="{{ user.firstname }}" name="email" ngModel
+                  #emailInput="ngModel" id="email">
+                <input type="hidden" name="originalEmail" [value]="user.firstname" ngModel
+                  #originalEmailInput="ngModel">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-success" type="submit"
+                    [disabled]="!isValidLastname(updateEmailForm3.value)">
                     <i class="bi bi-check2"></i>
                   </button>
                 </div>
@@ -57,18 +82,19 @@
           </div>
         </form>
 
-        <form #updateNameForm="ngForm"
-          (submit)="updateProfileFirstname( user.firstname, updateNameForm.value.firstname,user.id)">
+
+        <form #updateEmailForm3="ngForm"
+          (submit)="updateProfileLastname(updateEmailForm3.value, user.lastname, user.id)">
           <div class="container">
-            <div class="form-group">
-              <label for="firstname">First Name:</label>
-              <div class="input-group">
-                <input type="text" class="form-control" placeholder="{{ user.firstname }}" name="firstname" ngModel
-                  #firstnameInput="ngModel" id="firstname">
-                <input type="hidden" name="originalFirstname" [value]="user.firstname" ngModel
-                  #originalFirstnameInput="ngModel">
+            <div class="form-group ">
+              <label for="email">Lastname:</label>
+              <div class="input-group ">
+                <input type="text" class="form-control " placeholder="{{ user.lastname }}" name="email" ngModel
+                  #emailInput="ngModel" id="email">
+                <input type="hidden" name="originalEmail" [value]="user.lastname" ngModel #originalEmailInput="ngModel">
                 <div class="input-group-append">
-                  <button class="btn btn-outline-success" type="submit">
+                  <button class="btn btn-outline-success" type="submit"
+                    [disabled]="!isValidLastname(updateEmailForm3.value)">
                     <i class="bi bi-check2"></i>
                   </button>
                 </div>
@@ -76,6 +102,33 @@
             </div>
           </div>
         </form>
+
+
+
+        <form #updateEmailForm4="ngForm"
+          (submit)="updateProfilePassword(updateEmailForm4.value, user.password, user.id)">
+          <div class="container">
+            <div class="form-group ">
+              <label for="password">Password:</label>
+              <div class="input-group ">
+                <input type="password" class="form-control " placeholder="{{ user.password }}" name="password" ngModel
+                  #passwordInput="ngModel" id="password">
+                <input type="hidden" name="originalPassword" [value]="user.password" ngModel
+                  #originalPasswordInput="ngModel">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-success" type="submit"
+                    [disabled]="!isValidPassword(updateEmailForm4.value)">
+
+                    <i class="bi bi-check2"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+
+
+
 
 
 

@@ -1,6 +1,6 @@
 import { Course } from './Course';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { User } from './user';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
@@ -43,10 +43,7 @@ export class AuthService {
 
   //sends a verify email
   verifyEmail(email: string): Observable<ForgotPasswordResponse> {
-    return this.http.post<ForgotPasswordResponse>(
-      `${this.baseUrl}/email-verification?email=${email}`,
-      {}
-    );
+    return this.http.post<ForgotPasswordResponse>(`${this.baseUrl}/email-verification?email=${email}`, {});
   }
 
   //logs the user out (not complete)
@@ -128,9 +125,20 @@ export class AuthService {
     return this.http.put(`${this.baseUrl}/updateProfileEmail?newEmail=${newEmail}&oldEmail=${oldEmail}&userId=${userId}`, {}, { responseType: 'text' });
   }
 
-  updateProfileFirstName(oldFirstname: string, newFirstname: string, userId: string): Observable<any> {
-    return this.http.put(`${this.baseUrl}/updateProfileFirstName?oldFirstname=${oldFirstname}&newFirstname=${newFirstname}&userId=${userId}`, {}, { responseType: 'text' });
+  updateProfileFirstname(newEmail: any, oldEmail: any, userId: any): Observable<any> {
+    return this.http.put(`${this.baseUrl}/updateProfileFirstname?newEmail=${newEmail}&oldEmail=${oldEmail}&userId=${userId}`, {}, { responseType: 'text' });
   }
+
+
+  updateProfileLastname(newEmail: any, oldEmail: any, userId: any): Observable<any> {
+    return this.http.put(`${this.baseUrl}/updateProfileLastname?newEmail=${newEmail}&oldEmail=${oldEmail}&userId=${userId}`, {}, { responseType: 'text' });
+  }
+
+  updateProfilePassword(newEmail: any, oldEmail: any, userId: any): Observable<any> {
+    return this.http.put(`${this.baseUrl}/updateProfilePassword?newEmail=${newEmail}&oldEmail=${oldEmail}&userId=${userId}`, {}, { responseType: 'text' });
+  }
+
+
 
 
 

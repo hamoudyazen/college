@@ -28,7 +28,7 @@ import { RegisterCourseComponent } from './dashboards/teacher/register-course/re
 import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MainComponent } from './main/main.component';
-import { TeacherMyCoursesComponent } from './dashboards/teacher-my-courses/teacher-my-courses.component';
+import { TeacherMyCoursesComponent } from './dashboards/teacher/teacher-my-courses/teacher-my-courses.component';
 import { ProfileComponent } from './components/profile/profile.component';
 
 
