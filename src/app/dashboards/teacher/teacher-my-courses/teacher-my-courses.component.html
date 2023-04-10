@@ -16,98 +16,88 @@
   }
 </style>
 
-<body class="p-3 m-0 border-0 bd-example  fade-in">
+<body class="p-3 m-0 border-0 bd-example  fade-in" style="background-color: #F5F5F7;">
 
   <!-- Example Code -->
   <div class="row row-cols-1 row-cols-md-3 g-4">
-    <div *ngFor="let course of teacherCourses; let i = index" class="col">
-      <div class="card h-100">
-        <div class="card-header "
-          style="background-color: #A41D30; border: 1px solid #A41D30; border-radius: 0px; border: 1px #A41D30 solid;">
-          <h5 class="card-title" style="color: white;">{{ course.name }}</h5>
-        </div>
-        <div class="card-body">
-          <p class="card-text" style="color: black;"><strong>Description:</strong> {{ course.description }}</p>
-          <p class="card-text" style="color: black;"><strong>Credits:</strong> {{ course.credits }}</p>
-          <p class="card-text" style="color: black;"><strong>Semester:</strong> {{ course.semester }}</p>
-          <!-- Button trigger modal -->
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-            [attr.data-bs-target]="'#staticBackdrop'+i" (click)="courseID=course.id"
-            style="background-color: #A41D30; border: 1px solid #A41D30; border-radius: 0px;">
-            Edit students
-          </button>
-
-
-
-          <!-- Students modal -->
-          <div class="modal fade" [id]="'staticBackdrop'+i" data-bs-backdrop="false" data-bs-keyboard="false"
-            tabindex="-1" [attr.aria-labelledby]="'staticBackdropLabel'+i" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header"
-                  style="background-color: #A41D30; border: 1px solid #A41D30; border-radius: 0px;">
-                  <h1 class="modal-title fs-5" [id]="'staticBackdropLabel'+i" style="color: white;">Edit Students</h1>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  <h5 style="color: black;">Current Students:</h5>
-                  <ul>
-                    <div *ngFor="let student of course.studentsArray" style="margin-bottom: 10px">
-                      <div class="input-group">
-                        <form #updateStudentForm="ngForm"
-                          (submit)="updateStudent(updateStudentForm.value, student, student); $event.preventDefault()">
-                          <div class="input-group">
-                            <input type="text" class="form-control" placeholder="{{ student }}" name="email" ngModel
-                              #emailInput="ngModel">
-                            <input type="hidden" name="originalEmail" [value]="student" ngModel
-                              #originalEmailInput="ngModel">
-                            <div class="input-group-append">
-                              <button class="btn btn-outline-danger" type="button" (click)="deleteStudent(student)">
-                                <i class="bi bi-trash"></i>
-                              </button>
-                              <button class="btn btn-outline-success" type="submit">
-                                <i class="bi bi-check2"></i>
-                              </button>
-                            </div>
-                          </div>
-                        </form>
-
-                      </div>
-                    </div>
-
-
-                  </ul>
-
-                </div>
-
-                <div class="modal-footer" class="btn btn-secondary ml-auto"
-                  style="background-color: #A41D30; border: 1px #A41D30 solid; border-radius: 0px;">
-                  <form #addStudentForm="ngForm" (submit)="addStudent(addStudentForm)">
-                    <div class="input-group mb-3">
-                      <input type="text" class="form-control" placeholder="Enter new student's email" name="email"
-                        ngModel required #emailInput="ngModel">
-                      <div class="input-group-append">
-                        <button type="submit" class="btn btn-primary"
-                          style="background-color: #c4961a; border: 1px solid #A41D30; border-radius: 0px;">Add
-                          Student</button>
-                      </div>
-                    </div>
-                  </form>
-
-                  <button type="button" class="btn btn-secondary ml-auto" data-bs-dismiss="modal"
-                    style="background-color: #c4961a; border: 1px solid #A41D30; border-radius: 0px;">Close</button>
-                </div>
-
-              </div>
+    <ng-container *ngFor="let course of teacherCourses; let i = index">
+      <ng-container *ngIf="!showModal[i]">
+        <div class="col">
+          <div class="card h-100 fade-in" style="background-color: #1D1D1F; border-radius: 30px;">
+            <div class="card-header " style="background-color: #1D1D1F;  border-radius: 30px; border:0px solid black;">
+              <h5 class="card-title" style="color: #F5F5F7; font-weight: 700;">{{ course.name }}</h5>
+            </div>
+            <div class="card-body">
+              <p class="card-text" style="color: #F5F5F7;"><strong>Description:</strong> {{ course.description }}</p>
+              <p class="card-text" style="color: #F5F5F7;"><strong>Credits:</strong> {{ course.credits }}</p>
+              <p class="card-text" style="color: #F5F5F7;"><strong>Semester:</strong> {{ course.semester }}</p>
+              <!-- Button trigger modal -->
+              <button type="button" class="btn1" data-bs-toggle="modal" [attr.data-bs-target]="'#staticBackdrop'+i"
+                (click)="courseID=course.id; showModal[i] = true"
+                style="background-color: #F5F5F7; border: 1px solid #1D1D1F; border-radius: 30px; color: #1D1D1F;">
+                Edit students
+              </button>
             </div>
           </div>
-          <!--End of students-->
+        </div>
+      </ng-container>
+
+      <!-- Students modal -->
+      <div class="modal fade" [id]="'staticBackdrop'+i" data-bs-backdrop="false" data-bs-keyboard="false" tabindex="-1"
+        [attr.aria-labelledby]="'staticBackdropLabel'+i" [attr.aria-hidden]="!showModal[i] ? 'true' : null"
+        (shown.bs.modal)="onModalShow(i)" (hidden.bs.modal)="onModalHide(i)" style="background-color: #F5F5F7;">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header" style="background-color: #1D1D1F; border: 1px solid #1D1D1F; border-radius: 0px;">
+              <h1 class="modal-title fs-5" [id]="'staticBackdropLabel'+i" style="color: #F5F5F7;">Edit Students</h1>
+            </div>
+            <div class="modal-body">
+              <h5 style="color: #1D1D1F;">Current Students:</h5>
+              <ul>
+                <div *ngFor="let student of course.studentsArray" style="margin-bottom: 10px">
+                  <div class="input-group">
+                    <form #updateStudentForm="ngForm"
+                      (submit)="updateStudent(updateStudentForm.value, student, student); $event.preventDefault()">
+                      <div class="input-group">
+                        <input type="text" class="form-control" placeholder="{{ student }}" name="email" ngModel
+                          #emailInput="ngModel">
+                        <input type="hidden" name="originalEmail" [value]="student" ngModel
+                          #originalEmailInput="ngModel">
+                        <div class="input-group-append">
+                          <button class="btn btn-outline-danger" type="button" (click)="deleteStudent(student)">
+                            <i class="bi bi-trash"></i>
+                          </button>
+                          <button class="btn btn-outline-success" type="submit">
+                            <i class="bi bi-check2"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </ul>
+            </div>
+            <div class="modal-footer" class="btn btn-secondary ml-auto"
+              style="background-color: #1D1D1F; border: 1px #1D1D1F solid; border-radius: 0px;">
+              <form #addStudentForm="ngForm" (submit)="addStudent(addStudentForm)">
+                <div class="input-group mb-3">
+                  <input type="email" class="form-control" placeholder="Enter new student's email" name="email" ngModel
+                    required #emailInput="ngModel" email>
+                  <div class="input-group-append">
+                    <button type="submit" class="btn1" [disabled]="!emailInput.valid">Add Student</button>
+                  </div>
+                </div>
+              </form>
+              <button type="button" class="btn1" data-bs-dismiss="modal">Close</button>
+            </div>
+
+          </div>
         </div>
       </div>
-    </div>
+      <!--End of students-->
+    </ng-container>
+
   </div>
-
-
   <!-- End Example Code -->
 </body>
 

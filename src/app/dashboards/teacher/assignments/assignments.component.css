@@ -2,9 +2,11 @@
 
 body {
   font-family: 'IBM Plex Mono Medium', sans-serif;
+  background-color: #F5F5F7;
+  color: #1D1D1F;
 }
 
-.btn.btn-primary.form-control {
+.btn1 {
   background-color: #F5F5F7;
   color: #1D1D1F;
   border: 1px solid #1D1D1F;
@@ -14,7 +16,7 @@ body {
   font-weight: 700;
 }
 
-.btn.btn-primary.form-control:hover {
+.btn1:hover {
   background-color: #1D1D1F;
   color: #F5F5F7;
   border: 1px solid #F5F5F7;

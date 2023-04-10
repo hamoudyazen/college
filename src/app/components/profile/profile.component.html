@@ -15,130 +15,241 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 
-<body class="p-3 m-0 border-0 bd-example">
+<body class="p-3 m-0 border-0 bd-example" style="background-color: #F5F5F7;">
 
   <!-- Example Code -->
 
-  <div class="card position-relative">
-    <div class="position-absolute center-0 start-0" style="padding-top: 30px;">
-      <img
-        src="https://cdn.dribbble.com/users/1176657/screenshots/15468294/media/34af996ddff444391edab94abcf3c7f3.png?compress=1&resize=400x300"
-        alt="profile image" class="rounded-circle" width="150" height="150">
-    </div>
-    <svg class="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" role="img"
-      aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false">
-      <title>Placeholder</title>
-      <rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image
-        cap</text>
-    </svg>
-    <h4 style="padding: 5px;">
-      <p>Welcome {{name}}</p>
-    </h4>
+  <div class="d-flex justify-content-center align-items-center"
+    style="background-color: #1D1D1F; border: 0px solid black;">
+    <div class="card position-relative" style="background-color: #1D1D1F; border: 0px solid black;"> <svg
+        class="bd-placeholder-img card-img-top" width="100%" height="180" style="background-color: #1D1D1F;" role="img"
+        aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false">
+        <title>Placeholder</title>
+        <rect width=" 100%" height="100%" fill="#1D1D1F"></rect>
+        <text x="50%" y="50%" fill="#fff" dy=".3em">Welcome {{name | titlecase}} to your profile</text>
+      </svg>
 
-    <div class="card-body">
-      <h4> </h4>
-      <div *ngFor="let user of userDetails">
 
-        <form #updateEmailForm="ngForm" (submit)="updateProfileLastname(updateEmailForm2.value, user.email, user.id)">
-          <div class="container">
-            <div class="form-group">
-              <label for="email">Email:</label>
-              <div class="input-group">
-                <input type="text" class="form-control" placeholder="{{ user.email }}" name="email" ngModel
-                  #emailInput="ngModel" id="email">
-                <input type="hidden" name="originalEmail" [value]="user.email" ngModel #originalEmailInput="ngModel">
-                <div class="input-group-append">
-                  <button class="btn btn-outline-success" type="submit"
-                    [disabled]="!isValidEmail({email: emailInput.value, originalEmail: user.email})">
-                    <i class="bi bi-check2"></i>
+
+      <div class="card-body ">
+        <h4> </h4>
+        <div *ngFor="let user of userDetails">
+
+          <!-- End Example Code -->
+          <div class="card mb-3"
+            style="max-width: 1000px; background-color: #1D1D1F; border: 1px solid #F5F5F7; padding: 10px;">
+            <div class="row g-0">
+              <div class="col-md-4">
+                <img src="{{user.image}}" class="img-fluid rounded-start" alt="..." style="max-width: 70%;">
+                <div class="input-group">
+                  <input class="form-control" type="file" id="formFile" (change)="choseFile($event)">
+                  <button style=" background-color: #F5F5F7;color: #1D1D1F;"
+                    style=" background-color: #F5F5F7;color: #1D1D1F;" class="btn" type="submit" (click)="addData()"
+                    (click)="showLiveToast()">
+                    Upload
                   </button>
+                  <div class="toast-container position-fixed bottom-0 end-0 p-3" fade-in>
+                    <div id="liveToast" class="toast"
+                      [ngClass]="{'bg-danger': errorMessage, 'bg-success': successMessage}" role="alert"
+                      aria-live="assertive" aria-atomic="true">
+                      <div class="toast-header">
+                        <strong class="me-auto" style="font-weight: 700; color: black;">Error</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                      </div>
+                      <div class="toast-body" style="color: black;">
+                        {{errorMessage}}
+                        {{successMessage}}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-8">
+                <div class="card-body">
+                  <form #updateEmailForm="ngForm"
+                    (submit)="updateProfileEmail(updateEmailForm2.value, user.email, user.id)">
+                    <div class="container">
+                      <div class="form-group">
+                        <label for="email" style="color: #F5F5F7;">Email:</label>
+                        <div class="input-group">
+                          <input type="text" class="form-control" placeholder="{{ user.email }}" name="email" ngModel
+                            #emailInput="ngModel" id="email">
+                          <input type="hidden" name="originalEmail" [value]="user.email" ngModel
+                            #originalEmailInput="ngModel">
+                          <div class="input-group-append">
+                            <button style=" background-color: #F5F5F7;color: #1D1D1F;" class="btn" type="submit"
+                              [disabled]="!isValidEmail({email: emailInput.value, originalEmail: user.email})"
+                              (click)="showLiveToast()">
+                              Update
+                            </button>
+                            <div class="toast-container position-fixed bottom-0 end-0 p-3" fade-in>
+                              <div id="liveToast" class="toast"
+                                [ngClass]="{'bg-danger': errorMessage, 'bg-success': successMessage}" role="alert"
+                                aria-live="assertive" aria-atomic="true">
+                                <div class="toast-header">
+                                  <strong class="me-auto" style="font-weight: 700; color: black;">Error</strong>
+                                  <button type="button" class="btn-close" data-bs-dismiss="toast"
+                                    aria-label="Close"></button>
+                                </div>
+                                <div class="toast-body" style="color: black;">
+                                  {{errorMessage}}
+                                  {{successMessage}}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+
+
+
+                  <form #updateEmailForm2="ngForm"
+                    (submit)="updateProfileFirstname(updateEmailForm2.value, user.firstname, user.id)">
+                    <div class="container">
+                      <div class="form-group">
+                        <label for="email" style="color: #F5F5F7;">Firstname:</label>
+                        <div class="input-group">
+                          <input type="text" class="form-control" placeholder="{{ user.firstname }}" name="email"
+                            ngModel #emailInput="ngModel" id="email">
+                          <input type="hidden" name="originalEmail" [value]="user.firstname" ngModel
+                            #originalEmailInput="ngModel">
+                          <div class="input-group-append">
+                            <button style=" background-color: #F5F5F7;color: #1D1D1F;" class="btn" type="submit"
+                              [disabled]="!isValidFirstname(user.firstname ,updateEmailForm2.value)"
+                              (click)="showLiveToast()">
+                              Update
+                            </button>
+                            <div class="toast-container position-fixed bottom-0 end-0 p-3" fade-in>
+                              <div id="liveToast" class="toast"
+                                [ngClass]="{'bg-danger': errorMessage, 'bg-success': successMessage}" role="alert"
+                                aria-live="assertive" aria-atomic="true">
+                                <div class="toast-header">
+                                  <strong class="me-auto" style="font-weight: 700; color: black;">Error</strong>
+                                  <button type="button" class="btn-close" data-bs-dismiss="toast"
+                                    aria-label="Close"></button>
+                                </div>
+                                <div class="toast-body" style="color: black;">
+                                  {{errorMessage}}
+                                  {{successMessage}}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+
+
+                  <form #updateEmailForm3="ngForm"
+                    (submit)="updateProfileLastname(updateEmailForm3.value, user.lastname, user.id)">
+                    <div class="container">
+                      <div class="form-group ">
+                        <label for="email" style="color: #F5F5F7;">Lastname:</label>
+                        <div class="input-group ">
+                          <input type="text" class="form-control " placeholder="{{ user.lastname }}" name="email"
+                            ngModel #emailInput="ngModel" id="email">
+                          <input type="hidden" name="originalEmail" [value]="user.lastname" ngModel
+                            #originalEmailInput="ngModel">
+                          <div class="input-group-append">
+                            <button style=" background-color: #F5F5F7;color: #1D1D1F;" class="btn" type="submit"
+                              [disabled]="!isValidLastname(user.lastname ,updateEmailForm3.value)"
+                              (click)="showLiveToast()">
+                              Update
+                            </button>
+                            <div class="toast-container position-fixed bottom-0 end-0 p-3" fade-in>
+                              <div id="liveToast" class="toast"
+                                [ngClass]="{'bg-danger': errorMessage, 'bg-success': successMessage}" role="alert"
+                                aria-live="assertive" aria-atomic="true">
+                                <div class="toast-header">
+                                  <strong class="me-auto" style="font-weight: 700; color: black;">Error</strong>
+                                  <button type="button" class="btn-close" data-bs-dismiss="toast"
+                                    aria-label="Close"></button>
+                                </div>
+                                <div class="toast-body" style="color: black;">
+                                  {{errorMessage}}
+                                  {{successMessage}}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+
+
+
+                  <form #updateEmailForm4="ngForm"
+                    (submit)="updateProfilePassword(updateEmailForm4.value, user.password, user.id)">
+                    <div class="container">
+                      <div class="form-group ">
+                        <label for="password" style="color: #F5F5F7;">Password:</label>
+                        <div class="input-group ">
+                          <input type="password" class="form-control " placeholder="{{ user.password }}" name="password"
+                            ngModel #passwordInput="ngModel" id="password">
+                          <input type="hidden" name="originalPassword" [value]="user.password" ngModel
+                            #originalPasswordInput="ngModel">
+                          <div class="input-group-append">
+                            <button style=" background-color: #F5F5F7;color: #1D1D1F;" class="btn" type="submit"
+                              [disabled]="!isValidPassword(updateEmailForm4.value)" (click)="showLiveToast()">
+                              Update
+                            </button>
+                            <div class="toast-container position-fixed bottom-0 end-0 p-3" fade-in>
+                              <div id="liveToast" class="toast"
+                                [ngClass]="{'bg-danger': errorMessage, 'bg-success': successMessage}" role="alert"
+                                aria-live="assertive" aria-atomic="true">
+                                <div class="toast-header">
+                                  <strong class="me-auto" style="font-weight: 700; color: black;">Error</strong>
+                                  <button type="button" class="btn-close" data-bs-dismiss="toast"
+                                    aria-label="Close"></button>
+                                </div>
+                                <div class="toast-body" style="color: black;">
+                                  {{errorMessage}}
+                                  {{successMessage}}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+
+
+
+                  <form #updateEmailFor="ngForm">
+                    <div class="container">
+                      <div class="form-group ">
+                        <label for="role" style="color: #F5F5F7;">Role:</label>
+                        <div class="input-group ">
+                          <input type="password" class="form-control " placeholder="{{ user.role }}" id="role" disabled>
+
+                          <div class="input-group-append">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+
+
+
+
 
                 </div>
               </div>
             </div>
           </div>
-        </form>
-
-
-
-        <form #updateEmailForm2="ngForm"
-          (submit)="updateProfileLastname(updateEmailForm2.value, user.firstname, user.id)">
-          <div class="container">
-            <div class="form-group">
-              <label for="email">Firstname:</label>
-              <div class="input-group">
-                <input type="text" class="form-control" placeholder="{{ user.firstname }}" name="email" ngModel
-                  #emailInput="ngModel" id="email">
-                <input type="hidden" name="originalEmail" [value]="user.firstname" ngModel
-                  #originalEmailInput="ngModel">
-                <div class="input-group-append">
-                  <button class="btn btn-outline-success" type="submit"
-                    [disabled]="!isValidLastname(updateEmailForm3.value)">
-                    <i class="bi bi-check2"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </form>
-
-
-        <form #updateEmailForm3="ngForm"
-          (submit)="updateProfileLastname(updateEmailForm3.value, user.lastname, user.id)">
-          <div class="container">
-            <div class="form-group ">
-              <label for="email">Lastname:</label>
-              <div class="input-group ">
-                <input type="text" class="form-control " placeholder="{{ user.lastname }}" name="email" ngModel
-                  #emailInput="ngModel" id="email">
-                <input type="hidden" name="originalEmail" [value]="user.lastname" ngModel #originalEmailInput="ngModel">
-                <div class="input-group-append">
-                  <button class="btn btn-outline-success" type="submit"
-                    [disabled]="!isValidLastname(updateEmailForm3.value)">
-                    <i class="bi bi-check2"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </form>
-
-
-
-        <form #updateEmailForm4="ngForm"
-          (submit)="updateProfilePassword(updateEmailForm4.value, user.password, user.id)">
-          <div class="container">
-            <div class="form-group ">
-              <label for="password">Password:</label>
-              <div class="input-group ">
-                <input type="password" class="form-control " placeholder="{{ user.password }}" name="password" ngModel
-                  #passwordInput="ngModel" id="password">
-                <input type="hidden" name="originalPassword" [value]="user.password" ngModel
-                  #originalPasswordInput="ngModel">
-                <div class="input-group-append">
-                  <button class="btn btn-outline-success" type="submit"
-                    [disabled]="!isValidPassword(updateEmailForm4.value)">
-
-                    <i class="bi bi-check2"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </form>
-
-
-
-
-
-
+        </div>
       </div>
     </div>
   </div>
 
 
 
-  <!-- End Example Code -->
 
 </body>
 

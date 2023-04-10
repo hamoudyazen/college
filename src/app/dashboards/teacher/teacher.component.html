@@ -13,59 +13,89 @@
 <body class="p-3 m-0 border-0 bd-example fade-in">
   <!-- Example Code -->
   <!-- This is the navigation bar. It is a bootstrap component that is styled with custom css. -->
-  <nav class="navbar navbar-expand-lg" style="background-color: #A41D30;">
+  <nav class="navbar navbar-expand-lg" style="background-color: #1D1D1F; box-shadow: 0 6px 6px -6px #0E1119;">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">Navbar</a>
+      <a class="navbar-brand" style="color: #F5F5F7; text-transform: uppercase;">Academy</a>
       <button class="navbar-toggler" type="button" (click)="navbarCollapsed = !navbarCollapsed"
         [attr.aria-expanded]="!navbarCollapsed" aria-controls="navbarSupportedContent" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+        <span class="navbar-toggler-icon" style="color: #F5F5F7; background-color: #F5F5F7;"></span>
       </button>
       <div class="collapse navbar-collapse" [ngbCollapse]="navbarCollapsed" id="navbarSupportedContent">
 
         <!-- Navigation links -->
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item" style="color: white;">
-            <a style="color: white;" class="nav-link" (click)="toggleComponent('TeacherCourse')"
-              [ngClass]="{'active-link': activeLink === 'TeacherCourse'}">My Courses</a>
+            <a style="color: white;" class="nav-link" (click)="toggleComponent('My Courses')"
+              [ngClass]="{'active-link': activeLink === 'My Courses'}">My Courses</a>
           </li>
           <li class="nav-item" style="color: white;">
-            <a style="color: white;" class="nav-link" (click)="toggleComponent('AddCourse')"
-              [ngClass]="{'active-link': activeLink === 'AddCourse'}">Add Course</a>
+            <a style="color: white;" class="nav-link" (click)="toggleComponent('Add Course')"
+              [ngClass]="{'active-link': activeLink === 'Add Course'}">Add Course</a>
+          </li>
+          <li class="nav-item" style="color: white;">
+            <a style="color: white;" class="nav-link" (click)="toggleComponent('Assignment')"
+              [ngClass]="{'active-link': activeLink === 'Add Assignment'}">Assignment</a>
           </li>
         </ul>
         <!-- Profile -->
-        <div class="dropdown-center">
-          <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-            aria-expanded="false" style="background-color: black; border: 1px solid black;">
-            <img
-              src="https://marketplace.canva.com/EAFEits4-uw/1/0/800w/canva-boy-cartoon-gamer-animated-twitch-profile-photo-r0bPCSjUqg0.jpg"
-              class="rounded" alt="..." style="width: 30px;">
-            {{name}}
-          </button>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" (click)="toggleComponent('Profile')"
-                [ngClass]="{'active-link': activeLink === 'Profile'}">Profile</a></li>
-            <li><a class="dropdown-item" href="#">Action two</a></li>
-            <li><a class="dropdown-item" href="#">Action three</a></li>
-          </ul>
+
+        <!-- Button trigger modal -->
+        <div *ngFor="let user of userDetails">
+          <img type="image" src="{{user.image}}" class="rounded-circle" data-bs-toggle="modal"
+            data-bs-target="#exampleModal" style="max-width: 35px;">
         </div>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+          data-bs-backdrop="false" style="background-color: #f5f5f774;">
+          <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+            <div class="modal-content" style="background-color: #1D1D1F; color: #F5F5F7;">
+              <div class="modal-header"
+                style="background-color: #1D1D1F; color: #F5F5F7; border-bottom: 1px solid #F5F5F7;">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Welcome {{name|titlecase}}</h1>
+              </div>
+              <div class="modal-body">
+                <span class="badge text-bg-light" (click)="toggleComponent('Profile')"
+                  [ngClass]="{'active-link': activeLink === 'Profile'}">Profile Settings</span>
+                <br>
+                <span class="badge text-bg-danger" (click)="logOut()">Logout</span>
+
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn1" data-bs-dismiss="modal"
+                  style="background-color: #F5F5F7; border: 1px solid #F5F5F7; color: #1D1D1F;">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+
       </div>
     </div>
   </nav>
   <!-- This is the title of the page. It is styled with custom css. -->
-  <div style="padding: 10px; font-weight: 700;"> {{pagename}}</div>
   <!-- End Example Code -->
   <!-- This is the container for the component that we want to show.-->
   <ng-container *ngIf="showTeacherCourse">
+    <div style="padding: 10px; font-weight: 700;"> {{pagename}}</div>
     <app-teacher-my-courses></app-teacher-my-courses>
   </ng-container>
 
   <ng-container *ngIf="showRegisterCourse">
+    <div style="padding: 10px; font-weight: 700;"> {{pagename}}</div>
     <app-register-course></app-register-course>
   </ng-container>
 
   <ng-container *ngIf="showProfile">
+    <div style="padding: 10px; font-weight: 700;"> {{pagename}}</div>
     <app-profile></app-profile>
+  </ng-container>
+
+  <ng-container *ngIf="showAssignment">
+    <div style="padding: 10px; font-weight: 700;"> {{pagename}}</div>
+    <app-assignments></app-assignments>
   </ng-container>
 
 </body>

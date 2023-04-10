@@ -14,10 +14,10 @@ export class RegisterCourseComponent implements OnInit {
   successMessage: string | undefined;
 
   course: Course = {
-    capacity: '20',
-    credits: '',
+    capacity: 20,
+    credits: 0,
     description: '',
-    duration: '',
+    duration: 0,
     name: '',
     teacherID: '',
     studentsArray: [],
@@ -56,7 +56,6 @@ export class RegisterCourseComponent implements OnInit {
           this.authService.registerCourse(this.course).subscribe(
             () => {
               console.log('registration completed successfully');
-              alert('register complete ')
               this.successMessage = 'Courses added successfully';
             },
             (error) => {

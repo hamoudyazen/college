@@ -1,3 +1,71 @@
+@import url('https://fonts.cdnfonts.com/css/ibm-plex-mono-3');
+
+#card {
+  position: relative;
+  background-color: rgba(255, 255, 255, 0.27);
+  /* any other styles for your card */
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+  border-radius: 50px;
+  border: 0px white solid;
+
+}
+
+.form-control:focus {
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+
+}
+
+.form-label {
+  color: black;
+}
+
+.btn {
+  background-color: rgba(0, 0, 0, 0.347);
+  color: white;
+  transition: all 0.3s ease-in;
+  transform: scale(1);
+  border-radius: 40px;
+
+}
+
+.btn:hover {
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+  transform: scale(1.01);
+  transition: all 0.3s ease-out;
+}
+
+
+.btn:disabled {
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+  opacity: 100%;
+}
+
+body {
+  font-family: 'IBM Plex Mono Medium', sans-serif;
+  background: linear-gradient(90deg, #200122, #6f0000);
+  background-size: 400% 400%;
+  animation: animateGradient 10s ease infinite;
+}
+
+@keyframes animateGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+
 .form-container {
   display: flex;
   justify-content: center;
@@ -5,11 +73,7 @@
   height: 100vh;
 }
 
-.card {
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  border-radius: 0px;
-  border: 1px #A41D30 solid;
-}
+
 
 .content {
   width: 330px;
@@ -181,5 +245,20 @@
     color: #3498db;
     box-shadow: inset 2px 2px 5px #BABECC,
       inset -5px -5px 10px #ffffff73;
+  }
+}
+
+.fade-in {
+  animation: fade-in 0.3s forwards;
+  background-color: transparent !important;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
   }
 }

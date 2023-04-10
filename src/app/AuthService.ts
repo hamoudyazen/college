@@ -7,6 +7,8 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { ForgotPasswordResponse } from './ForgotPasswordResponse';
+import { Assignment } from './Assignment';
+import { Submission } from './submission';
 
 @Injectable({
   providedIn: 'root',
@@ -48,15 +50,18 @@ export class AuthService {
 
   //logs the user out (not complete)
   logout() {
-    this.fireauth
-      .signOut()
-      .then(() => {
-        localStorage.removeItem('token');
-        this.router.navigate(['/login']);
-      })
-      .catch((err) => {
-        alert(err.message);
-      });
+    if (localStorage.getItem('loggedInTeacher') === 'true') {
+      localStorage.removeItem('loggedInTeacher');
+      this.router.navigateByUrl('/login');
+    }
+    else if (localStorage.getItem('loggedInStudent') === 'true') {
+      localStorage.removeItem('loggedInStudent');
+      this.router.navigateByUrl('/login');
+    }
+    else if (localStorage.getItem('loggedInAdmin') === 'true') {
+      localStorage.removeItem('loggedInAdmin');
+      this.router.navigateByUrl('/login');
+    }
   }
 
   //logs the user in
@@ -118,8 +123,12 @@ export class AuthService {
     );
   }
 
-
-  //PROFILE
+  getRole(id: string): Observable<{ role: string }> {
+    return this.http.get<{ role: string }>(
+      `${this.baseUrl}/getRole?id=${id}`
+    );
+  }
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////// PROFILE ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   updateProfileEmail(newEmail: any, oldEmail: any, userId: any): Observable<any> {
     return this.http.put(`${this.baseUrl}/updateProfileEmail?newEmail=${newEmail}&oldEmail=${oldEmail}&userId=${userId}`, {}, { responseType: 'text' });
@@ -138,9 +147,65 @@ export class AuthService {
     return this.http.put(`${this.baseUrl}/updateProfilePassword?newEmail=${newEmail}&oldEmail=${oldEmail}&userId=${userId}`, {}, { responseType: 'text' });
   }
 
+  updateProfilePicture(downloadURL: any, userId: any): Observable<any> {
+    return this.http.put(`${this.baseUrl}/updateProfilePicture?downloadURL=${downloadURL}&userId=${userId}`, {}, { responseType: 'text' });
+  }
+
+  isEmailExists(email: any): Observable<boolean> {
+    return this.http.put<boolean>(`${this.baseUrl}/isEmailExists?email=${email}`, {});
+  }
+
+  isBirthdaySame(birthday: any): Observable<boolean> {
+    return this.http.put<boolean>(`${this.baseUrl}/isBirthdaySame?birthday=${birthday}`, {});
+  }
+
+  updatePassword(newPassword: any, email: any): Observable<any> {
+    return this.http.put(`${this.baseUrl}/updatePassword?newPassword=${newPassword}&email=${email}`, {}, { responseType: 'text' });
+  }
+
+  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //
+  addAssignment(assignment: Assignment): Observable<any> {
+    console.log('Sending assignment request:', assignment);
+    return this.http.post(`${this.baseUrl}/addAssignment`, assignment);
+  }
+
+  updateAssignmentLink(downloadURL: any, assignmentId: any): Observable<any> {
+    return this.http.put(`${this.baseUrl}/updateAssignmentLink?downloadURL=${downloadURL}&assignmentId=${assignmentId}`, {}, { responseType: 'text' });
+  }
+  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //
+  showAvailableCoursesForStudent(): Observable<Course[]> {
+    return this.http.get<Course[]>(`${this.baseUrl}/ShowAvailableCoursesForStudent`);
+  }
+  StudentCourses(email: string): Observable<Course[]> {
+    return this.http.get<Course[]>(`${this.baseUrl}/StudentCourses?email=${email}`);
+  }
+
+  registerForCourse(courseID: string, email: string): Observable<boolean> {
+    const params = new HttpParams()
+      .set('courseID', courseID)
+      .set('email', email);
+    return this.http.post<boolean>(`${this.baseUrl}/RegisterForCourse`, params);
+  }
+
+  studentAssignments(email: string): Observable<Assignment[]> {
+    return this.http.get<Assignment[]>(`${this.baseUrl}/StudentAssignments?email=${email}`);
+  }
+
+  addSubmission(submission: Submission): Observable<any> {
+    console.log('Sending submission request:', submission);
+    return this.http.post<any>(`${this.baseUrl}/submissions`, submission);
+  }
+
+  updateSubmissionLink(downloadURL: any, submissionId: any): Observable<any> {
+    const params = new HttpParams()
+      .set('downloadURL', downloadURL)
+      .set('submissionId', submissionId);
+    return this.http.put(`${this.baseUrl}/updateSubmissionLink`, {}, { params, responseType: 'text' });
+  }
+
+  teacherAssignmentsSubmissions(email: string): Observable<Submission[]> {
+    return this.http.get<Submission[]>(`${this.baseUrl}/teacherAssignmentsSubmissions`, { params: { email } });
+  }
 
 
-
-
-  //
 }

@@ -1,9 +1,9 @@
 export interface Course {
   id?: string;
-  capacity: string;
-  credits: string;
+  capacity: number;
+  credits: number;
   description: string;
-  duration: string;
+  duration: number;
   name: string;
   teacherID: string;
   studentsArray: string[];

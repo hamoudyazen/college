@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/AuthService';
 import { ForgotPasswordResponse } from 'src/app/ForgotPasswordResponse';
+import { Component, Renderer2, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-verify-email',
@@ -15,10 +15,16 @@ export class VerifyEmailComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private authService: AuthService
-  ) {}
+    private authService: AuthService,
+    private renderer: Renderer2
+  ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    const script = this.renderer.createElement('script');
+    script.src = '/assets/js.js';
+    script.type = 'text/javascript';
+    this.renderer.appendChild(document.head, script);
+  }
   verifyEmail() {
     this.authService.verifyEmail(this.email).subscribe(
       (response: ForgotPasswordResponse) => {
