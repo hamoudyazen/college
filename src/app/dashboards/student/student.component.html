@@ -43,10 +43,8 @@
         <!-- Profile -->
 
         <!-- Button trigger modal -->
-        <div *ngFor="let user of userDetails">
-          <img type="image" src="{{user.image}}" class="rounded-circle" data-bs-toggle="modal"
-            data-bs-target="#exampleModal" style="max-width: 35px;">
-        </div>
+        <img type="image" src="{{profileImg}}" class="rounded-circle" data-bs-toggle="modal"
+          data-bs-target="#exampleModal" style="max-width: 35px;">
         <!-- Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
           data-bs-backdrop="false" style="background-color: #f5f5f774;">
@@ -58,7 +56,7 @@
               </div>
               <div class="modal-body">
                 <span class="badge text-bg-light" (click)="toggleComponent('Profile')"
-                  [ngClass]="{'active-link': activeLink === 'Profile'}">Profile Settings</span>
+                  [ngClass]="{'active-link': activeLink === 'profile'}">Profile Settings</span>
                 <br>
                 <span class="badge text-bg-danger" (click)="logOut()">Logout</span>
 
@@ -96,7 +94,10 @@
     <app-student-register-for-course></app-student-register-for-course>
   </ng-container>
 
-
+  <ng-container *ngIf="showProfile">
+    <div style="padding: 10px; font-weight: 700;"> {{pagename}}</div>
+    <app-profile></app-profile>
+  </ng-container>
 
 </body>
 

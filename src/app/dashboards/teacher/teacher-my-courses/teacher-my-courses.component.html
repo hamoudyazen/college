@@ -15,6 +15,9 @@
     background-image: none;
   }
 </style>
+<b>Major: {{major}}</b>
+<br>
+<b>Semester: {{semester}}</b>
 
 <body class="p-3 m-0 border-0 bd-example  fade-in" style="background-color: #F5F5F7;">
 
@@ -40,6 +43,7 @@
             </div>
           </div>
         </div>
+
       </ng-container>
 
       <!-- Students modal -->
@@ -94,11 +98,58 @@
           </div>
         </div>
       </div>
+
       <!--End of students-->
     </ng-container>
 
   </div>
-  <!-- End Example Code -->
+</body>
+
+<!------------------------------------------------------------------------- Material -------------------------------------------------------------------------->
+
+<body class="p-3 m-0 border-0 bd-example  fade-in" style="background-color: #F5F5F7;">
+  <hr style="border-top: 1px solid #1D1D1F;">
+  <div class="form-container d-flex justify-content-center">
+    <div class="card p-2" style="width: 450px; background-color: #1D1D1F;">
+      <h1 style="text-align: center; color:#F5F5F7">Add Course Material</h1>
+
+      <form class="row g-3 col-10 mx-auto justify-content-center" (ngSubmit)="onSubmit()" #registerForm="ngForm">
+
+
+        <div class="col-md-10">
+          <div>
+            <label for="validationServer02" class="form-label" style="color: #F5F5F7;">Select a course:</label>
+            <select class="form-select is-valid" id="validationServer02" [(ngModel)]="courseMaterial.materialCourseId"
+              name="course_id" required>
+              <option *ngFor="let course of teacherCourses" [value]="course.id">{{ course.name }}</option>
+            </select>
+          </div>
+        </div>
+
+
+        <div class="col-md-10">
+          <label for="validationServer01" class="form-label" style="color: #F5F5F7;">Name</label>
+          <input type="text" class="form-control is-valid" id="validationServer01" value="Mark" required=""
+            [(ngModel)]="courseMaterial.materialCourseName" name="name">
+        </div>
+
+
+        <div class="col-md-10 ">
+          <label for="validationServer02" class="form-label" style="color: #F5F5F7;">Description</label>
+          <input type="description" class="form-control is-valid" id="validationServer02" value="Otto" required=""
+            [(ngModel)]="courseMaterial.materialCourseDescription" name="description">
+        </div>
+
+        <input class="form-control" type="file" id="formFile" (change)="choseFile($event)">
+        <button class="btn1" type="submit" (click)="addData()">
+          Add Material
+        </button>
+
+      </form>
+
+
+    </div>
+  </div>
 </body>
 
 </html>

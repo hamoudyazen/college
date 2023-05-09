@@ -18,7 +18,7 @@
 
 <body class="p-3 m-0 border-0 bd-example  fade-in" style="background-color: #F5F5F7;">
 
-  <!-- Example Code -->
+  <!------------------------------------------------------------------- Available Assignments  -------------------------------------------------------------------------------------------->
   <div class="row row-cols-1 row-cols-md-3 g-4">
     <div *ngFor="let assignment of assignments; let i=index">
       <div class="col">
@@ -52,10 +52,9 @@
       </div>
     </div>
   </div>
-  <!-- End Example Code -->
-  <form class="row g-3 col-10 mx-auto justify-content-center" (ngSubmit)="onSubmit()" #registerForm="ngForm">
-
-
+  <!------------------------------------------------------------------- Submission Form  -------------------------------------------------------------------------------------------->
+  <form class="row g-3 col-10 mx-auto justify-content-center" (ngSubmit)="onSubmit(submission.submission_assignment_id)"
+    #registerForm="ngForm">
 
     <div class="col-md-10 ">
       <label for="validationServer02" class="form-label" style="color: #F5F5F7;">Description</label>
@@ -74,11 +73,9 @@
     </div>
 
     <input class="form-control" type="file" id="formFile" (change)="choseFile($event)">
-    <button class="btn1" type="submit" (click)="addData()" (click)="showLiveToast()">
+    <button class="btn1" type="submit" (click)="addData()">
       Add Assignment
     </button>
-
-
 
 
     <div class="toast-container position-fixed bottom-0 end-0 p-3" fade-in>
@@ -97,6 +94,45 @@
     </div>
   </form>
 
+  <hr style="color: #1D1D1F;">
+  <!------------------------------------------------------------------- My Submissions  -------------------------------------------------------------------------------------------->
+
+  <h1>My submissions</h1>
+
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    <div *ngFor="let submissions of mySubmissions; let i=index">
+      <div class="col">
+        <div class="card h-100 fade-in" style="background-color: #1D1D1F; border-radius: 30px;">
+          <div class="card-header " style="background-color: #1D1D1F;  border-radius: 30px; border:0px solid black;">
+            <h5 class="card-title" style="color: #F5F5F7; font-weight: 700;">{{ submissions.submission_id }}</h5>
+          </div>
+          <div class="card-body">
+            <p class="card-text" style="color: #F5F5F7;"><strong>Description:</strong> {{
+              submissions.submission_description }}</p>
+            <span class="badge rounded-pill text-bg-danger" (click)="deleteSubmission()"
+              (click)="showLiveToast()">Delete</span>
+
+
+
+            <div class="toast-container position-fixed bottom-0 end-0 p-3" fade-in>
+              <div id="liveToast" class="toast" [ngClass]="{'bg-danger': errorMessage, 'bg-success': successMessage}"
+                role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                  <strong class="me-auto" style="font-weight: 700; color: black;">Result</strong>
+                  <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body" style="color: black;">
+                  {{errorMessage}}
+                  {{successMessage}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Example Code -->
 </body>
 
 </html>

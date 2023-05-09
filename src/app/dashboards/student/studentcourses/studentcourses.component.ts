@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Course } from 'src/app/Course';
-import { AuthService } from 'src/app/AuthService';
+import { AuthService } from 'src/app/services/AuthService';
+import { Assignment, Course, Submission, ForgotPasswordResponse, CourseMaterial, LoginRequest, User } from 'src/app/models/allModels';
 
 @Component({
   selector: 'app-studentcourses',
@@ -13,6 +13,9 @@ export class StudentcoursesComponent implements OnInit {
   successMessage: any;
   errorMessage: string | undefined;
 
+  courseMaterial: CourseMaterial[] = [];
+
+
   constructor(private AuthService: AuthService) { }
 
   ngOnInit(): void {
@@ -21,7 +24,11 @@ export class StudentcoursesComponent implements OnInit {
     this.AuthService.StudentCourses(this.currentemail).subscribe(courses => {
       this.courseList = courses;
     });
-  }
+
+    this.AuthService.showAllCourseMaterials().subscribe(courseMaterials => {
+      this.courseMaterial = courseMaterials;
+    });
+  };
 
 
 }

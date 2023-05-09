@@ -1,8 +1,11 @@
-import * as PIXI from "https://cdn.skypack.dev/pixi.js@5.x";
 import { KawaseBlurFilter } from "https://cdn.skypack.dev/@pixi/filter-kawase-blur@3.2.0";
 import SimplexNoise from "https://cdn.skypack.dev/simplex-noise@3.0.0";
 import hsl from "https://cdn.skypack.dev/hsl-to-hex";
 import debounce from "https://cdn.skypack.dev/debounce";
+
+function clickk() {
+  alert("Hello, world!");
+}
 
 // return a random number within a range
 function random(min, max) {
@@ -226,3 +229,5 @@ document
       orb.fill = colorPalette.randomColor();
     });
   });
+
+

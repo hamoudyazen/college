@@ -9,12 +9,17 @@
   <title>Bootstrap Example</title>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
+<b>Major: {{major}}</b>
+<br>
+<b>Semester: {{semester}}</b>
 
 <body class="p-10 m-0  fade-in" style="background-color: #F5F5F7;">
   <div class="form-container d-flex justify-content-center">
     <div class="card p-2" style="width: 450px; background-color: #1D1D1F;">
 
       <h1 style="text-align: center; color:#F5F5F7">Add Course</h1>
+      <p style="text-align: center;color: red;">Teachers are limited to registering up to 5 courses per semester.
+      </p>
 
       <form class="row g-3 col-10 mx-auto justify-content-center" (ngSubmit)="onSubmit()" #registerForm="ngForm">
         <div class="col-md-10">
@@ -23,11 +28,13 @@
             [(ngModel)]="course.name" name="name">
         </div>
 
-        <div class="col-md-10 ">
+        <div class="col-md-10">
           <label for="validationServer02" class="form-label" style="color: #F5F5F7;">Credits</label>
           <input type="number" class="form-control is-valid" id="validationServer02" value="Otto" required=""
-            [(ngModel)]="course.credits" name="credits">
+            [(ngModel)]="course.credits" name="credits" max="5" oninput="checkSemesterHours(this)"
+            onkeydown="return false" min="1">
         </div>
+
 
         <div class="col-md-10 ">
           <label for="validationServer02" class="form-label" style="color: #F5F5F7;">Description</label>
@@ -35,46 +42,34 @@
             [(ngModel)]="course.description" name="description">
         </div>
 
-        <div class="col-md-10 ">
-          <label for="validationServer02" class="form-label" style="color: #F5F5F7;">Duration (in months)</label>
+        <div class="col-md-10">
+          <label for="validationServer02" class="form-label" style="color: #F5F5F7;">semester Hours</label>
           <input type="number" class="form-control is-valid" id="validationServer02" value="Otto" required=""
-            [(ngModel)]="course.duration" name="duration">
+            [(ngModel)]="course.semesterHours" name="semesterHours" max="5" oninput="checkSemesterHours(this)"
+            onkeydown="return false" min="1">
         </div>
 
 
-        <div class="col-md-10">
+
+        <div class="col-md-10 ">
           <label for="validationServer02" class="form-label" style="color: #F5F5F7;">Semester</label>
-          <select class="form-select" aria-label="Semester" [(ngModel)]="course.semester" name="semester" required>
-            <option selected disabled value="">Select a semester</option>
-            <option value="Spring">Spring 2023</option>
-            <option value="Summer">Summer 2023</option>
-            <option value="Fall">Fall 2023</option>
-            <option value="Winter">Winter 2023</option>
-          </select>
+          <input type="semester" class="form-control is-valid" id="validationServer02" disabled="" [value]="semester">
         </div>
 
 
-        <!--sadas-->
+        <div class="col-md-10 ">
+          <label for="validationServer02" class="form-label" style="color: #F5F5F7;">Major</label>
+          <input type="major" class="form-control is-valid" id="validationServer02" disabled="" [value]="major">
+        </div>
+
+
         <div class="col-md-10">
-          <button class="btn btn-primary form-control" type="submit" [disabled]="!registerForm.form.valid"
-            id="liveToastBtn" (click)="showLiveToast()">Add
+          <button class="btn btn-primary form-control" type="submit" [disabled]="!registerForm.form.valid">Add
             Course</button>
         </div>
 
-        <div class="toast-container position-fixed bottom-0 end-0 p-3" fade-in>
-          <div id="liveToast" class="toast" [ngClass]="{'bg-danger': errorMessage, 'bg-success': successMessage}"
-            role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="toast-header">
-              <strong class="me-auto" style="font-weight: 700; color: black;">Error</strong>
 
-              <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-            <div class="toast-body" style="color: black;">
-              {{errorMessage}}
-              {{successMessage}}
-            </div>
-          </div>
-        </div>
+
       </form>
 
 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Course } from 'src/app/Course';
-import { AuthService } from 'src/app/AuthService';
+import { AuthService } from 'src/app/services/AuthService';
 import { Toast } from 'bootstrap';
+import { Assignment, Course, Submission, ForgotPasswordResponse, CourseMaterial, LoginRequest, User } from 'src/app/models/allModels';
 
 @Component({
   selector: 'app-student-register-for-course',
@@ -29,6 +29,7 @@ export class StudentRegisterForCourseComponent implements OnInit {
     this.AuthService.registerForCourse(courseID, this.currentemail).subscribe(result => {
       if (result) {
         // Course registration successful
+        window.location.reload();
         this.errorMessage = '';
         this.successMessage = 'Course registration successful!';
       } else {

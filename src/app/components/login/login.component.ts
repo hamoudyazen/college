@@ -1,8 +1,10 @@
 import { Component, Renderer2, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/AuthService';
+import { AuthService } from 'src/app/services/AuthService';
 import { Router } from '@angular/router';
-import { User } from 'src/app/user';
 import { Toast } from 'bootstrap';
+import { Assignment, Course, Submission, ForgotPasswordResponse, CourseMaterial, LoginRequest, User } from 'src/app/models/allModels';
+import { HttpClient } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-login',
@@ -10,7 +12,10 @@ import { Toast } from 'bootstrap';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
-
+  noAccessButton: boolean = false;
+  current_ip_address: any;
+  loginCounter: number = 0;
+  myMap = new Map<any, any>();
   errorMessage: string | undefined;
   email: string | undefined;
   password: string | undefined;
@@ -19,13 +24,11 @@ export class LoginComponent {
   isRedirecting: boolean = false;
   loginForm: any;
   successMessage: any;
-
-  //forgot password
+  currentRole: any | undefined;
 
   id: string | undefined;
 
   userDetails: User[] = [];
-
   isAccountExists: boolean = false;
   isBirthdaySame: boolean = false;
   formValue1: string = '';
@@ -46,7 +49,8 @@ export class LoginComponent {
     image: '' // set the default value for the new "image" field
   };
 
-  constructor(private authService: AuthService, private router: Router, private renderer: Renderer2) { }
+  constructor(private authService: AuthService, private router: Router, private renderer: Renderer2,
+    private http: HttpClient) { }
   showLiveToast() {
     const liveToastEl = document.getElementById('liveToast');
     if (liveToastEl) {
@@ -55,13 +59,24 @@ export class LoginComponent {
     }
   }
 
-
   ngOnInit(): void {
-    const script = this.renderer.createElement('script');
-    script.src = '/assets/js.js';
-    script.type = 'text/javascript';
-    this.renderer.appendChild(document.head, script);
+    const storedData = JSON.parse(localStorage.getItem('loginData') || '{}');
+    const lastAttemptTime = storedData.lastAttemptTime || 0;
+    const loginCounter = storedData.loginCounter || 0;
 
+    // Check if the user has exceeded the maximum number of login attempts
+    const noAccessButton = this.checkUserLimit(loginCounter, lastAttemptTime);
+
+    const script = this.renderer.createElement('script');
+    script.src = '/assets/js/login.js';
+    script.type = 'text/javascript';
+    script.onload = () => {
+      const ipAddress = (window as any).getIP();
+      console.log(ipAddress); // handle the returned IP address here
+      localStorage.setItem('ipAddress', ipAddress);
+      this.current_ip_address = ipAddress;
+    };
+    this.renderer.appendChild(document.head, script);
     //forgot password
     //to call the getID function
     const email = localStorage.getItem('email');
@@ -92,57 +107,88 @@ export class LoginComponent {
 
   }
 
-  //////////////////////////////////////////////////////////////////////////////////////////////////// LOGIN  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+  //////////////////////////////////////////////////////////////////////////////////////////////////// LOGIN  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   login() {
     const loginRequest = {
       email: this.email,
       password: this.password,
     };
 
-    this.authService.loginn(loginRequest).subscribe(
-      (response) => {
-        console.log(response);
-        this.successMessage = 'Login successfully';
-        localStorage.setItem('email', this.email || '');
-        const role = localStorage.getItem('role') || '';
-        if (role === 'teacher') {
-          localStorage.setItem('loggedInTeacher', 'true');
-          this.router.navigate(['/teacher']);
-        } else if (role === 'student') {
-          localStorage.setItem('loggedInStudent', 'true');
-          this.router.navigate(['/student']);
-        } else if (role === 'admin') {
-          localStorage.setItem('loggedInAdmin', 'true');
-          this.router.navigate(['/admin']);
-        }
+    const storedData = JSON.parse(localStorage.getItem('loginData') || '{}');
+    const lastAttemptTime = storedData.lastAttemptTime || 0;
+    const loginCounter = storedData.loginCounter || 0;
 
-      },
-      (error) => {
-        if (error.error && error.error.message && error.error.message === 'Email is not verified') {
-          this.errorMessage = 'Email is not verified , a verification email has been sent to your email address';
-          this.isRedirecting = true;
-          this.authService.verifyEmail(this.email || '').subscribe(
-            (response) => {
-              this.successMessage = 'Verification email sent successfully';
-            }
+    // Check if the user has exceeded the maximum number of login attempts
+    const noAccessButton = this.checkUserLimit(loginCounter, lastAttemptTime);
 
-          );
+    if (!noAccessButton) {
+      this.authService.loginn(loginRequest).subscribe(
+        (response) => {
+          console.log(response);
+          localStorage.setItem('email', this.email || '');
+          if (response === 1) {
+            console.log(1);
+            this.authService.getRole(this.email || '').subscribe(
+              (roleResponse) => {
+                localStorage.setItem('role', roleResponse.role);
+                console.log("role", roleResponse);
+                this.authService.getUserDetails(this.email || '').subscribe(
+                  userDetailsResponse => {
+                    localStorage.setItem('userDetails', JSON.stringify(userDetailsResponse));
+                    this.userDetails = userDetailsResponse;
+                    console.log("userDetails", this.userDetails);
+                  },
+                );
+                if (roleResponse.role === 'teacher') {
+                  this.router.navigateByUrl('/teacher');
+                } else if (roleResponse.role === 'student') {
+                  this.router.navigateByUrl('/student');
+                } else if (roleResponse.role === 'admin') {
+                  this.router.navigateByUrl('/admin');
+                } else {
+                  console.log("Invalid role");
+                }
+              },
+            );
+          } else if (response === 0) {
+            console.log("0");
+          }
         }
-        else if (error.error && error.error.message && error.error.message === 'Wrong Password') {
-          this.errorMessage = 'Wrong Password';
-        }
-        else if (error.error && error.error.message && error.error.message === 'User Not Registered') {
-          this.errorMessage = 'User Not Registered';
-        }
-        else {
-          this.errorMessage =
-            'An error occurred during Login , Please try again later..';
-        }
-      }
-    );
-
+      );
+    } else {
+      alert('You have exceeded the maximum number of login attempts. Please try again later.');
+    }
   }
+
+
+  checkUserLimit(loginCounter: string, lastAttemptTime: number) {
+    const storedData = JSON.parse(localStorage.getItem('loginData') || '{}');
+
+    if (Date.now() - lastAttemptTime > 5 * 60 * 1000) {
+      // Reset the login counter if the last attempt was more than 5 minutes ago
+      storedData.loginCounter = 1;
+    } else {
+      // Increment the login counter if the last attempt was less than 5 minutes ago
+      storedData.loginCounter = loginCounter + 1;
+    }
+
+    storedData.lastAttemptTime = Date.now();
+    localStorage.setItem('loginData', JSON.stringify(storedData));
+
+    if (storedData.loginCounter >= 5) {
+      // Disable the login button if the user has exceeded the maximum number of login attempts
+      this.noAccessButton = true;
+      setTimeout(() => {
+        this.noAccessButton = false;
+      }, 5 * 60 * 1000); // re-enable the button after 5 minutes
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+
 
   //////////////////////////////////////////////////////////////////////////////////////////////////// FORGOT PASSWORD ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

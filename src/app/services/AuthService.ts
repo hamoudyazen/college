@@ -1,14 +1,10 @@
-import { Course } from './Course';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
-import { User } from './user';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
-import { ForgotPasswordResponse } from './ForgotPasswordResponse';
-import { Assignment } from './Assignment';
-import { Submission } from './submission';
+import { Assignment, Course, Submission, ForgotPasswordResponse, CourseMaterial, LoginRequest, User } from '../models/allModels';
 
 @Injectable({
   providedIn: 'root',
@@ -26,9 +22,7 @@ export class AuthService {
     private router: Router
   ) { }
 
-  addCourse(course: Course) {
-    return this.http.post(`${this.baseUrl}/add-course`, course);
-  }
+
   //register a new user
   register(user: User): Observable<any> {
     console.log('Sending register request:', user);
@@ -48,28 +42,13 @@ export class AuthService {
     return this.http.post<ForgotPasswordResponse>(`${this.baseUrl}/email-verification?email=${email}`, {});
   }
 
-  //logs the user out (not complete)
-  logout() {
-    if (localStorage.getItem('loggedInTeacher') === 'true') {
-      localStorage.removeItem('loggedInTeacher');
-      this.router.navigateByUrl('/login');
-    }
-    else if (localStorage.getItem('loggedInStudent') === 'true') {
-      localStorage.removeItem('loggedInStudent');
-      this.router.navigateByUrl('/login');
-    }
-    else if (localStorage.getItem('loggedInAdmin') === 'true') {
-      localStorage.removeItem('loggedInAdmin');
-      this.router.navigateByUrl('/login');
-    }
-  }
 
   //logs the user in
   loginn(loginRequest: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/login`, loginRequest);
   }
 
-  getID(email: string): Observable<{ id: string }> {
+  getID(email: any): Observable<{ id: string }> {
     return this.http.get<{ id: string }>(
       `${this.baseUrl}/getId?email=${email}`
     );
@@ -77,12 +56,13 @@ export class AuthService {
 
 
 
+
   getTeacherCourses(id: string): Observable<Course[]> {
     return this.http.get<Course[]>(`${this.baseUrl}/getTeacherCourses?id=${id}`);
   }
 
-  getUserDetails(id: string): Observable<User[]> {
-    return this.http.get<User[]>(`${this.baseUrl}/getUserDetails?id=${id}`);
+  getUserDetails(email: string): Observable<User[]> {
+    return this.http.get<User[]>(`${this.baseUrl}/getUserDetails?email=${email}`);
   }
 
 
@@ -123,11 +103,12 @@ export class AuthService {
     );
   }
 
-  getRole(id: string): Observable<{ role: string }> {
+  getRole(email: string): Observable<{ role: string }> {
     return this.http.get<{ role: string }>(
-      `${this.baseUrl}/getRole?id=${id}`
+      `${this.baseUrl}/getRole?email=${email}`
     );
   }
+
   ///////////////////////////////////////////////////////////////////////////////////////////////////////// PROFILE ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   updateProfileEmail(newEmail: any, oldEmail: any, userId: any): Observable<any> {
@@ -206,6 +187,29 @@ export class AuthService {
   teacherAssignmentsSubmissions(email: string): Observable<Submission[]> {
     return this.http.get<Submission[]>(`${this.baseUrl}/teacherAssignmentsSubmissions`, { params: { email } });
   }
+
+
+  studentMySubmissions(id: any): Observable<Submission[]> {
+    return this.http.get<Submission[]>(`${this.baseUrl}/studentMySubmissions`, { params: { id } });
+  }
+
+  studentDeleteSubmission(id: any): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/studentDeleteSubmission?id=${id}`);
+  }
+
+  addCourseMaterial(courseMaterial: CourseMaterial): Observable<any> {
+    return this.http.post(`${this.baseUrl}/CourseMaterial`, courseMaterial);
+  }
+
+  showAllCourseMaterials(): Observable<CourseMaterial[]> {
+    return this.http.get<CourseMaterial[]>(`${this.baseUrl}/showAllCourseMaterials`);
+  }
+
+  addTeacherWeeklyTimeSlots(data: any): Observable<any> {
+    console.log('Sending addTeacherWeeklyTimeSlots request:', data);
+    return this.http.post(`${this.baseUrl}/addTeacherWeeklyTimeSlots`, data);
+  }
+
 
 
 }

@@ -11,13 +11,16 @@
   <script src="/src/app/components/login/js.js"></script>
 </head>
 
+
 <body class="p-0 m-0 ">
   <div class="form-container d-flex justify-content-center">
     <div id="card" class="card p-2" style="width: 450px;">
       <img src=" ./assets/logo.png" class="rounded mx-auto d-block" alt="..." style="width: 150px;">
       <div class="row g-3 col-10 mx-auto justify-content-center">
+
         <!----------------------------------------------------------------------------------Login---------------------------------------------------------------------------------------------------------->
         <form class="row g-3 col-10 mx-auto justify-content-center" (ngSubmit)="login()" #LoginForm="ngForm">
+
           <div class="col-md-12">
             <label for="validationServer01" class="form-label">Email</label>
             <input type="text" class="form-control" id="validationServer01" value="Mark" required="" [(ngModel)]="email"
@@ -28,8 +31,7 @@
             <input type="password" class="form-control" id="validationServer02" value="Otto" required=""
               [(ngModel)]="password" name="Password">
           </div>
-          <button class="btn" [disabled]="!LoginForm.form.valid" id="liveToastBtn"
-            (click)="showLiveToast()">Login</button>
+          <button class="btn" [disabled]="!LoginForm.form.valid || noAccessButton" id="liveToastBtn">Login</button>
           <div class="toast-container position-fixed bottom-0 end-0 p-3" fade-in>
             <div id="liveToast" class="toast" [ngClass]="{'bg-danger': errorMessage, 'bg-success': successMessage}"
               role="alert" aria-live="assertive" aria-atomic="true">
@@ -62,27 +64,12 @@
                     <div class="input-group">
                       <div class="input-group-text">@</div>
                       <input type="text" class="form-control" id="inlineFormInputGroupUsername"
-                        placeholder="name@email.com" [(ngModel)]="formValue1" name="formValue1"
-                        (ngModelChange)="clearMessages()">
+                        placeholder="name@email.com" [(ngModel)]="formValue1" name="formValue1">
                     </div>
                   </div>
                   <div class="col-12">
-                    <button type="submit" class="btn" [disabled]="!isValidEmail({email: formValue1})"
-                      (click)="showLiveToast()">Submit</button>
-                    <div class="toast-container position-fixed bottom-0 end-0 p-3" fade-in>
-                      <div id="liveToast" class="toast"
-                        [ngClass]="{'bg-danger': errorMessage, 'bg-success': successMessage}" role="alert"
-                        aria-live="assertive" aria-atomic="true">
-                        <div class="toast-header">
-                          <strong class="me-auto" style="font-weight: 700; color: black;">Error</strong>
-                          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                        </div>
-                        <div class="toast-body" style="color: black;">
-                          {{errorMessage}}
-                          {{successMessage}}
-                        </div>
-                      </div>
-                    </div>
+                    <button type="submit" class="btn"
+                      [disabled]="!isValidEmail({email: formValue1}) || noAccessButton">Submit</button>
                   </div>
                 </form>
               </div>
@@ -188,8 +175,9 @@
           </div>
         </div>
         <!--End of Step 3 Content -->
-        <button class="btn" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Forgot
-          password</button>
+        <button class="btn" data-bs-target="#exampleModalToggle" data-bs-toggle="modal"
+          [disabled]="noAccessButton">Forgot password</button>
+
         <!----------------------------------------------------------------------------------End Of Forgot Password---------------------------------------------------------------------------------------------------------->
         <!----------------------------------------------------------------------------------Register---------------------------------------------------------------------------------------------------------->
 
@@ -274,7 +262,8 @@
           </div>
         </div>
         <!--end of content 1-->
-        <button class="btn" data-bs-target="#exampleModalToggleRegister" data-bs-toggle="modal">Register</button>
+        <button class="btn" [disabled]="noAccessButton" data-bs-target="#exampleModalToggleRegister"
+          data-bs-toggle="modal">Register</button>
         <!----------------------------------------------------------------------------------End Of Register---------------------------------------------------------------------------------------------------------->
       </div>
     </div>

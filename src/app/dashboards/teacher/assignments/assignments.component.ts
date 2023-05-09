@@ -1,15 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Toast } from 'bootstrap';
-import { AuthService } from 'src/app/AuthService';
-import { Course } from 'src/app/Course';
-import { User } from 'src/app/user';
+import { AuthService } from 'src/app/services/AuthService';
 import { Router } from '@angular/router';
-import { ForgotPasswordResponse } from 'src/app/ForgotPasswordResponse';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { finalize } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Assignment } from 'src/app/Assignment';
-import { Submission } from 'src/app/submission';
+import { Assignment, Course, Submission, ForgotPasswordResponse, CourseMaterial, LoginRequest, User } from 'src/app/models/allModels';
+
 
 @Component({
   selector: 'app-assignments',
@@ -114,13 +111,11 @@ export class AssignmentsComponent implements OnInit {
             .updateAssignmentLink(encodedDownloadURL, userId)
             .subscribe(
               (response) => {
-                this.successMessage = 'Profile picture updated successfully';
                 setTimeout(() => {
                   window.location.reload();
                 }, 2000);
               },
               (error) => {
-                this.errorMessage = error.error.message;
               }
             );
         });
@@ -130,6 +125,10 @@ export class AssignmentsComponent implements OnInit {
 
 
   onSubmit(): void {
+    if (this.assignment.deadline < new Date().toISOString()) {
+      alert('Deadline cannot be in the past');
+      return;
+    }
     const userId = this.assignment.assignment_id;
     const storageRef = this.storage.ref(`assignment/${userId}`).child(this.file.name);
     const uploadTask = storageRef.put(this.file);
@@ -139,9 +138,12 @@ export class AssignmentsComponent implements OnInit {
         storageRef.getDownloadURL().subscribe((downloadURL) => {
           const encodedDownloadURL = (downloadURL);
           this.assignment.material_link = encodedDownloadURL;
+
           this.authService.addAssignment(this.assignment).subscribe(
             () => {
-              this.successMessage = 'Assignment added successfully';
+              alert('Assignment added successfully');
+              window.location.reload();
+
             },
             (error) => {
               if (
@@ -149,9 +151,10 @@ export class AssignmentsComponent implements OnInit {
                 error.error.message &&
                 error.error.message === 'Assignment already exists'
               ) {
-                this.errorMessage = 'Assignment with this name already exists';
+                alert('Assignment with this name already exists');
+
               } else {
-                this.errorMessage = 'An error occurred during assignment creation. Please try again later.';
+                alert('An error occurred during assignment creation. Please try again later');
               }
             }
           );

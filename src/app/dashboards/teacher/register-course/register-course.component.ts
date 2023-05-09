@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Toast } from 'bootstrap';
-import { AuthService } from 'src/app/AuthService';
-import { Course } from 'src/app/Course';
+import { Alert, Toast } from 'bootstrap';
+import { AuthService } from 'src/app/services/AuthService';
+import { Assignment, Course, Submission, ForgotPasswordResponse, CourseMaterial, LoginRequest, User } from 'src/app/models/allModels';
 
 @Component({
   selector: 'app-register-course',
@@ -9,70 +9,65 @@ import { Course } from 'src/app/Course';
   styleUrls: ['./register-course.component.css']
 })
 export class RegisterCourseComponent implements OnInit {
-  id: string | undefined;
-  errorMessage: string | undefined;
-  successMessage: string | undefined;
+  id: any;
+  major: any;
+  semester: any;
+  date!: Date;
+  userDetails: User[] = [];
+  userDetailsStorage: User[] = [];
 
   course: Course = {
     capacity: 20,
     credits: 0,
     description: '',
-    duration: 0,
+    semesterHours: 0,
     name: '',
     teacherID: '',
     studentsArray: [],
-    semester: ''
+    semester: "",
+    major: ''
   };
 
   constructor(private authService: AuthService) { }
-  showLiveToast() {
-    const liveToastEl = document.getElementById('liveToast');
-    if (liveToastEl) {
-      const liveToast = new Toast(liveToastEl);
-      liveToast.show();
-    }
-  }
   ngOnInit(): void {
+    const userDetailsStorage = JSON.parse(localStorage.getItem('userDetails') || '{}');
+    this.id = userDetailsStorage.id;
+    this.major = userDetailsStorage.major;
+    this.userDetails = Object.values(userDetailsStorage);
 
-    //to call the getName function
-    const email = localStorage.getItem('email');
-    console.log('email', email);
-    if (email) {
-      this.authService.getID(email).subscribe(
-        response => this.id = response.id,
-        error => console.log('Failed to get teacher id:', error)
-      );
-    }
-  } onSubmit(): void {
-    const email = localStorage.getItem('email');
-    if (email) {
-      this.authService.getID(email).subscribe(
-        response => {
-          this.id = response.id;
-          // Set the teacherID field to the ID of the logged-in user, if available
-          if (this.id !== undefined) {
-            this.course.teacherID = this.id;
-          }
-          this.authService.registerCourse(this.course).subscribe(
-            () => {
-              console.log('registration completed successfully');
-              this.successMessage = 'Courses added successfully';
-            },
-            (error) => {
-              if (error.error && error.error.message && error.error.message === 'User Already Exist') {
-                this.errorMessage = 'User with this email already exist';
-              }
-              else if (error.error && error.error.message && error.error.message === 'Password Short') {
-                this.errorMessage = 'Password Short';
-              }
-              else {
-                this.errorMessage = 'An error occurred during registration, Please try again later..';
-              }
-            }
-          );
-        },
-        error => console.log('Failed to get teacher id:', error)
-      );
+    const date = new Date();
+    const month = date.getMonth() + 1; // get current month (Jan is 0, Dec is 11)
+
+    if (month >= 10 || month < 4) {
+      this.semester = "winter";
+    } else {
+      this.semester = "summer";
     }
   }
+
+
+
+  onSubmit(): void {
+    this.course.teacherID = this.id;
+    this.course.major = this.major;
+    this.course.semester = this.semester;
+    this.authService.registerCourse(this.course).subscribe(
+      response => {
+        alert('added successfully');
+      },
+      error => {
+        alert('error');
+      }
+    );
+  }
+
+  checkSemesterHours(input: any) {
+    if (input.value >= 5) {
+      input.value = 5;
+    }
+    else if (input.value <= 0) {
+      input.value = 1;
+    }
+  }
+
 }

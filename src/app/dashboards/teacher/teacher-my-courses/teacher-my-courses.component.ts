@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Course } from 'src/app/Course';
-import { AuthService } from 'src/app/AuthService';
+import { AuthService } from 'src/app/services/AuthService';
 import { NgForm } from '@angular/forms';
 import { Validators, FormControl } from '@angular/forms';
-
+import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { finalize } from 'rxjs/operators';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Assignment, Course, Submission, ForgotPasswordResponse, CourseMaterial, LoginRequest, User } from 'src/app/models/allModels';
+import { error } from 'jquery';
 
 @Component({
   selector: 'app-teacher-my-courses',
@@ -11,6 +14,13 @@ import { Validators, FormControl } from '@angular/forms';
   styleUrls: ['./teacher-my-courses.component.css']
 })
 export class TeacherMyCoursesComponent implements OnInit {
+  public file: any = {};
+  major: any;
+  semester: any;
+  date !: Date;
+  userDetails: User[] = [];
+  userDetailsStorage: User[] = [];
+
   showModal: boolean[] = [];
   onModalShow(index: number) {
     this.showModal[index] = true;
@@ -24,29 +34,43 @@ export class TeacherMyCoursesComponent implements OnInit {
   courseID: any;
   errorMessage: any;
   sucessmessage: any;
-  constructor(private authService: AuthService) { }
+
+  courseMaterial: CourseMaterial = {
+    materialCourseLink: '',
+    materialCourseId: '',
+    materialCourseName: '',
+    materialCourseDescription: '',
+  };
+
+
+
+
+  constructor(private authService: AuthService, private storage: AngularFireStorage, private firestore: AngularFirestore) { }
 
   ngOnInit(): void {
+    const userDetailsStorage = JSON.parse(localStorage.getItem('userDetails') || '{}');
+    this.id = userDetailsStorage.id;
+    this.major = userDetailsStorage.major;
+    this.userDetails = Object.values(userDetailsStorage);
 
-    const email = localStorage.getItem('email');
-    if (email) {
-      this.authService.getID(email).subscribe(
-        response => {
-          this.id = response.id;
+    this.authService.getTeacherCourses(userDetailsStorage.id).subscribe(response => {
+      this.teacherCourses = response;
+    }, error => {
+      alert('error');
+    });
 
-          this.authService.getTeacherCourses(this.id).subscribe(
-            (courses) => {
-              this.sucessmessage = response;
-              this.teacherCourses = courses;
-            },
-            (error) => {
-              this.errorMessage = error.message;
-            }
-          );
-        }
-      );
+    const date = new Date();
+    const month = date.getMonth() + 1; // get current month (Jan is 0, Dec is 11)
+
+    if (month >= 10 || month < 4) {
+      this.semester = 'winter';
+    } else {
+      this.semester = 'summer';
     }
+
+
   }
+
 
   currentEmail: string = '';
   updateStudent(formData: any, student: any, originalEmail: string) {
@@ -114,6 +138,56 @@ export class TeacherMyCoursesComponent implements OnInit {
         }
       }
     }
+  }
+
+
+
+  ////material
+  choseFile(event: any) {
+    this.file = event.target.files[0];
+  }
+  addData() {
+    const userId = this.courseMaterial.id;
+    const storageRef = this.storage.ref(`CourseMaterial/${userId}`).child(this.file.name);
+    const uploadTask = storageRef.put(this.file);
+
+    uploadTask.snapshotChanges().pipe(
+      finalize(() => {
+        storageRef.getDownloadURL().subscribe((downloadURL) => {
+          const encodedDownloadURL = encodeURIComponent(downloadURL);
+          this.authService.updateAssignmentLink(encodedDownloadURL, userId).subscribe(() => {
+            alert('Course Material updated successfully');
+            window.location.reload();
+          }, error => {
+            alert('Error occurred during Course Material update');
+          });
+        });
+      })
+    ).subscribe();
+  }
+
+
+  onSubmit(): void {
+    const userId = this.courseMaterial.id;
+    const storageRef = this.storage.ref(`CourseMaterial/${userId}`).child(this.file.name);
+    const uploadTask = storageRef.put(this.file);
+
+    uploadTask.snapshotChanges().pipe(
+      finalize(() => {
+        storageRef.getDownloadURL().subscribe((downloadURL) => {
+          const encodedDownloadURL = (downloadURL);
+          this.courseMaterial.materialCourseLink = encodedDownloadURL;
+          this.authService.addCourseMaterial(this.courseMaterial).subscribe(
+            () => {
+              alert('Course Material added successfully');
+            },
+            () => {
+              alert('Course Material with this name already exists');
+            }
+          );
+        });
+      })
+    ).subscribe();
   }
 
 

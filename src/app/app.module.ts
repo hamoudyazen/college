@@ -24,7 +24,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RegisterCourseComponent } from './dashboards/teacher/register-course/register-course.component';
 import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { MainComponent } from './main/main.component';
 import { TeacherMyCoursesComponent } from './dashboards/teacher/teacher-my-courses/teacher-my-courses.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { provideStorage, getStorage } from '@angular/fire/storage'
@@ -33,6 +32,20 @@ import { AssignmentsComponent } from './dashboards/teacher/assignments/assignmen
 import { StudentassignmentComponent } from './dashboards/student/studentassignment/studentassignment.component';
 import { StudentcoursesComponent } from './dashboards/student/studentcourses/studentcourses.component';
 import { StudentRegisterForCourseComponent } from './dashboards/student/student-register-for-course/student-register-for-course.component';
+import { ChatComponent } from './components/chat/chat.component';
+
+
+
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { DatePipe } from '@angular/common';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { AuthGuard } from './services/AuthGuard';
+import { TeacherscheduleComponent } from './dashboards/teacher/teacherschedule/teacherschedule.component';
+import { StudentscheduleComponent } from './dashboards/student/studentschedule/studentschedule.component';
+import { ScheduleComponent } from './dashboards/teacher/schedule/schedule.component';
+import { Socket } from 'ngx-socket-io';
+
 
 @NgModule({
   declarations: [
@@ -43,13 +56,16 @@ import { StudentRegisterForCourseComponent } from './dashboards/student/student-
     StudentComponent,
     RegisterCourseComponent,
     VerifyEmailComponent,
-    MainComponent,
     TeacherMyCoursesComponent,
     ProfileComponent,
     AssignmentsComponent,
     StudentassignmentComponent,
     StudentcoursesComponent,
-    StudentRegisterForCourseComponent
+    StudentRegisterForCourseComponent,
+    ChatComponent,
+    TeacherscheduleComponent,
+    StudentscheduleComponent,
+    ScheduleComponent
   ],
   imports: [
     BrowserModule,
@@ -66,11 +82,11 @@ import { StudentRegisterForCourseComponent } from './dashboards/student/student-
     MatSidenavModule,
     MatListModule,
     LayoutModule,
-    NgbModule,
+    NgbModule, MatAutocompleteModule, DatePipe, MatDividerModule,
     provideStorage(() => getStorage()),
-    AngularFireStorageModule
+    AngularFireStorageModule, MatFormFieldModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent],
+  providers: [AuthGuard],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,14 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Toast } from 'bootstrap';
-import { AuthService } from 'src/app/AuthService';
-import { Course } from 'src/app/Course';
-import { User } from 'src/app/user';
+import { AuthService } from 'src/app/services/AuthService';
 import { Router } from '@angular/router';
-import { ForgotPasswordResponse } from 'src/app/ForgotPasswordResponse';
 import { Storage, ref, uploadBytesResumable, getDownloadURL } from '@angular/fire/storage'
 import { storage } from 'firebase-admin';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { finalize } from 'rxjs';
+import { Assignment, Course, Submission, ForgotPasswordResponse, CourseMaterial, LoginRequest, User } from 'src/app/models/allModels';
 
 @Component({
   selector: 'app-profile',
@@ -18,42 +16,43 @@ import { finalize } from 'rxjs';
 
 export class ProfileComponent implements OnInit {
   public file: any = {}
-  id: string | undefined;
-  errorMessage: string | undefined;
-  successMessage: string | undefined;
-  name: string | undefined;
   userDetails: User[] = [];
-  lastname: string | undefined;
-  firstname: string | undefined;
+  userDetailsStorage: User[] = [];
+  id: any;
+  name: any;
+  email: any;
+  firstname: any;
+  lastname: any;
+  image: any;
+  password: any;
+  role: any;
+
+
+
 
   constructor(private authService: AuthService, private router: Router, private storage: AngularFireStorage) { }
-  showLiveToast() {
-    const liveToastEl = document.getElementById('liveToast');
-    if (liveToastEl) {
-      const liveToast = new Toast(liveToastEl);
-      liveToast.show();
-    }
+  ngOnInit(): void {
+    const userDetailsStorage = JSON.parse(localStorage.getItem('userDetails') || '{}');
+    this.name = userDetailsStorage.firstname + ' ' + userDetailsStorage.lastname;
+    this.id = userDetailsStorage.id;
+    this.email = userDetailsStorage.email;
+    this.firstname = userDetailsStorage.firstname;
+    this.lastname = userDetailsStorage.lastname;
+    this.image = userDetailsStorage.image;
+    this.password = userDetailsStorage.password;
+    this.role = userDetailsStorage.role;
+    this.userDetails = Object.values(userDetailsStorage);
+    console.log(this.userDetails);
+
   }
 
-  ngOnInit(): void {
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////GET USER'S NAME////////////////////////////////////////////////////////////////////////////////////
-    const email = localStorage.getItem('email');
-    if (email) {
-      this.authService.getID(email).subscribe(
-        response => {
-          this.id = response.id;
-          this.authService.getUserDetails(this.id).subscribe(
-            response => {
-              this.userDetails = response;
-              this.name = this.userDetails[0].firstname;
-            },
-            error => this.errorMessage = 'Failed to get teacher details'
-          );
-        },
-        error => console.log(''));
-    }
-  }
-  /////////////////////////////////////////////////////////////////////////////////////////////////////////UPDATE EMAIL ////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
   updateProfileEmail(formData: any, originalEmail: any, userId: any) {
     const newEmail = formData.email;
     this.authService.updateProfileEmail(newEmail, originalEmail, userId).subscribe(
@@ -61,79 +60,98 @@ export class ProfileComponent implements OnInit {
         localStorage.removeItem('email');
         this.authService.verifyEmail(newEmail).subscribe(
         );
-        this.successMessage = 'Email updated successfully';
+        alert('Email updated successfully');
         setTimeout(() => {
           this.router.navigateByUrl('/login');
         }, 2000);
       },
       (error) => {
-        this.errorMessage = "Email didn't update"
+        alert('Email didnt update');
       }
     );
   }
-
   isValidEmail(value: any) {
     const newName = value.email?.trim();
     const oldName = value.originalEmail?.trim();
     const emailPattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     return newName && emailPattern.test(newName) && newName !== oldName;
   }
-  /////////////////////////////////////////////////////////////////////////////////////////////////////////UPDATE FIRST NAME////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
   updateProfileFirstname(formData: any, originalEmail: any, userId: any) {
     const newEmail = formData.email;
     this.authService.updateProfileFirstname(newEmail, originalEmail, userId).subscribe(
       (response) => {
-        this.successMessage = 'Last name updated successfully';
+        alert('Last name updated successfully');
         setTimeout(() => {
           window.location.reload();
         }, 2000);
       },
       (error) => {
-        this.errorMessage = error.error.message;
+        alert('Last name didnt update')
       }
     );
   }
-
   isValidFirstname(old: any, value: any) {
     const pattern = /^[a-zA-Z]+$/;
     const newName = value.email?.trim();
     const oldName = value.originalEmail?.trim();
     return newName && newName.length >= 3 && pattern.test(newName) && newName !== old;
   }
-  /////////////////////////////////////////////////////////////////////////////////////////////////////////UPDATE LAST NAME////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
   updateProfileLastname(formData: any, originalEmail: any, userId: any) {
     const newEmail = formData.email;
     this.authService.updateProfileLastname(newEmail, originalEmail, userId).subscribe(
       (response) => {
-        this.successMessage = 'Last name updated successfully';
+        alert('Last name updated successfully');
         setTimeout(() => {
           window.location.reload();
         }, 2000);
       },
       (error) => {
-        this.errorMessage = error;
+        alert('Last name didnt update')
       }
     );
   }
-
   isValidLastname(old: any, value: any) {
     const pattern = /^[a-zA-Z]+$/;
     const newName = value.email?.trim();
     const oldName = value.originalEmail?.trim();
     return newName && newName.length >= 3 && pattern.test(newName) && newName !== old;
   }
-  /////////////////////////////////////////////////////////////////////////////////////////////////////////UPDATE PASSWORD  ////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
   updateProfilePassword(formData: any, originalPassword: any, userId: any) {
     const newPassword = formData.password;
     this.authService.updateProfilePassword(newPassword, originalPassword, userId).subscribe(
       (response) => {
-        this.successMessage = 'Password updated successfully';
+        alert('Password updated successfully');
         setTimeout(() => {
           window.location.reload();
         }, 2000);
       },
       (error) => {
-        this.errorMessage = error;
+        alert('Password didnt update')
       },
     );
   }
@@ -144,7 +162,15 @@ export class ProfileComponent implements OnInit {
     const oldPassword = value.originalPassword?.trim();
     return newPassword && newPassword.length >= 8 && pattern.test(newPassword) && newPassword !== oldPassword;
   }
-  /////////////////////////////////////////////////////////////////////////////////////////////////////////UPDATE PHOTO ////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
   choseFile(event: any) {
     this.file = event.target.files[0];
   }
@@ -159,13 +185,13 @@ export class ProfileComponent implements OnInit {
           const encodedDownloadURL = encodeURIComponent(downloadURL);
           this.authService.updateProfilePicture(encodedDownloadURL, userId).subscribe(
             (response) => {
-              this.successMessage = 'Profile picture updated successfully';
+              alert('Profile picture updated successfully');
               setTimeout(() => {
                 window.location.reload();
               }, 2000);
             },
             (error) => {
-              this.errorMessage = error.error.message;
+              alert('Profile picture didnt update')
             }
           );
         });

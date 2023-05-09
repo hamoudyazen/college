@@ -224,18 +224,3 @@ body {
 
 /*END OF FORMS*/
 /* Define the fade-in animation */
-.fade-in {
-  opacity: 0;
-  animation: fadeInAnimation 1s ease-in-out forwards;
-}
-
-/* Define the fade-in animation keyframes */
-@keyframes fadeInAnimation {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
