@@ -44,7 +44,7 @@
     "@angular-devkit/build-angular": "^14.2.7",
     "@angular-devkit/core": "~14.2.7",
     "@angular-devkit/schematics": "~14.2.7",
-    "@angular/cli": "~14.2.7",
+    "@angular/cli": "^16.0.0",
     "@angular/compiler-cli": "^14.2.0",
     "@nx/angular": "16.1.0",
     "@nx/workspace": "16.1.0",
