@@ -15,7 +15,7 @@ export class RegisterCourseComponent implements OnInit {
   date!: Date;
   userDetails: User[] = [];
   userDetailsStorage: User[] = [];
-
+  currentEmail: any;
   course: Course = {
     capacity: 20,
     credits: 0,
@@ -31,9 +31,17 @@ export class RegisterCourseComponent implements OnInit {
   constructor(private authService: AuthService) { }
   ngOnInit(): void {
     const userDetailsStorage = JSON.parse(localStorage.getItem('userDetails') || '{}');
-    this.id = userDetailsStorage.id;
-    this.major = userDetailsStorage.major;
-    this.userDetails = Object.values(userDetailsStorage);
+
+
+    this.currentEmail = localStorage.getItem('email');
+    this.authService.getUserDetails(this.currentEmail).subscribe(
+      response => {
+        this.userDetails = response;
+        localStorage.setItem('userDetails', JSON.stringify(this.userDetails));
+        this.major = this.userDetails[0].major;
+        this.id = this.userDetails[0].id;
+      },
+    );
 
     const date = new Date();
     const month = date.getMonth() + 1; // get current month (Jan is 0, Dec is 11)

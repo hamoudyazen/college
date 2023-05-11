@@ -16,42 +16,24 @@
   }
 </style>
 
-<body class="p-3 m-0 border-0 bd-example  fade-in" style="background-color: #F5F5F7;">
-
-  <!-- Example Code -->
+<body class="p-3 m-0 border-0 bd-example fade-in" style="background-color: #F5F5F7;">
   <div class="row row-cols-1 row-cols-md-3 g-4">
     <div *ngFor="let course of courseList; let i=index">
       <div class="col">
         <div class="card h-100 fade-in" style="background-color: #1D1D1F; border-radius: 30px;">
-          <div class="card-header " style="background-color: #1D1D1F;  border-radius: 30px; border:0px solid black;">
+          <div class="card-header" style="background-color: #1D1D1F;  border-radius: 30px; border:0px solid black;">
             <h5 class="card-title" style="color: #F5F5F7; font-weight: 700;">{{ course.name }}</h5>
           </div>
           <div class="card-body">
             <p class="card-text" style="color: #F5F5F7;"><strong>Description:</strong> {{ course.description }}</p>
             <p class="card-text" style="color: #F5F5F7;"><strong>Credits:</strong> {{ course.credits }}</p>
             <p class="card-text" style="color: #F5F5F7;"><strong>Semester:</strong> {{ course.semester }}</p>
-            <button class="btn1" (click)="register(course.id)" (click)="showLiveToast()">Register</button>
-
-            <div class="toast-container position-fixed bottom-0 end-0 p-3" fade-in>
-              <div id="liveToast" class="toast" [ngClass]="{'bg-danger': errorMessage, 'bg-success': successMessage}"
-                role="alert" aria-live="assertive" aria-atomic="true">
-                <div class="toast-header">
-                  <strong class="me-auto" style="font-weight: 700; color: black;">Result</strong>
-                  <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                </div>
-                <div class="toast-body" style="color: black;">
-                  {{errorMessage}}
-                  {{successMessage}}
-                </div>
-              </div>
-            </div>
-
+            <button class="btn1" (click)="register(course.id); showLiveToast()">Register</button>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <!-- End Example Code -->
 </body>
 
 </html>

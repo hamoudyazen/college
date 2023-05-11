@@ -67,33 +67,33 @@
 
     </div>
   </div>
-</body>
+  <hr style="border-top: 1px solid black;">
 
-<hr style="border-top: 1px solid black;">
-<!---------------------------------------------------------------------------- Student Submissions ------------------------------------------------------------------------>
+  <body class="p-3 m-0 border-0 bd-example  fade-in" style="background-color: #F5F5F7;">
 
-<body class="p-3 m-0 border-0 bd-example  fade-in" style="background-color: #F5F5F7;">
+    <h1 style="color: #1D1D1F; text-align: center;">Student Submissions:</h1>
 
-  <h1 style="color: #1D1D1F; text-align: center;">Student Submissions:</h1>
-
-  <div class="row row-cols-1 row-cols-md-3 g-4">
-    <div *ngFor="let submission of submissions; let i=index">
-      <div class="col">
-        <div class="card h-100 fade-in" style="background-color: #1D1D1F; border-radius: 30px;">
-          <div class="card-header " style="background-color: #1D1D1F;  border-radius: 30px; border:0px solid black;">
-            <h5 class="card-title" style="color: #F5F5F7; font-weight: 700;">{{ submission.submission_description }}
-            </h5>
-          </div>
-          <div class="card-body">
-            <p class="card-text" style="color: #F5F5F7;"><strong>Description:</strong> {{ submission.submission_id }}
-            </p>
-            <p class="card-text" style="color: #F5F5F7;"><strong>Credits:</strong> {{ submission.submission_id }}</p>
-            <p class="card-text" style="color: #F5F5F7;"><strong>Semester:</strong> {{ submission.answerURL }}</p>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      <div *ngFor="let submission of submissions; let i=index">
+        <div class="col">
+          <div class="card h-100 fade-in" style="background-color: #1D1D1F; border-radius: 30px;">
+            <div class="card-header " style="background-color: #1D1D1F;  border-radius: 30px; border:0px solid black;">
+              <h5 class="card-title" style="color: #F5F5F7; font-weight: 700;">{{ submission.submission_description }}
+              </h5>
+            </div>
+            <div class="card-body">
+              <p class="card-text" style="color: #F5F5F7;"><strong>Description:</strong> {{ submission.submission_id }}
+              </p>
+              <p class="card-text" style="color: #F5F5F7;"><strong>Credits:</strong> {{ submission.submission_id }}</p>
+              <p class="card-text" style="color: #F5F5F7;"><strong>Semester:</strong> {{ submission.answerURL }}</p>
 
 
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </body>
 </body>
+
+<!---------------------------------------------------------------------------- Student Submissions ------------------------------------------------------------------------>

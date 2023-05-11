@@ -12,7 +12,6 @@ export interface CourseMaterial {
 export interface LoginRequest {
   email: string;
   password: string;
-  token: string;
 }
 export interface Submission {
   submission_id?: string;
@@ -58,11 +57,11 @@ export interface AuthResponse {
   user: User;
 }
 
-export interface TeacherWeeklyTimeSlots {
-  id: String;
-  sundayArray: String[];
-  mondayArray: String[];
-  tuesdayArray: String[];
-  wednesdayArray: String[];
-  thursdayArray: String[];
+export interface SundaySchedule {
+  id?: string;
+  teacherId: string;
+  scheduleMajor: string;
+  sundayArray: string[];
+
 }
+

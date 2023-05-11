@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { map, Observable } from 'rxjs';
+import { catchError, map, Observable, throwError } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
-import { Assignment, Course, Submission, ForgotPasswordResponse, CourseMaterial, LoginRequest, User } from '../models/allModels';
+import { Assignment, Course, Submission, ForgotPasswordResponse, CourseMaterial, LoginRequest, User, SundaySchedule } from '../models/allModels';
 
 @Injectable({
   providedIn: 'root',
@@ -211,5 +211,8 @@ export class AuthService {
   }
 
 
-
+  addSundaySchedule(schedule: SundaySchedule): Observable<any> {
+    console.log('Sending register request:', schedule);
+    return this.http.post(`${this.baseUrl}/addSundaySchedule`, schedule);
+  }
 }

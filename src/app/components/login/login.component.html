@@ -31,7 +31,8 @@
             <input type="password" class="form-control" id="validationServer02" value="Otto" required=""
               [(ngModel)]="password" name="Password">
           </div>
-          <button class="btn" [disabled]="!LoginForm.form.valid || noAccessButton" id="liveToastBtn">Login</button>
+          <button class="button_custom" [disabled]="!LoginForm.form.valid || noAccessButton"
+            id="liveToastBtn">Login</button>
           <div class="toast-container position-fixed bottom-0 end-0 p-3" fade-in>
             <div id="liveToast" class="toast" [ngClass]="{'bg-danger': errorMessage, 'bg-success': successMessage}"
               role="alert" aria-live="assertive" aria-atomic="true">
@@ -175,7 +176,7 @@
           </div>
         </div>
         <!--End of Step 3 Content -->
-        <button class="btn" data-bs-target="#exampleModalToggle" data-bs-toggle="modal"
+        <button class="button_custom" data-bs-target="#exampleModalToggle" data-bs-toggle="modal"
           [disabled]="noAccessButton">Forgot password</button>
 
         <!----------------------------------------------------------------------------------End Of Forgot Password---------------------------------------------------------------------------------------------------------->
@@ -262,7 +263,7 @@
           </div>
         </div>
         <!--end of content 1-->
-        <button class="btn" [disabled]="noAccessButton" data-bs-target="#exampleModalToggleRegister"
+        <button class="button_custom" [disabled]="noAccessButton" data-bs-target="#exampleModalToggleRegister"
           data-bs-toggle="modal">Register</button>
         <!----------------------------------------------------------------------------------End Of Register---------------------------------------------------------------------------------------------------------->
       </div>

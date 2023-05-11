@@ -2,10 +2,10 @@
 
 #card {
   position: relative;
-  background-color: rgba(255, 255, 255, 0.27);
+  background-color: white;
   /* any other styles for your card */
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
-  border-radius: 50px;
+  border-radius: 1rem;
   border: 0px white solid;
 
 }
@@ -19,34 +19,12 @@
   color: black;
 }
 
-.btn {
-  background-color: rgba(0, 0, 0, 0.347);
-  color: white;
-  transition: all 0.3s ease-in;
-  transform: scale(1);
-  border-radius: 40px;
-
-}
-
-.btn:hover {
-  background-color: white;
-  color: black;
-  border: 1px solid black;
-  transform: scale(1.01);
-  transition: all 0.3s ease-out;
-}
 
 
-.btn:disabled {
-  background-color: white;
-  color: black;
-  border: 1px solid black;
-  opacity: 100%;
-}
 
 body {
   font-family: 'IBM Plex Mono Medium', sans-serif;
-  background: linear-gradient(90deg, #200122, #6f0000);
+  background-color: #f1f1f1;
   background-size: 400% 400%;
   animation: animateGradient 10s ease infinite;
 }
@@ -141,58 +119,26 @@ body {
   opacity: 0;
 }
 
-.forgot-pass {
-  text-align: left;
-  margin: 10px 0 10px 5px;
-}
 
-.forgot-pass a {
-  font-size: 16px;
-  color: #666666;
-  text-decoration: none;
-}
-
-.forgot-pass:hover a {
-  text-decoration: underline;
-}
-
-.button {
-  margin: 15px 0;
+.button_custom {
+  color: black;
   width: 100%;
   height: 50px;
-  font-size: 18px;
-  line-height: 50px;
-  font-weight: 600;
-  background: #dde1e7;
-  border-radius: 25px;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  color: #595959;
+  background-color: white;
+  border-color: 1px solid white;
+  border-radius: 1rem;
   box-shadow: 2px 2px 5px #BABECC,
     -5px -5px 10px #ffffff73;
+  transition: all 0.3s ease-in-out;
+  text-transform: uppercase;
+  font-weight: 700;
 }
 
-.button:focus {
-  color: #3498db;
-  box-shadow: inset 2px 2px 5px #BABECC,
-    inset -5px -5px 10px #ffffff73;
+.button_custom:hover {
+  transform: scale(1.05);
 }
 
-.sign-up {
-  margin: 10px 0;
-  color: #595959;
-  font-size: 16px;
-}
 
-.sign-up a {
-  color: #3498db;
-  text-decoration: none;
-}
-
-.sign-up a:hover {
-  text-decoration: underline;
-}
 
 @media screen and (max-width: 600px) {
   .content {
@@ -224,28 +170,7 @@ body {
     margin: 10px 0 10px 5px;
   }
 
-  .button {
-    margin: 15px 0;
-    width: 100%;
-    height: 50px;
-    font-size: 18px;
-    line-height: 50px;
-    font-weight: 600;
-    background: #dde1e7;
-    border-radius: 25px;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    color: #595959;
-    box-shadow: 2px 2px 5px #BABECC,
-      -5px -5px 10px #ffffff73;
-  }
 
-  .button:focus {
-    color: #3498db;
-    box-shadow: inset 2px 2px 5px #BABECC,
-      inset -5px -5px 10px #ffffff73;
-  }
 }
 
 .fade-in {

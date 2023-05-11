@@ -17,7 +17,7 @@ export class LoginComponent {
   loginCounter: number = 0;
   myMap = new Map<any, any>();
   errorMessage: string | undefined;
-  email: string | undefined;
+  email: any;
   password: string | undefined;
   name: string | undefined;
   counter: number = 5;
@@ -115,6 +115,8 @@ export class LoginComponent {
       password: this.password,
     };
 
+    localStorage.setItem('email', this.email);
+    console.log('email is : ', this.email);
     const storedData = JSON.parse(localStorage.getItem('loginData') || '{}');
     const lastAttemptTime = storedData.lastAttemptTime || 0;
     const loginCounter = storedData.loginCounter || 0;
@@ -132,12 +134,10 @@ export class LoginComponent {
             this.authService.getRole(this.email || '').subscribe(
               (roleResponse) => {
                 localStorage.setItem('role', roleResponse.role);
-                console.log("role", roleResponse);
                 this.authService.getUserDetails(this.email || '').subscribe(
                   userDetailsResponse => {
                     localStorage.setItem('userDetails', JSON.stringify(userDetailsResponse));
                     this.userDetails = userDetailsResponse;
-                    console.log("userDetails", this.userDetails);
                   },
                 );
                 if (roleResponse.role === 'teacher') {
@@ -176,7 +176,7 @@ export class LoginComponent {
     storedData.lastAttemptTime = Date.now();
     localStorage.setItem('loginData', JSON.stringify(storedData));
 
-    if (storedData.loginCounter >= 5) {
+    if (storedData.loginCounter >= 50) {
       // Disable the login button if the user has exceeded the maximum number of login attempts
       this.noAccessButton = true;
       setTimeout(() => {

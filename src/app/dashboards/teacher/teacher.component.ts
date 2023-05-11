@@ -17,6 +17,7 @@ export class TeacherComponent implements OnInit {
 
   userDetails: User[] = [];
   navbarCollapsed = true;
+  currentEmail: any;
   name: any;
   profileImg: any;
   pagename: string = '';
@@ -27,15 +28,22 @@ export class TeacherComponent implements OnInit {
   showSchedule: boolean = true;
   showProfile: boolean = false;
   activeLink: string = 'courses';
-
   constructor(private breakpointObserver: BreakpointObserver, private router: Router, private authService: AuthService) { }
   ngOnInit(): void {
-    const userDetails = JSON.parse(localStorage.getItem('userDetails') || '{}');
-    this.name = userDetails.firstname + ' ' + userDetails.lastname;
-    this.profileImg = userDetails.image;
-    this.userDetails = localStorage.getItem('userDetails') ? JSON.parse(localStorage.getItem('userDetails') || '{}') : [];
-    console.log(this.userDetails);
+    this.currentEmail = localStorage.getItem('email');
+    this.authService.getUserDetails(this.currentEmail).subscribe(
+      response => {
+        this.userDetails = response;
+        localStorage.setItem('userDetails', JSON.stringify(this.userDetails));
+        this.name = this.userDetails[0].firstname;
+        this.profileImg = this.userDetails[0].image;
+      },
+    );
   }
+
+
+
+
 
 
 

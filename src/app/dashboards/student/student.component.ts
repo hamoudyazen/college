@@ -12,29 +12,34 @@ import { Assignment, Course, Submission, ForgotPasswordResponse, CourseMaterial,
   styleUrls: ['./student.component.css']
 })
 export class StudentComponent implements OnInit {
+  @ViewChild('sidenav') sidenav!: MatSidenav;
+
   userDetails: User[] = [];
   navbarCollapsed = true;
   name: string | undefined;
   pagename: string = '';
   isSmallScreen!: boolean;
   showAssignments: boolean = false;
-  showStudentCourses: boolean = false;
+  showStudentCourses: boolean = true;
   showAllAvailableCourses: boolean = false;
   showProfile: boolean = false;
   activeLink: string = '';
   profileImg: any;
-
+  currentEmail: any;
 
 
 
 
   constructor(private breakpointObserver: BreakpointObserver, private router: Router, private authService: AuthService) { }
   ngOnInit(): void {
-    const userDetails = JSON.parse(localStorage.getItem('userDetails') || '{}');
-    this.name = userDetails.firstname + ' ' + userDetails.lastname;
-    this.profileImg = userDetails.image;
-    this.userDetails = localStorage.getItem('userDetails') ? JSON.parse(localStorage.getItem('userDetails') || '{}') : [];
-    console.log(this.userDetails);
+    this.currentEmail = localStorage.getItem('email');
+    this.authService.getUserDetails(this.currentEmail).subscribe(
+      response => {
+        this.userDetails = response;
+        this.name = this.userDetails[0].firstname;
+        this.profileImg = this.userDetails[0].image;
+      },
+    );
   }
 
 

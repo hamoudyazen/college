@@ -16,24 +16,19 @@ import { error } from 'jquery';
 export class TeacherMyCoursesComponent implements OnInit {
   public file: any = {};
   major: any;
+  currentEmail: any;
   semester: any;
   date !: Date;
   userDetails: User[] = [];
-  userDetailsStorage: User[] = [];
+
+  currentId: any;
 
   showModal: boolean[] = [];
-  onModalShow(index: number) {
-    this.showModal[index] = true;
-  }
 
-  onModalHide(index: number) {
-    this.showModal[index] = false;
-  }
   teacherCourses: Course[] = [];
   id: string | undefined;
   courseID: any;
-  errorMessage: any;
-  sucessmessage: any;
+
 
   courseMaterial: CourseMaterial = {
     materialCourseLink: '',
@@ -42,37 +37,45 @@ export class TeacherMyCoursesComponent implements OnInit {
     materialCourseDescription: '',
   };
 
+  onModalShow(index: number) {
+    this.showModal[index] = true;
+  }
 
+  onModalHide(index: number) {
+    this.showModal[index] = false;
+  }
 
 
   constructor(private authService: AuthService, private storage: AngularFireStorage, private firestore: AngularFirestore) { }
 
   ngOnInit(): void {
-    const userDetailsStorage = JSON.parse(localStorage.getItem('userDetails') || '{}');
-    this.id = userDetailsStorage.id;
-    this.major = userDetailsStorage.major;
-    this.userDetails = Object.values(userDetailsStorage);
+    this.currentEmail = localStorage.getItem('email');
+    this.authService.getUserDetails(this.currentEmail).subscribe(
+      response => {
+        this.userDetails = response;
+        localStorage.setItem('userDetails', JSON.stringify(this.userDetails));
+        this.currentId = this.userDetails[0].id;
+        this.major = this.userDetails[0].major;
 
-    this.authService.getTeacherCourses(userDetailsStorage.id).subscribe(response => {
-      this.teacherCourses = response;
-    }, error => {
-      alert('error');
-    });
+        this.authService.getTeacherCourses(this.currentId).subscribe(response => {
+          console.log(this.currentId);
+          this.teacherCourses = response;
+        });
+      }
+    );
 
     const date = new Date();
-    const month = date.getMonth() + 1; // get current month (Jan is 0, Dec is 11)
+    const month = date.getMonth() + 1;
 
     if (month >= 10 || month < 4) {
       this.semester = 'winter';
     } else {
       this.semester = 'summer';
     }
-
-
   }
 
 
-  currentEmail: string = '';
+
   updateStudent(formData: any, student: any, originalEmail: string) {
     const newEmail = formData.email;
 
@@ -80,7 +83,6 @@ export class TeacherMyCoursesComponent implements OnInit {
       this.authService.updateEmail(this.courseID, originalEmail, newEmail)
         .subscribe(
           (response) => {
-            this.sucessmessage = response;
             // Update the corresponding student email in the array
             const index = this.teacherCourses.findIndex(course => course.id === this.courseID);
             const studentIndex = this.teacherCourses[index].studentsArray.indexOf(originalEmail);
@@ -89,7 +91,7 @@ export class TeacherMyCoursesComponent implements OnInit {
 
           },
           (error) => {
-            this.errorMessage = error.message;
+            alert('error');
           }
         );
     }
@@ -100,7 +102,6 @@ export class TeacherMyCoursesComponent implements OnInit {
       this.authService.deleteEmail(this.courseID, email)
         .subscribe(
           (response) => {
-            this.sucessmessage = response;
             // Remove the corresponding student email from the array
             const index = this.teacherCourses.findIndex(course => course.id === this.courseID);
             const studentIndex = this.teacherCourses[index].studentsArray.indexOf(email);
@@ -109,7 +110,7 @@ export class TeacherMyCoursesComponent implements OnInit {
 
           },
           (error) => {
-            this.errorMessage = error.message;
+            alert('error');
           });
     }
   }
@@ -125,13 +126,12 @@ export class TeacherMyCoursesComponent implements OnInit {
           if (this.courseID) {
             this.authService.addStudent(this.courseID, newEmail).subscribe(
               (response) => {
-                this.sucessmessage = response;
                 this.teacherCourses.find(course => course.id === this.courseID)?.studentsArray.push(newEmail);
                 addStudentForm.resetForm(); // Clear the input field
                 window.location.reload();
               },
               (error) => {
-                this.errorMessage = error.message;
+                alert('error');
               }
             );
           }

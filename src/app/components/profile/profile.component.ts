@@ -17,7 +17,7 @@ import { Assignment, Course, Submission, ForgotPasswordResponse, CourseMaterial,
 export class ProfileComponent implements OnInit {
   public file: any = {}
   userDetails: User[] = [];
-  userDetailsStorage: User[] = [];
+  currentEmail: any;
   id: any;
   name: any;
   email: any;
@@ -32,19 +32,23 @@ export class ProfileComponent implements OnInit {
 
   constructor(private authService: AuthService, private router: Router, private storage: AngularFireStorage) { }
   ngOnInit(): void {
-    const userDetailsStorage = JSON.parse(localStorage.getItem('userDetails') || '{}');
-    this.name = userDetailsStorage.firstname + ' ' + userDetailsStorage.lastname;
-    this.id = userDetailsStorage.id;
-    this.email = userDetailsStorage.email;
-    this.firstname = userDetailsStorage.firstname;
-    this.lastname = userDetailsStorage.lastname;
-    this.image = userDetailsStorage.image;
-    this.password = userDetailsStorage.password;
-    this.role = userDetailsStorage.role;
-    this.userDetails = Object.values(userDetailsStorage);
-    console.log(this.userDetails);
-
+    this.currentEmail = localStorage.getItem('email');
+    this.authService.getUserDetails(this.currentEmail).subscribe(
+      response => {
+        this.userDetails = response;
+        localStorage.setItem('userDetails', JSON.stringify(this.userDetails));
+        this.name = this.userDetails[0].firstname;
+        this.id = this.userDetails[0].id;
+        this.email = this.userDetails[0].email;
+        this.firstname = this.userDetails[0].firstname;
+        this.lastname = this.userDetails[0].lastname;
+        this.image = this.userDetails[0].image;
+        this.password = this.userDetails[0].password;
+        this.role = this.userDetails[0].role;
+      },
+    );
   }
+
 
 
 
