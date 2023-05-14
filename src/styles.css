@@ -11,6 +11,9 @@ body {
   font-family: 'IBM Plex Mono Medium', sans-serif;
   background-color: #F5F5F7;
   color: #1D1D1F;
+  padding: 0;
+  margin: 0;
+
 }
 
 .btn1 {
@@ -224,3 +227,16 @@ body {
 
 /*END OF FORMS*/
 /* Define the fade-in animation */
+.title {
+  color: black;
+  font-family: 700;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.subTitle {
+  color: black;
+  font-family: 700;
+  text-decoration: none;
+  font-size: 18px;
+}

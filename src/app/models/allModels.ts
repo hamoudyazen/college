@@ -65,3 +65,22 @@ export interface SundaySchedule {
 
 }
 
+
+interface CourseSchudle {
+  courseName: string;
+  courseHours: number;
+}
+
+
+export interface PublicSchedule {
+  id?: string;
+  majorName: string;
+  sunday: CourseSchudle[];
+  monday: CourseSchudle[];
+  tuesday: CourseSchudle[];
+  wednesday: CourseSchudle[];
+  thursday: CourseSchudle[];
+  friday: CourseSchudle[];
+
+
+}

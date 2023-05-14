@@ -41,11 +41,10 @@ import { DatePipe } from '@angular/common';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { AuthGuard } from './services/AuthGuard';
-import { TeacherscheduleComponent } from './dashboards/teacher/teacherschedule/teacherschedule.component';
 import { StudentscheduleComponent } from './dashboards/student/studentschedule/studentschedule.component';
 import { ScheduleComponent } from './dashboards/teacher/schedule/schedule.component';
 import { Socket } from 'ngx-socket-io';
-
+import { SharedService } from './services/SharedService';
 
 @NgModule({
   declarations: [
@@ -63,7 +62,6 @@ import { Socket } from 'ngx-socket-io';
     StudentcoursesComponent,
     StudentRegisterForCourseComponent,
     ChatComponent,
-    TeacherscheduleComponent,
     StudentscheduleComponent,
     ScheduleComponent
   ],
@@ -86,7 +84,7 @@ import { Socket } from 'ngx-socket-io';
     provideStorage(() => getStorage()),
     AngularFireStorageModule, MatFormFieldModule,
   ],
-  providers: [AuthGuard],
+  providers: [AuthGuard, SharedService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

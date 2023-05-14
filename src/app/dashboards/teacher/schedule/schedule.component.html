@@ -12,99 +12,60 @@
 
 <body class="p-3 m-0 border-0 bd-example">
 
-  <!-----------------------------------------------------------SUNDAY--------------------------------------------------------->
 
-  <div class="modal fade" id="modelToggleSchedule" aria-labelledby="modelToggleSchedule" tabindex="-1"
-    aria-hidden="true" style="display: none;">
-    <div class="modal-dialog modal-dialog modal-xl">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="modelToggleSchedule">Setup Schedule</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <!--Content-->
-          <form id="availability-form" (submit)="submitSundayAvailability($event)">
-            <h2 style="color: red;">Sunday</h2>
-            <p style="color: red;">Please select each time-slots that you can teach <b
-                style="color: red; text-decoration: underline;"><br>MUST
-                SELECT AT LEAST 3 TIME
-                SLOTS</b></p>
-
-
-            <input type="checkbox" class="btn-check" id="time-slot-1" name="time-slot[]" value="8:00AM - 8:45AM"
-              autocomplete="off" (change)="onSundayCheckboxChange($event)">
-            <label class="btn btn-outline-primary" for="time-slot-1">8:00AM - 8:45AM</label>
-
-
-            <input type="checkbox" class="btn-check" id="time-slot-2" name="time-slot[]" value="9:15AM - 9:45AM"
-              autocomplete="off" (change)="onSundayCheckboxChange($event)">
-            <label class="btn btn-outline-primary" for="time-slot-2">9:00AM - 9:45AM</label>
-
-
-            <input type="checkbox" class="btn-check" id="time-slot-3" name="time-slot[]" value="10:00AM - 10:45AM"
-              autocomplete="off" (change)="onSundayCheckboxChange($event)">
-            <label class="btn btn-outline-primary" for="time-slot-3">10:00AM - 10:45AM</label>
-
-
-            <input type="checkbox" class="btn-check" id="time-slot-4" name="time-slot[]" value="11:00AM - 11:45AM"
-              autocomplete="off" (change)="onSundayCheckboxChange($event)">
-            <label class="btn btn-outline-primary" for="time-slot-4">11:00AM - 11:45AM</label>
-            <br>
-            <br>
-
-            <input type="checkbox" class="btn-check" id="time-slot-5" name="time-slot[]" value="12:00PM - 12:45PM"
-              autocomplete="off" (change)="onSundayCheckboxChange($event)">
-            <label class="btn btn-outline-primary" for="time-slot-5">12:00PM - 12:45PM</label>
-
-            <input type="checkbox" class="btn-check" id="time-slot-6" name="time-slot[]" value="1:00PM - 1:45PM"
-              autocomplete="off" (change)="onSundayCheckboxChange($event)">
-            <label class="btn btn-outline-primary" for="time-slot-6">1:00PM - 1:45PM</label>
-
-            <input type="checkbox" class="btn-check" id="time-slot-7" name="time-slot[]" value="2:00PM - 2:45PM"
-              autocomplete="off" (change)="onSundayCheckboxChange($event)">
-            <label class="btn btn-outline-primary" for="time-slot-7">2:00PM - 2:45PM</label>
-
-            <input type="checkbox" class="btn-check" id="time-slot-8" name="time-slot[]" value="3:00PM - 3:45PM"
-              autocomplete="off" (change)="onSundayCheckboxChange($event)">
-            <label class="btn btn-outline-primary" for="time-slot-8">3:00PM - 3:45PM</label>
-
-            <br>
-            <br>
-
-            <input type="checkbox" class="btn-check" id="time-slot-9" name="time-slot[]" value="4:00PM - 4:45PM"
-              autocomplete="off" (change)="onSundayCheckboxChange($event)">
-            <label class="btn btn-outline-primary" for="time-slot-9">4:00PM - 4:45PM</label>
-
-            <input type="checkbox" class="btn-check" id="time-slot-10" name="time-slot[]" value="5:00PM - 5:45PM"
-              autocomplete="off" (change)="onSundayCheckboxChange($event)">
-            <label class="btn btn-outline-primary" for="time-slot-10">5:00PM - 5:45PM</label>
-
-            <input type="checkbox" class="btn-check" id="time-slot-11" name="time-slot[]" value="6:00PM - 6:45PM"
-              autocomplete="off" (change)="onSundayCheckboxChange($event)">
-            <label class="btn btn-outline-primary" for="time-slot-11">6:00PM - 6:45PM</label>
-
-            <input type="checkbox" class="btn-check" id="time-slot-12" name="time-slot[]" value="7:00PM - 7:45PM"
-              autocomplete="off" (change)="onSundayCheckboxChange($event)">
-            <label class="btn btn-outline-primary" for="time-slot-12">7:00PM - 7:45PM</label>
-
-            <br>
-            <br>
-            <button class="btn btn-primary" type="submit" data-bs-target="#modelToggleMondaySchedule">Submit
-              Sunday</button>
+  <table>
+    <thead>
+      <tr>
+        <th></th>
+        <th>Sunday</th>
+        <th>Monday</th>
+        <th>Tuesday</th>
+        <th>Wednesday</th>
+        <th>Thursday</th>
+        <th>Friday (Exceptional)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Course</td>
+        <td>
+          <ul>
+            <li *ngFor="let course of sunday">{{ course.courseName }} - {{ course.courseHours }} hours</li>
+          </ul>
+        </td>
+        <td>
+          <ul>
+            <li *ngFor="let course of monday">{{ course.courseName }} - {{ course.courseHours }} hours</li>
+          </ul>
+        </td>
+        <td>
+          <ul>
+            <li *ngFor="let course of tuesday">{{ course.courseName }} - {{ course.courseHours }} hours</li>
+          </ul>
+        </td>
+        <td>
+          <ul>
+            <li *ngFor="let course of wednesday">{{ course.courseName }} - {{ course.courseHours }} hours
+            </li>
+          </ul>
+        </td>
+        <td>
+          <ul>
+            <li *ngFor="let course of thursday">{{ course.courseName }} - {{ course.courseHours }} hours
+            </li>
+          </ul>
+        </td>
+        <td>
+          <ul>
+            <li *ngFor="let course of friday">{{ course.courseName }} - {{ course.courseHours }} hours
+            </li>
+          </ul>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
 
-          </form>
-          <!--End of Content-->
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-----------------------------------------------------------END OF THURSDAY--------------------------------------------------------->
-
-  <button class="btn btn-primary" data-bs-target="#modelToggleSchedule" data-bs-toggle="modal">Setup Schedule</button>
-
-  <!-- End Example Code -->
 </body>
 
 </html>

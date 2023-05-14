@@ -7,6 +7,7 @@ import { finalize } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Assignment, Course, Submission, ForgotPasswordResponse, CourseMaterial, LoginRequest, User } from 'src/app/models/allModels';
 import { error } from 'jquery';
+import { SharedService } from 'src/app/services/SharedService';
 
 @Component({
   selector: 'app-teacher-my-courses',
@@ -15,20 +16,9 @@ import { error } from 'jquery';
 })
 export class TeacherMyCoursesComponent implements OnInit {
   public file: any = {};
-  major: any;
-  currentEmail: any;
-  semester: any;
   date !: Date;
-  userDetails: User[] = [];
-
-  currentId: any;
-
   showModal: boolean[] = [];
-
-  teacherCourses: Course[] = [];
-  id: string | undefined;
   courseID: any;
-
 
   courseMaterial: CourseMaterial = {
     materialCourseLink: '',
@@ -45,34 +35,44 @@ export class TeacherMyCoursesComponent implements OnInit {
     this.showModal[index] = false;
   }
 
+  //shared
+  teacherCourses: Course[] = [];
+  userDetails: User[] = [];
+  currentEmail: any;
+  id: any;
+  firstname: any;
+  lastname: any;
+  email: any;
+  password: any;
+  role: any;
+  name: any;
+  profileImg: any;
+  major: any;
+  semester: any;
+  //end of shared
 
-  constructor(private authService: AuthService, private storage: AngularFireStorage, private firestore: AngularFirestore) { }
 
-  ngOnInit(): void {
-    this.currentEmail = localStorage.getItem('email');
-    this.authService.getUserDetails(this.currentEmail).subscribe(
-      response => {
-        this.userDetails = response;
-        localStorage.setItem('userDetails', JSON.stringify(this.userDetails));
-        this.currentId = this.userDetails[0].id;
-        this.major = this.userDetails[0].major;
-
-        this.authService.getTeacherCourses(this.currentId).subscribe(response => {
-          console.log(this.currentId);
-          this.teacherCourses = response;
-        });
-      }
-    );
-
-    const date = new Date();
-    const month = date.getMonth() + 1;
-
-    if (month >= 10 || month < 4) {
-      this.semester = 'winter';
-    } else {
-      this.semester = 'summer';
+  constructor(private authService: AuthService, private storage: AngularFireStorage, private firestore: AngularFirestore, private sharedService: SharedService) { }
+  async ngOnInit(): Promise<void> {
+    try {
+      this.userDetails = await this.sharedService.getUserDetails(); // Assign the resolved value to teacherCourses
+      this.teacherCourses = await this.sharedService.getTeacherCourses();
+      this.userDetails = this.sharedService.userDetails;
+      this.email = this.sharedService.email;
+      this.id = this.sharedService.id;
+      this.firstname = this.sharedService.firstname;
+      this.lastname = this.sharedService.lastname;
+      this.password = this.sharedService.password;
+      this.role = this.sharedService.role;
+      this.name = this.sharedService.name;
+      this.profileImg = this.sharedService.profileImg;
+      this.major = this.sharedService.major;
+      this.semester = this.sharedService.semester;
+    } catch (error) {
+      console.error('Error retrieving data:', error);
     }
   }
+
 
 
 

@@ -19,3 +19,17 @@ body {
   color: #F5F5F7;
   border: 1px solid #F5F5F7;
 }
+
+.title {
+  color: black;
+  font-family: 700;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.subTitle {
+  color: black;
+  font-family: 700;
+  text-decoration: none;
+  font-size: 18px;
+}

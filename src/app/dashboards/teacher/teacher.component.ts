@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/AuthService';
 import { Input } from '@angular/core';
 import { Assignment, Course, Submission, ForgotPasswordResponse, CourseMaterial, LoginRequest, User } from 'src/app/models/allModels';
-
+import { SharedService } from 'src/app/services/SharedService';
 
 @Component({
   selector: 'app-teacher',
@@ -13,33 +13,53 @@ import { Assignment, Course, Submission, ForgotPasswordResponse, CourseMaterial,
   styleUrls: ['./teacher.component.css']
 })
 export class TeacherComponent implements OnInit {
-  @ViewChild('sidenav') sidenav!: MatSidenav;
 
-  userDetails: User[] = [];
-  navbarCollapsed = true;
-  currentEmail: any;
-  name: any;
-  profileImg: any;
   pagename: string = '';
-  isSmallScreen!: boolean;
   showRegisterCourse: boolean = false;
-  showTeacherCourse: boolean = false;
+  showTeacherCourse: boolean = true;
   showAssignment: boolean = false;
-  showSchedule: boolean = true;
+  showSchedule: boolean = false;
   showProfile: boolean = false;
   activeLink: string = 'courses';
-  constructor(private breakpointObserver: BreakpointObserver, private router: Router, private authService: AuthService) { }
-  ngOnInit(): void {
-    this.currentEmail = localStorage.getItem('email');
-    this.authService.getUserDetails(this.currentEmail).subscribe(
-      response => {
-        this.userDetails = response;
-        localStorage.setItem('userDetails', JSON.stringify(this.userDetails));
-        this.name = this.userDetails[0].firstname;
-        this.profileImg = this.userDetails[0].image;
-      },
-    );
+
+  //shared
+  teacherCourses: Course[] = [];
+  userDetails: User[] = [];
+  currentEmail: any;
+  id: any;
+  firstname: any;
+  lastname: any;
+  email: any;
+  password: any;
+  role: any;
+  name: any;
+  profileImg: any;
+  major: any;
+  semester: any;
+  //end of shared
+
+  constructor(private breakpointObserver: BreakpointObserver, private router: Router, private authService: AuthService, private sharedService: SharedService) { }
+  async ngOnInit(): Promise<void> {
+    try {
+      this.userDetails = await this.sharedService.getUserDetails(); // Assign the resolved value to teacherCourses
+      this.teacherCourses = await this.sharedService.getTeacherCourses();
+      this.userDetails = this.sharedService.userDetails;
+      this.email = this.sharedService.email;
+      this.id = this.sharedService.id;
+      this.firstname = this.sharedService.firstname;
+      this.lastname = this.sharedService.lastname;
+      this.password = this.sharedService.password;
+      this.role = this.sharedService.role;
+      this.name = this.sharedService.name;
+      this.profileImg = this.sharedService.profileImg;
+      this.major = this.sharedService.major;
+      this.semester = this.sharedService.semester;
+    } catch (error) {
+      console.error('Error retrieving data:', error);
+    }
   }
+
+
 
 
 
@@ -55,6 +75,7 @@ export class TeacherComponent implements OnInit {
     this.showProfile = false;
     this.showAssignment = false;
     this.showSchedule = false;
+    this.activeLink = component;
 
     if (component === 'Add Course') {
       this.showRegisterCourse = true;
@@ -62,8 +83,10 @@ export class TeacherComponent implements OnInit {
       this.showProfile = false;
       this.showAssignment = false;
       this.showSchedule = false;
+
       this.pagename = 'Add Course';
       this.activeLink = 'Add Course';
+
     }
 
     else if (component === 'My Courses') {
@@ -72,6 +95,7 @@ export class TeacherComponent implements OnInit {
       this.showProfile = false;
       this.showAssignment = false;
       this.showSchedule = false;
+
       this.pagename = 'My Courses';
       this.activeLink = 'My Courses';
     }
@@ -81,6 +105,7 @@ export class TeacherComponent implements OnInit {
       this.showAssignment = false;
       this.showSchedule = false;
       this.showProfile = true;
+
       this.pagename = 'Profile';
       this.activeLink = 'Profile';
     }
@@ -90,6 +115,7 @@ export class TeacherComponent implements OnInit {
       this.showAssignment = true;
       this.showProfile = false;
       this.showSchedule = false;
+
       this.pagename = 'Add Assignment';
       this.activeLink = 'Add Assignment';
     }
@@ -100,11 +126,12 @@ export class TeacherComponent implements OnInit {
       this.showAssignment = false;
       this.showProfile = false;
       this.showSchedule = true;
+
       this.pagename = 'Schedule';
       this.activeLink = 'Schedule'; // set active link to courses
     }
-  }
 
+  }
 
   logOut() {
     localStorage.clear();

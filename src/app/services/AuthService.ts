@@ -4,7 +4,7 @@ import { catchError, map, Observable, throwError } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
-import { Assignment, Course, Submission, ForgotPasswordResponse, CourseMaterial, LoginRequest, User, SundaySchedule } from '../models/allModels';
+import { Assignment, Course, Submission, ForgotPasswordResponse, CourseMaterial, LoginRequest, User, SundaySchedule, PublicSchedule } from '../models/allModels';
 
 @Injectable({
   providedIn: 'root',
@@ -215,4 +215,22 @@ export class AuthService {
     console.log('Sending register request:', schedule);
     return this.http.post(`${this.baseUrl}/addSundaySchedule`, schedule);
   }
+
+  getMajorCourses(majorName: string): Observable<any[]> {
+    const url = `${this.baseUrl}/getMajorCourses?majorName=${encodeURIComponent(majorName)}`;
+    return this.http.get<any[]>(url);
+  }
+
+
+  getCourseDetails(id: string): Observable<Course[]> {
+    return this.http.get<Course[]>(`${this.baseUrl}/getCourseDetails?id=${id}`);
+  }
+
+
+  addPublicSchedule(ps: PublicSchedule): Observable<any> {
+    console.log('Sending assignment request:', ps);
+    return this.http.post(`${this.baseUrl}/addPublicSchedule`, ps);
+  }
+
+
 }
