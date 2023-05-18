@@ -13,7 +13,7 @@ body {
   color: #1D1D1F;
   padding: 0;
   margin: 0;
-
+  max-height: fit-content;
 }
 
 .btn1 {
@@ -239,4 +239,53 @@ body {
   font-family: 700;
   text-decoration: none;
   font-size: 18px;
+}
+
+.title {
+  color: black;
+  font-family: 700;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.subTitle {
+  color: black;
+  font-family: 700;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.myTitle {
+  color: black;
+  font-family: 700;
+  text-decoration: underline;
+  text-align: center;
+  font-size: 25px;
+}
+
+.mySubTitle {
+  color: rgb(55, 54, 54);
+  font-family: 700;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.myDescription {
+  color: black;
+  font-family: 400;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.myButton {
+  background-color: #F5F5F7;
+  border-radius: 1rem;
+  border: 1px solid #F5F5F7;
+  transition-duration: 300ms;
+  transform: scale(1);
+}
+
+.myButton:hover {
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.3);
+  /* Replace #FF0000 with the desired hover color */
 }

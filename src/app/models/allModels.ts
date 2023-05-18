@@ -81,6 +81,25 @@ export interface PublicSchedule {
   wednesday: CourseSchudle[];
   thursday: CourseSchudle[];
   friday: CourseSchudle[];
-
-
 }
+export interface Major {
+  id?: string;
+  majorName: string;
+  isBeingEdited: boolean;
+  coursesList: string[];
+  schedule: {
+    sunday: CourseInsideMajor[];
+    monday: CourseInsideMajor[];
+    tuesday: CourseInsideMajor[];
+    wednesday: CourseInsideMajor[];
+    thursday: CourseInsideMajor[];
+    friday: CourseInsideMajor[];
+  };
+}
+
+export interface CourseInsideMajor {
+  courseId: string;
+  timeSlot: string;
+}
+
+

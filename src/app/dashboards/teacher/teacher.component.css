@@ -4,6 +4,9 @@ body {
   font-family: 'IBM Plex Mono Medium', sans-serif;
   background-color: #F5F5F7;
   color: #1D1D1F;
+  max-height: fit-content;
+  padding: 0;
+  margin: 0;
 }
 
 * {
@@ -89,7 +92,10 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   z-index: 100;
   position: sticky;
+  top: 0;
+
 }
+
 
 .sidebar h3 {
   color: #707793;
@@ -261,4 +267,17 @@ body {
   /* Adjust the width and height as needed */
   height: 24px;
   /* Additional styling for the SVG if desired */
+}
+
+.svg-icon-settings {
+  width: 24px;
+  /* Adjust the width and height as needed */
+  height: 24px;
+  rotate: 0deg;
+}
+
+.svg-icon-settings:hover {
+  rotate: 90deg;
+  transition: 0.2s linear;
+
 }

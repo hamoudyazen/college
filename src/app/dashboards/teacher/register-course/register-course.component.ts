@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Alert, Toast } from 'bootstrap';
 import { AuthService } from 'src/app/services/AuthService';
 import { Assignment, Course, Submission, ForgotPasswordResponse, CourseMaterial, LoginRequest, User } from 'src/app/models/allModels';
+import { SharedService } from 'src/app/services/SharedService';
 
 @Component({
   selector: 'app-register-course',
@@ -28,28 +29,16 @@ export class RegisterCourseComponent implements OnInit {
     major: ''
   };
 
-  constructor(private authService: AuthService) { }
-  ngOnInit(): void {
-    const userDetailsStorage = JSON.parse(localStorage.getItem('userDetails') || '{}');
-
-
-    this.currentEmail = localStorage.getItem('email');
-    this.authService.getUserDetails(this.currentEmail).subscribe(
-      response => {
-        this.userDetails = response;
-        localStorage.setItem('userDetails', JSON.stringify(this.userDetails));
-        this.major = this.userDetails[0].major;
-        this.id = this.userDetails[0].id;
-      },
-    );
-
-    const date = new Date();
-    const month = date.getMonth() + 1; // get current month (Jan is 0, Dec is 11)
-
-    if (month >= 10 || month < 4) {
-      this.semester = "winter";
-    } else {
-      this.semester = "summer";
+  constructor(private authService: AuthService, private sharedService: SharedService) { }
+  async ngOnInit(): Promise<void> {
+    try {
+      this.userDetails = await this.sharedService.getUserDetails(); // Assign the resolved value to teacherCourses
+      this.userDetails = this.sharedService.userDetails;
+      this.id = this.sharedService.id;
+      this.major = this.sharedService.major;
+      this.semester = this.sharedService.semester;
+    } catch (error) {
+      console.error('Error retrieving data:', error);
     }
   }
 

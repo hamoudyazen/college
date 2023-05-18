@@ -10,10 +10,11 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 
-<body class="p-3 m-0 border-0 bd-example  fade-in" style="background-color: #F5F5F7;">
+<body class="p-3 m-0 border-0 bd-example  fade-in"
+  style="background-color: #fff; border-radius: 1rem; height: fit-content;">
   <div class="form-container d-flex justify-content-center">
-    <div class="card p-2" style="width: 450px; background-color: #1D1D1F;">
-      <h1 style="text-align: center; color:#F5F5F7">Add Assignment</h1>
+    <div class="card p-2" style="width: 450px; background-color: #c1cbde; border-radius: 1rem; border: 0px;">
+      <h1 class="myTitle">Add Assignment</h1>
       <p style="text-align: center;color: red;">File upload must be <br> Less than 5MB ,
         <br>File
         Type : PDF , PNG , JPG
@@ -23,7 +24,7 @@
 
         <div class="col-md-10">
           <div>
-            <label for="validationServer02" class="form-label" style="color: #F5F5F7;">Select a course:</label>
+            <label for="validationServer02" class="form-label" style="color: #000;">Select a course:</label>
             <select class="form-select is-valid" id="validationServer02" [(ngModel)]="assignment.course_id"
               name="course_id" required>
               <option *ngFor="let course of teacherCourses" [value]="course.id">{{ course.name }}</option>
@@ -34,27 +35,28 @@
 
 
         <div class="col-md-10">
-          <label for="validationServer01" class="form-label" style="color: #F5F5F7;">Name</label>
+          <label for="validationServer01" class="form-label" style="color: #000;">Name</label>
           <input type="text" class="form-control is-valid" id="validationServer01" value="Mark" required=""
             [(ngModel)]="assignment.name" name="name">
         </div>
 
 
         <div class="col-md-10 ">
-          <label for="validationServer02" class="form-label" style="color: #F5F5F7;">Description</label>
+          <label for="validationServer02" class="form-label" style="color: #000;">Description</label>
           <input type="description" class="form-control is-valid" id="validationServer02" value="Otto" required=""
             [(ngModel)]="assignment.description" name="description">
         </div>
 
 
         <div class="col-md-10 ">
-          <label for="validationServer02" class="form-label" style="color: #F5F5F7;">Deadline</label>
+          <label for="validationServer02" class="form-label" style="color: #000;">Deadline</label>
           <input type="date" class="form-control is-valid" id="validationServer02" value="Otto" required=""
             [(ngModel)]="assignment.deadline" name="description">
         </div>
 
         <input class="form-control" type="file" id="formFile" (change)="choseFile($event)">
-        <button class="btn1" type="submit" (click)="addData()" (click)="showLiveToast()">
+        <button class="myButton" type="submit" (click)="addData()" (click)="showLiveToast()"
+          style="border-radius: 1rem;">
           Add Assignment
         </button>
 
@@ -67,9 +69,10 @@
 
     </div>
   </div>
-  <hr style="border-top: 1px solid black;">
+  <br>
 
-  <body class="p-3 m-0 border-0 bd-example  fade-in" style="background-color: #F5F5F7;">
+  <body class="p-3 m-0 border-0 bd-example  fade-in"
+    style="background-color: #fff; border-radius: 1rem; height: fit-content;">
 
     <h1 style="color: #1D1D1F; text-align: center;">Student Submissions:</h1>
 

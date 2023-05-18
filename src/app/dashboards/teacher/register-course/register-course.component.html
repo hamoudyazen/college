@@ -11,23 +11,25 @@
 </head>
 
 
-<body class="p-10 m-0  fade-in" style="background-color: #fff; border-radius: 1rem;">
+<body class="p-10 m-0  fade-in"
+  style="background-color: #fff; border-radius: 1rem; height: fit-content; padding: 50px;">
   <div class="form-container d-flex justify-content-center">
-    <div class="card p-2" style="width: 450px; background-color: #1D1D1F;">
+    <div class="card p-2" style="width: 450px; background-color: #c1cbde; border-radius: 1rem; border: 0px">
 
-      <h1 style="text-align: center; color:#F5F5F7">Add Course</h1>
-      <p style="text-align: center;color: red;">Teachers are limited to registering up to 5 courses per semester.
+      <h1 class="myTitle" style="text-align: center;">Add Course</h1>
+      <p class="mySubtitle" style="text-align: center;">Teachers are limited to registering up to 5 courses per
+        semester.
       </p>
 
       <form class="row g-3 col-10 mx-auto justify-content-center" (ngSubmit)="onSubmit()" #registerForm="ngForm">
         <div class="col-md-10">
-          <label for="validationServer01" class="form-label" style="color: #F5F5F7;">Name</label>
+          <label for="validationServer01" class="form-label" style="color: #000;">Name</label>
           <input type="text" class="form-control is-valid" id="validationServer01" value="Mark" required=""
             [(ngModel)]="course.name" name="name">
         </div>
 
         <div class="col-md-10">
-          <label for="validationServer02" class="form-label" style="color: #F5F5F7;">Credits</label>
+          <label for="validationServer02" class="form-label" style="color: #000;">Credits</label>
           <input type="number" class="form-control is-valid" id="validationServer02" value="Otto" required=""
             [(ngModel)]="course.credits" name="credits" max="5" oninput="checkSemesterHours(this)"
             onkeydown="return false" min="1">
@@ -35,13 +37,13 @@
 
 
         <div class="col-md-10 ">
-          <label for="validationServer02" class="form-label" style="color: #F5F5F7;">Description</label>
+          <label for="validationServer02" class="form-label" style="color: #000;">Description</label>
           <input type="description" class="form-control is-valid" id="validationServer02" value="Otto" required=""
             [(ngModel)]="course.description" name="description">
         </div>
 
         <div class="col-md-10">
-          <label for="validationServer02" class="form-label" style="color: #F5F5F7;">semester Hours</label>
+          <label for="validationServer02" class="form-label" style="color: #000;">semester Hours</label>
           <input type="number" class="form-control is-valid" id="validationServer02" value="Otto" required=""
             [(ngModel)]="course.semesterHours" name="semesterHours" max="5" oninput="checkSemesterHours(this)"
             onkeydown="return false" min="1">
@@ -50,19 +52,21 @@
 
 
         <div class="col-md-10 ">
-          <label for="validationServer02" class="form-label" style="color: #F5F5F7;">Semester</label>
-          <input type="semester" class="form-control is-valid" id="validationServer02" disabled="" [value]="semester">
+          <label for="validationServer02" class="form-label" style="color: #000;">Semester</label>
+          <input style="background-color: rgba(0, 0, 0, 0.5);" type="semester" class="form-control is-valid"
+            id="validationServer02" disabled="" [value]="semester">
         </div>
 
 
         <div class="col-md-10 ">
-          <label for="validationServer02" class="form-label" style="color: #F5F5F7;">Major</label>
-          <input type="major" class="form-control is-valid" id="validationServer02" disabled="" [value]="major">
+          <label for="validationServer02" class="form-label" style="color: #000;">Major</label>
+          <input style="background-color: rgba(0, 0, 0, 0.5);" type="major" class="form-control is-valid"
+            id="validationServer02" disabled="" [value]="major">
         </div>
 
 
-        <div class="col-md-10">
-          <button class="btn btn-primary form-control" type="submit" [disabled]="!registerForm.form.valid">Add
+        <div class="col-md-10" style="display: flex; justify-content: center;">
+          <button class="myButton" type="submit" [disabled]="!registerForm.form.valid" style="">Add
             Course</button>
         </div>
 

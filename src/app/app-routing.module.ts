@@ -15,7 +15,6 @@ import { StudentcoursesComponent } from './dashboards/student/studentcourses/stu
 import { StudentRegisterForCourseComponent } from './dashboards/student/student-register-for-course/student-register-for-course.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ScheduleComponent } from './dashboards/teacher/schedule/schedule.component';
-
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },

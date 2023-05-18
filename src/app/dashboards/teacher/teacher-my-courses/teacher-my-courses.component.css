@@ -118,17 +118,3 @@ body {
 .card.fade-out {
   opacity: 0;
 }
-
-.title {
-  color: black;
-  font-family: 700;
-  text-decoration: none;
-  font-size: 18px;
-}
-
-.subTitle {
-  color: black;
-  font-family: 700;
-  text-decoration: none;
-  font-size: 18px;
-}

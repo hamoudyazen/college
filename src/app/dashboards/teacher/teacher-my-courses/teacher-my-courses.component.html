@@ -25,18 +25,17 @@
     <ng-container *ngFor="let course of teacherCourses; let i = index">
       <ng-container *ngIf="!showModal[i]">
         <div class="col">
-          <div class="card h-100 fade-in" style="background-color: #1D1D1F; border-radius: 1rem;">
-            <div class="card-header " style="background-color: #1D1D1F;  border-radius: 30px; border:0px solid black;">
-              <h5 class="card-title" style="color: #F5F5F7; font-weight: 700;">{{ course.name }}</h5>
+          <div class="card h-100 fade-in" style="background-color: #c1cbde; border-radius: 1rem; border: 0px;">
+            <div class="card-header " style="background-color: #c1cbde;  border: 0px; border-radius: 1rem;">
+              <h5 class="myTitle">{{ course.name }}</h5>
             </div>
             <div class="card-body">
-              <p class="card-text" style="color: #F5F5F7;"><strong>Description:</strong> {{ course.description }}</p>
-              <p class="card-text" style="color: #F5F5F7;"><strong>Credits:</strong> {{ course.credits }}</p>
-              <p class="card-text" style="color: #F5F5F7;"><strong>Semester:</strong> {{ course.semester }}</p>
+              <p class="myDescription"><strong>Description:</strong> {{ course.description }}</p>
+              <p class="mySubTitle"><strong>Credits:</strong> {{ course.credits }}</p>
+              <p class="mySubTitle"><strong>Semester:</strong> {{ course.semester }}</p>
               <!-- Button trigger modal -->
-              <button type="button" class="btn1" data-bs-toggle="modal" [attr.data-bs-target]="'#staticBackdrop'+i"
-                (click)="courseID=course.id; showModal[i] = true"
-                style="background-color: #F5F5F7; border: 1px solid #1D1D1F; border-radius: 30px; color: #1D1D1F;">
+              <button type="myButton" class="myButton" data-bs-toggle="modal"
+                [attr.data-bs-target]="'#staticBackdrop'+i" (click)="courseID=course.id; showModal[i] = true">
                 Edit students
               </button>
             </div>
@@ -48,14 +47,13 @@
       <!-- Students modal -->
       <div class="modal fade" [id]="'staticBackdrop'+i" data-bs-backdrop="false" data-bs-keyboard="false" tabindex="-1"
         [attr.aria-labelledby]="'staticBackdropLabel'+i" [attr.aria-hidden]="!showModal[i] ? 'true' : null"
-        (shown.bs.modal)="onModalShow(i)" (hidden.bs.modal)="onModalHide(i)" style="background-color: #F5F5F7;">
+        (shown.bs.modal)="onModalShow(i)" (hidden.bs.modal)="onModalHide(i)" style="background-color: #000000d6;">
         <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
           <div class="modal-content">
-            <div class="modal-header" style="background-color: #1D1D1F; border: 1px solid #1D1D1F; border-radius: 0px;">
-              <h1 class="modal-title fs-5" [id]="'staticBackdropLabel'+i" style="color: #F5F5F7;">Edit Students</h1>
+            <div class="modal-header" style="background-color: #c1cbde; border: 1px solid #c1cbde; border-radius: 0px;">
+              <h1 class="myTitle" [id]="'staticBackdropLabel'+i">Edit Students</h1>
             </div>
             <div class="modal-body">
-              <h5 style="color: #1D1D1F;">Current Students:</h5>
               <ul>
                 <div *ngFor="let student of course.studentsArray" style="margin-bottom: 10px">
                   <div class="input-group">
@@ -81,17 +79,17 @@
               </ul>
             </div>
             <div class="modal-footer" class="btn btn-secondary ml-auto"
-              style="background-color: #1D1D1F; border: 1px #1D1D1F solid; border-radius: 0px;">
+              style="border-radius: 0rem; background-color: #c1cbde; border: 0px;">
               <form #addStudentForm="ngForm" (submit)="addStudent(addStudentForm)">
                 <div class="input-group mb-3">
                   <input type="email" class="form-control" placeholder="Enter new student's email" name="email" ngModel
                     required #emailInput="ngModel" email>
                   <div class="input-group-append">
-                    <button type="submit" class="btn1" [disabled]="!emailInput.valid">Add Student</button>
+                    <button type="submit" class="myButton" [disabled]="!emailInput.valid">Add Student</button>
                   </div>
                 </div>
               </form>
-              <button type="button" class="btn1" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="myButton" data-bs-dismiss="modal">Close</button>
             </div>
 
           </div>
@@ -110,17 +108,17 @@
 <br>
 
 <body class="p-3 m-0 border-0 bd-example fade-in"
-  style="background-color: #fff; border-radius: 1rem; height: fit-content;">
+  style="background-color: #fff; border-radius: 1rem; height: fit-content; border: 0px;">
   <div class="form-container d-flex justify-content-center">
-    <div class="card p-2" style="width: 450px; background-color: #1D1D1F; border-radius: 1rem;">
-      <h1 style="text-align: center; color:#F5F5F7">Add Course Material</h1>
+    <div class="card p-2" style="width: 450px; background-color: #c1cbde; border-radius: 1rem; border: 0px;">
+      <h1 class="myTitle">Add Course Material</h1>
 
       <form class="row g-3 col-10 mx-auto justify-content-center" (ngSubmit)="onSubmit()" #registerForm="ngForm">
 
 
         <div class="col-md-10">
           <div>
-            <label for="validationServer02" class="form-label" style="color: #F5F5F7;">Select a course:</label>
+            <label for="validationServer02" class="form-label" style="color:black;">Select a course:</label>
             <select class="form-select is-valid" id="validationServer02" [(ngModel)]="courseMaterial.materialCourseId"
               name="course_id" required>
               <option *ngFor="let course of teacherCourses" [value]="course.id">{{ course.name }}</option>
@@ -130,20 +128,20 @@
 
 
         <div class="col-md-10">
-          <label for="validationServer01" class="form-label" style="color: #F5F5F7;">Name</label>
+          <label for="validationServer01" class="form-label" style="color: black;">Name</label>
           <input type="text" class="form-control is-valid" id="validationServer01" value="Mark" required=""
             [(ngModel)]="courseMaterial.materialCourseName" name="name">
         </div>
 
 
         <div class="col-md-10 ">
-          <label for="validationServer02" class="form-label" style="color: #F5F5F7;">Description</label>
+          <label for="validationServer02" class="form-label" style="color: black;">Description</label>
           <input type="description" class="form-control is-valid" id="validationServer02" value="Otto" required=""
             [(ngModel)]="courseMaterial.materialCourseDescription" name="description">
         </div>
 
         <input class="form-control" type="file" id="formFile" (change)="choseFile($event)">
-        <button class="btn1" type="submit" (click)="addData()">
+        <button class="myButton" type="submit" (click)="addData()">
           Add Material
         </button>
 

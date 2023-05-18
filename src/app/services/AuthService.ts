@@ -4,7 +4,7 @@ import { catchError, map, Observable, throwError } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
-import { Assignment, Course, Submission, ForgotPasswordResponse, CourseMaterial, LoginRequest, User, SundaySchedule, PublicSchedule } from '../models/allModels';
+import { Assignment, Course, Submission, ForgotPasswordResponse, CourseMaterial, LoginRequest, User, SundaySchedule, Major } from '../models/allModels';
 
 @Injectable({
   providedIn: 'root',
@@ -227,10 +227,26 @@ export class AuthService {
   }
 
 
-  addPublicSchedule(ps: PublicSchedule): Observable<any> {
-    console.log('Sending assignment request:', ps);
-    return this.http.post(`${this.baseUrl}/addPublicSchedule`, ps);
+  addPublicSchedule(schedule: any): Observable<any> {
+    console.log('Sending assignment request:', schedule);
+    return this.http.post(`${this.baseUrl}/addPublicSchedule`, schedule);
   }
+  createMajor(major: Major): Observable<any> {
+    return this.http.post(`${this.baseUrl}/createMajor`, major);
+  }
+
+  getMajorDetails(majorName: string): Observable<Major[]> {
+    return this.http.get<Major[]>(`${this.baseUrl}/getMajorDetails?majorName=${majorName}`);
+  }
+
+  updateSchedule(major: Major): Observable<any> {
+    return this.http.put(`${this.baseUrl}/updateSchedule`, major);
+  }
+
+  updateScheduleEditStatus(id: string, status: boolean): Observable<any> {
+    return this.http.put(`${this.baseUrl}/updateScheduleEditStatus?id=${id}&status=${status}`, {});
+  }
+
 
 
 }

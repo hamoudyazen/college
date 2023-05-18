@@ -4,6 +4,9 @@ body {
   font-family: 'IBM Plex Mono Medium', sans-serif;
   background-color: #F5F5F7;
   color: #1D1D1F;
+  max-height: fit-content;
+  margin: 0;
+  padding: 0;
 }
 
 .btn1 {

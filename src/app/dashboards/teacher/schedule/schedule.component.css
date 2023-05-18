@@ -7,11 +7,11 @@ th,
 td {
     padding: 10px;
     text-align: center;
-    border: 1px solid #ccc;
+    border: 1px solid #000;
 }
 
 th {
-    background-color: #f0f0f0;
+    background-color: #c1cbde;
 }
 
 tbody tr:nth-child(even) {
@@ -28,4 +28,19 @@ tbody td:first-child {
 
 tbody td:not(:first-child) {
     font-style: italic;
+}
+
+/**/
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+ul li {
+    padding: 5px;
+    margin: 5px;
+    border-radius: 1rem;
+    background-color: #c1cbde;
 }

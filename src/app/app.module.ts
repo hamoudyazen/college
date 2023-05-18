@@ -63,7 +63,7 @@ import { SharedService } from './services/SharedService';
     StudentRegisterForCourseComponent,
     ChatComponent,
     StudentscheduleComponent,
-    ScheduleComponent
+    ScheduleComponent,
   ],
   imports: [
     BrowserModule,
