@@ -217,10 +217,8 @@ export class AuthService {
   }
 
   getMajorCourses(majorName: string): Observable<any[]> {
-    const url = `${this.baseUrl}/getMajorCourses?majorName=${encodeURIComponent(majorName)}`;
-    return this.http.get<any[]>(url);
+    return this.http.get<any[]>(`${this.baseUrl}/getMajorCourses?majorName=${majorName}`);
   }
-
 
   getCourseDetails(id: string): Observable<Course[]> {
     return this.http.get<Course[]>(`${this.baseUrl}/getCourseDetails?id=${id}`);
@@ -243,10 +241,18 @@ export class AuthService {
     return this.http.put(`${this.baseUrl}/updateSchedule`, major);
   }
 
+  updateScheduleRemove(major: Major): Observable<any> {
+    return this.http.put(`${this.baseUrl}/updateScheduleRemove`, major);
+  }
+
   updateScheduleEditStatus(id: string, status: boolean): Observable<any> {
     return this.http.put(`${this.baseUrl}/updateScheduleEditStatus?id=${id}&status=${status}`, {});
   }
 
+
+  getUserCourses(email: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/getUserCourses?email=${email}`);
+  }
 
 
 }

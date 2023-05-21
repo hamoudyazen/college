@@ -15,6 +15,8 @@ import { StudentcoursesComponent } from './dashboards/student/studentcourses/stu
 import { StudentRegisterForCourseComponent } from './dashboards/student/student-register-for-course/student-register-for-course.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ScheduleComponent } from './dashboards/teacher/schedule/schedule.component';
+import { StudentscheduleComponent } from './dashboards/student/studentschedule/studentschedule.component';
+
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
@@ -36,6 +38,7 @@ const routes: Routes = [
   { path: 'studentAssignment', component: StudentassignmentComponent, canActivate: [AuthGuard], data: { roles: ['student'] } },
   { path: 'studentCourse', component: StudentcoursesComponent, canActivate: [AuthGuard], data: { roles: ['student'] } },
   { path: 'studentRegisterForCourses', component: StudentRegisterForCourseComponent, canActivate: [AuthGuard], data: { roles: ['student'] } },
+  { path: 'studentSchedule', component: StudentscheduleComponent, canActivate: [AuthGuard], data: { roles: ['student'] } },
 ];
 
 @NgModule({

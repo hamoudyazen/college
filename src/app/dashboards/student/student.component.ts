@@ -20,8 +20,10 @@ export class StudentComponent implements OnInit {
   pagename: string = '';
   isSmallScreen!: boolean;
   showAssignments: boolean = false;
-  showStudentCourses: boolean = true;
+  showStudentCourses: boolean = false;
   showAllAvailableCourses: boolean = false;
+  showStudentSchedule: boolean = true;
+
   showProfile: boolean = false;
   activeLink: string = '';
   profileImg: any;
@@ -52,18 +54,24 @@ export class StudentComponent implements OnInit {
     this.showStudentCourses = false;
     this.showAssignments = false;
     this.showProfile = false;
+    this.showStudentSchedule = false;
+
     if (component === 'Assignments') {
       this.showAllAvailableCourses = false;
       this.showStudentCourses = false;
       this.showProfile = false;
+      this.showStudentSchedule = false;
       this.showAssignments = true;
+
       this.pagename = 'Assignments';
       this.activeLink = 'Assignments';
+
     }
     else if (component === 'My Courses') {
       this.showAllAvailableCourses = false;
       this.showStudentCourses = true;
       this.showAssignments = false;
+      this.showStudentSchedule = false;
       this.showProfile = false;
       this.pagename = 'My Courses';
       this.activeLink = 'My Courses';
@@ -73,6 +81,7 @@ export class StudentComponent implements OnInit {
       this.showStudentCourses = false;
       this.showAssignments = false;
       this.showProfile = false;
+      this.showStudentSchedule = false;
       this.pagename = 'Available Courses';
       this.activeLink = 'Available Courses';
     } else if (component === 'Profile') {
@@ -80,8 +89,17 @@ export class StudentComponent implements OnInit {
       this.showStudentCourses = false;
       this.showAssignments = false;
       this.showProfile = true;
+      this.showStudentSchedule = false;
       this.pagename = 'Profile';
       this.activeLink = 'Profile';
+    } else if (component === 'Schedule') {
+      this.showAllAvailableCourses = false;
+      this.showStudentCourses = false;
+      this.showAssignments = false;
+      this.showProfile = false;
+      this.showStudentSchedule = true;
+      this.pagename = 'Schedule';
+      this.activeLink = 'Schedule';
     }
   }
 

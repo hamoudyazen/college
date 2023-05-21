@@ -100,6 +100,8 @@ export interface Major {
 export interface CourseInsideMajor {
   courseId: string;
   timeSlot: string;
+  title: string;
+  description: string;
 }
 
 

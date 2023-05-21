@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { User, Course } from '../models/allModels';
+import { User, Course, Major } from '../models/allModels';
 import { AuthService } from './AuthService';
 
 @Injectable({
@@ -71,6 +71,45 @@ export class SharedService {
     getTeacherCourses(): Promise<Course[]> {
         return new Promise<Course[]>((resolve, reject) => {
             this.authService.getTeacherCourses(this.id).subscribe(
+                response => {
+                    resolve(response);
+                },
+                error => {
+                    reject(error);
+                }
+            );
+        });
+    }
+
+    getMajorCourses(): Promise<any[]> {
+        return new Promise<any[]>((resolve, reject) => {
+            this.authService.getMajorCourses(this.major).subscribe(
+                response => {
+                    resolve(response);
+                },
+                error => {
+                    reject(error);
+                }
+            );
+        });
+    }
+
+    getStudentCourses(): Promise<any[]> {
+        return new Promise<any[]>((resolve, reject) => {
+            this.authService.getUserCourses(this.email).subscribe(
+                response => {
+                    resolve(response);
+                },
+                error => {
+                    reject(error);
+                }
+            );
+        });
+    }
+
+    getMajorDetails(): Promise<Major[]> {
+        return new Promise<any[]>((resolve, reject) => {
+            this.authService.getMajorDetails(this.major).subscribe(
                 response => {
                     resolve(response);
                 },
