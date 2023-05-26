@@ -254,5 +254,13 @@ export class AuthService {
     return this.http.get<any[]>(`${this.baseUrl}/getUserCourses?email=${email}`);
   }
 
+  getAllCourses(): Observable<Course[]> {
+    return this.http.get<Course[]>(`${this.baseUrl}/getAllCourses`);
+  }
+
+  getAllUsers(): Observable<User[]> {
+    return this.http.get<User[]>(`${this.baseUrl}/getAllUsers`);
+  }
+
 
 }

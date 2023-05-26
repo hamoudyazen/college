@@ -31,8 +31,9 @@
         <td>{{ timeSlot }}</td>
         <td *ngFor="let day of days">
           <div>
-
-            <span>{{ getCourseId(day, timeSlot) }}</span>
+            <span [ngClass]="{'eventColor': getCourseId(day, timeSlot).includes('Event')}">
+              {{ getCourseId(day, timeSlot) }}
+            </span>
           </div>
         </td>
       </tr>

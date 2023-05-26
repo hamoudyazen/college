@@ -18,6 +18,7 @@ export class RegisterCourseComponent implements OnInit {
   userDetailsStorage: User[] = [];
   currentEmail: any;
   course: Course = {
+    id: '',
     capacity: 20,
     credits: 0,
     description: '',

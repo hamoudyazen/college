@@ -1,11 +1,8 @@
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
-import { MatSidenav } from '@angular/material/sidenav';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/AuthService';
-import { Input } from '@angular/core';
-import { Assignment, Course, Submission, ForgotPasswordResponse, CourseMaterial, LoginRequest, User } from 'src/app/models/allModels';
 import { SharedService } from 'src/app/services/SharedService';
+import { Course, Major, User } from 'src/app/models/allModels';
 
 @Component({
   selector: 'app-teacher',
@@ -16,35 +13,44 @@ export class TeacherComponent implements OnInit {
 
   pagename: string = '';
   showRegisterCourse: boolean = false;
-  showTeacherCourse: boolean = false;
+  showTeacherCourse: boolean = true;
   showAssignment: boolean = false;
-  showSchedule: boolean = true;
+  showSchedule: boolean = false;
   showProfile: boolean = false;
   activeLink: string = 'courses';
 
-  //shared
-  teacherCourses: Course[] = [];
+  // Shared properties
   userDetails: User[] = [];
-  currentEmail: any;
+  email: any;
   id: any;
   firstname: any;
   lastname: any;
-  email: any;
-  password: any;
   role: any;
   name: any;
   profileImg: any;
   major: any;
   semester: any;
-  //end of shared
-  majorId: any;
+  // End of shared properties
 
-  constructor(private breakpointObserver: BreakpointObserver, private router: Router, private authService: AuthService, private sharedService: SharedService) { }
-  async ngOnInit(): Promise<void> {
+  majorId: any;
+  allUsers: any;
+  currentMajorDetails: Major[] = [];
+  isBeingEdited: boolean = true;
+  private pageRefreshed: boolean = false; // Flag to track if page has been refreshed
+
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private sharedService: SharedService
+  ) { }
+
+  ngOnInit(): void {
+    this.loadData();
+  }
+
+  async loadData(): Promise<void> {
     try {
       this.userDetails = await this.sharedService.getUserDetails();
-      this.teacherCourses = await this.sharedService.getTeacherCourses();
-      this.userDetails = this.sharedService.userDetails;
       this.email = this.sharedService.email;
       this.id = this.sharedService.id;
       this.firstname = this.sharedService.firstname;
@@ -54,13 +60,26 @@ export class TeacherComponent implements OnInit {
       this.profileImg = this.sharedService.profileImg;
       this.major = this.sharedService.major;
       this.semester = this.sharedService.semester;
+
+      await this.authService.getMajorDetails(this.major).toPromise(); // Wait for the HTTP request to complete
+      this.allUsers = await this.sharedService.getAllUsers();
+
+      for (let i = 0; i < this.allUsers.length; i++) {
+        if (this.allUsers[i].editingSchedule === true) {
+          this.isBeingEdited = false;
+        }
+      }
+
+      this.currentMajorDetails = await this.sharedService.getMajorDetails();
+      this.majorId = this.currentMajorDetails[0].id;
+
       this.authService.getMajorDetails(this.major).subscribe(response => {
         this.majorId = response[0].id;
-        console.log('ddd', this.majorId);
       });
     } catch (error) {
       console.error('Error retrieving data:', error);
     }
+
     if (!navigator.onLine) {
       this.handleUserDisconnect();
     }
@@ -77,13 +96,7 @@ export class TeacherComponent implements OnInit {
   }
 
   handleUserDisconnect() {
-    this.changeEditStatusInDB();
-  }
-
-  changeEditStatusInDB() {
-    this.authService.updateScheduleEditStatus(this.majorId, false).subscribe(response => {
-      console.log('Updated edit status in DB');
-    });
+    this.changeStatusFalse();
   }
 
   toggleComponent(component: string): void {
@@ -96,61 +109,46 @@ export class TeacherComponent implements OnInit {
 
     if (component === 'Add Course') {
       this.showRegisterCourse = true;
-      this.showTeacherCourse = false;
-      this.showProfile = false;
-      this.showAssignment = false;
-      this.showSchedule = false;
-      this.changeEditStatusInDB();
-
+      this.changeStatusFalse();
       this.pagename = 'Add Course';
       this.activeLink = 'Add Course';
-
     } else if (component === 'My Courses') {
       this.showTeacherCourse = true;
-      this.showRegisterCourse = false;
-      this.showProfile = false;
-      this.showAssignment = false;
-      this.showSchedule = false;
-      this.changeEditStatusInDB();
-
+      this.changeStatusFalse();
       this.pagename = 'My Courses';
       this.activeLink = 'My Courses';
     } else if (component === 'Profile') {
-      this.showTeacherCourse = false;
-      this.showRegisterCourse = false;
-      this.showAssignment = false;
-      this.showSchedule = false;
       this.showProfile = true;
-      this.changeEditStatusInDB();
-
+      this.changeStatusFalse();
       this.pagename = 'Profile';
       this.activeLink = 'Profile';
     } else if (component === 'Assignment') {
-      this.showTeacherCourse = false;
-      this.showRegisterCourse = false;
       this.showAssignment = true;
-      this.showProfile = false;
-      this.showSchedule = false;
-      this.changeEditStatusInDB();
-
-
+      this.changeStatusFalse();
       this.pagename = 'Add Assignment';
       this.activeLink = 'Add Assignment';
     } else if (component === 'Schedule') {
-      this.showTeacherCourse = false;
-      this.showRegisterCourse = false;
-      this.showAssignment = false;
-      this.showProfile = false;
       this.showSchedule = true;
-
+      this.chageStatus();
       this.pagename = 'Schedule';
       this.activeLink = 'Schedule';
     }
   }
 
   logOut() {
-    this.changeEditStatusInDB();
+    this.changeStatusFalse();
     localStorage.clear();
     this.router.navigate(['/login']);
+  }
+
+  chageStatus() {
+    this.authService.updateScheduleEditStatus(this.userDetails[0].id!, true).subscribe(response => {
+    });
+  }
+
+  changeStatusFalse() {
+    this.authService.updateScheduleEditStatus(this.userDetails[0].id!, false).subscribe(response => {
+
+    });
   }
 }

@@ -39,6 +39,7 @@ export class LoginComponent {
 
 
   user: User = {
+    editingSchedule: false,
     firstname: '',
     lastname: '',
     birthday: new Date(),
@@ -46,7 +47,7 @@ export class LoginComponent {
     password: '',
     role: '',
     major: '',
-    image: '' // set the default value for the new "image" field
+    image: ''
   };
 
   constructor(private authService: AuthService, private router: Router, private renderer: Renderer2,

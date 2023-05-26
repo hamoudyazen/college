@@ -6,13 +6,17 @@
         <div class="myCardBody">
             <label class="myFormLabel" for="selectedDay">Subject:</label>
             <div class="select-wrapper">
+
                 <select id="selectedDay" name="selectedDay" [(ngModel)]="selectedSubject"
                     (change)="updateSelectBeenMade()">
-                    <option class="myFormInput" *ngFor="let subject of coursesList" [value]="subject">{{ subject }}
+                    <option class="myFormInput" *ngFor="let subject of coursesList" [value]="subject"
+                        [disabled]="hasHoursAddTable(subject)">{{ subject }}
                     </option>
                 </select>
+
             </div>
-            <button class="editSchedule" (click)="showable()">Add course to schedule</button>
+            <button class="editSchedule" (click)="showable()">Add course to
+                schedule</button>
         </div>
         <div *ngIf="showTimetable" style="padding:50px">
 
@@ -82,8 +86,6 @@
     <br>
     <div class="myBody">
         <p class="myCardTitle">Add Custom Event:</p>
-        <h5 style="color: red; padding-left: 10px;padding-right: 10px;">in order to complete the steps , you need to
-            select a day first </h5>
         <form class="myForm"
             (ngSubmit)="submitForm(selectedDay, selectedTimeSlot, eventTitle.value, eventDescription.value)"
             #myForm="ngForm">
@@ -121,6 +123,20 @@
         </form>
 
 
+    </div>
+
+    <div class="myBody">
+
+        <p class="myCardTitle"> AutoFill Course:</p>
+        <div class="form-group" style="padding: 10px;">
+            <label class="myFormLabel" for="selectedDay">Day:</label>
+            <select id="selectedDay" name="selectedDay" [(ngModel)]="selectedSubjectAutoFill">
+                <option class="myFormInput" *ngFor="let subject of coursesList" [value]="subject"
+                    [disabled]="hasHoursAddTable(subject)">{{ subject }}</option>
+            </select>
+        </div>
+        <button class="editSchedule" (click)="autoComplete(selectedSubjectAutoFill)"
+            style="margin-bottom: 10px;">AutoFill</button>
     </div>
 
 </div>

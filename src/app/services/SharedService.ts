@@ -58,7 +58,6 @@ export class SharedService {
         return new Promise<User[]>((resolve, reject) => {
             this.authService.getUserDetails(this.currentEmail).subscribe(
                 response => {
-                    console.log('details: ', response);
                     resolve(response);
                 },
                 error => {
@@ -119,4 +118,76 @@ export class SharedService {
             );
         });
     }
+
+    getCourseTeacher(userRegisteredCourses: any[]): Promise<any[]> {
+        const promises = userRegisteredCourses.map(course => {
+            return new Promise<any>((resolve, reject) => {
+                this.authService.getCourseDetails(course).subscribe(
+                    response => {
+                        resolve(response[0].teacherID);
+                    },
+                    error => {
+                        reject(error);
+                    }
+                );
+            });
+        });
+
+        return Promise.all(promises);
+    }
+
+
+
+    getAllCourseTeachers(): Promise<any[]> {
+        return new Promise<any[]>((resolve, reject) => {
+            this.authService.getAllCourses().subscribe(
+                response => {
+                    resolve(response);
+                },
+                error => {
+                    reject(error);
+                }
+            );
+        });
+    }
+
+    getAllUsers(): Promise<any[]> {
+        return new Promise<any[]>((resolve, reject) => {
+            this.authService.getAllUsers().subscribe(
+                response => {
+                    resolve(response);
+                },
+                error => {
+                    reject(error);
+                }
+            );
+        });
+    }
+
+    createMajor(major: Major): Promise<any[]> {
+        return new Promise<any[]>((resolve, reject) => {
+            this.authService.createMajor(major).subscribe(
+                response => {
+                    resolve(response);
+                },
+                error => {
+                    reject(error);
+                }
+            );
+        });
+    }
+
+    getTeacherAssignmentsSubmissions(id: string): Promise<any[]> {
+        return new Promise<any[]>((resolve, reject) => {
+            this.authService.teacherAssignmentsSubmissions(id).subscribe(
+                response => {
+                    resolve(response);
+                },
+                error => {
+                    reject(error);
+                }
+            );
+        });
+    }
+
 }

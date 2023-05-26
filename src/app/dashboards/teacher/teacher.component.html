@@ -27,7 +27,6 @@
         <p class="profileRole">{{role}}</p>
       </div>
 
-
       <nav class="menu">
         <a class="menu-item" (click)="toggleComponent('My Courses')" [class.active-link]="activeLink === 'My Courses'">
           <img src="./assets/svg/courses.svg" alt="Book Icon" style="max-width: 20px; margin-right: 10px;">
@@ -47,10 +46,15 @@
         </a>
 
         <hr class="myHr">
-        <a class="menu-item" (click)="toggleComponent('Schedule')" [class.active-link]="activeLink === 'Schedule'">
+
+        <a *ngIf="isBeingEdited" class="menu-item" (click)="toggleComponent('Schedule')"
+          [class.active-link]="activeLink === 'Schedule'">
           <img src="./assets/svg/calendar.svg" alt="Schedule Icon" style="max-width: 20px; margin-right: 10px;">
           <span>Schedule</span>
         </a>
+
+
+
 
         <hr class="myHr">
         <a class="menu-item-logout" (click)="logOut()">

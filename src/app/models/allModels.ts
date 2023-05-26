@@ -30,7 +30,7 @@ export interface Assignment {
   studentUploads: any[];
 }
 export interface Course {
-  id?: string;
+  id: string;
   capacity: number;
   credits: number;
   description: string;
@@ -43,6 +43,7 @@ export interface Course {
 }
 export interface User {
   id?: string;
+  editingSchedule: boolean;
   firstname: string;
   lastname: string;
   birthday: Date;
@@ -50,7 +51,7 @@ export interface User {
   password: string;
   role: string;
   major: string;
-  image?: string; // add a new property called "image"
+  image?: string;
 }
 export interface AuthResponse {
   token: string;
@@ -85,7 +86,6 @@ export interface PublicSchedule {
 export interface Major {
   id?: string;
   majorName: string;
-  isBeingEdited: boolean;
   coursesList: string[];
   schedule: {
     sunday: CourseInsideMajor[];

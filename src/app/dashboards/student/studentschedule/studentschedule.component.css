@@ -216,3 +216,16 @@ ul li {
     color: white;
     background: linear-gradient(to right, #6929b3, #353535);
 }
+
+td div {
+    color: #6929b3;
+    font-weight: 700;
+    text-transform: uppercase;
+    background-color: #C1CBDE;
+    padding: 0;
+    margin: 0;
+}
+
+.eventColor {
+    color: green;
+}

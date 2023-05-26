@@ -7,7 +7,6 @@ import { AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { error, get } from 'jquery';
 import { SharedService } from 'src/app/services/SharedService';
 
-
 @Component({
   selector: 'app-schedule',
   templateUrl: './schedule.component.html',
@@ -35,22 +34,28 @@ export class ScheduleComponent implements OnInit {
   coursesList: string[] = [];
   selectedSubject: any;
   selectedSubjectRemove: any;
-  isUserEditing: boolean = false;
-  isBeingEditedByOtherUser: boolean = false;
   showDetailsEvent = false;
   selectedDay: any;
   eventTitle: any;
   eventDescription: any;
   selectedTimeSlot: any;
 
+  courseHours!: number;
+  selectedSubjectAutoFill: any;
+  allCourses: any;
+
+  totalCourseHours = 0;
+  totalCourseHoursLeft = 0;
   constructor(private AuthService: AuthService, private renderer: Renderer2, private firestore: AngularFirestore, private SharedService: SharedService) { }
 
   async ngOnInit(): Promise<void> {
     try {
+
       this.userDetails = await this.SharedService.getUserDetails(); // Assign the resolved value to teacherCourses
       this.teacherCourses = await this.SharedService.getTeacherCourses();
       this.teacherCoursesBackup = await this.SharedService.getTeacherCourses();
-      console.log('adsasdas', this.teacherCourses);
+      this.allCourses = await this.SharedService.getAllCourseTeachers();
+
       this.currentEmail = localStorage.getItem('email');
       this.AuthService.getUserDetails(this.currentEmail).subscribe(
         response => {
@@ -64,11 +69,6 @@ export class ScheduleComponent implements OnInit {
               this.backupMajorEvent = response;
               if (this.backupMajor.length > 0) {
                 this.currentMajorId = this.backupMajor[0].id;
-                this.isBeingEditedByOtherUser = this.backupMajor[0].isBeingEdited;
-                if (this.isBeingEditedByOtherUser) {
-                  alert('This major is being edited by another user. Please try again later.');
-                }
-                console.log('Current Major ID:', this.currentMajorId);
               } else {
                 console.log('No major details found.');
               }
@@ -92,6 +92,7 @@ export class ScheduleComponent implements OnInit {
       console.error('Error retrieving data:', error);
     }
   }
+
   getCourseId(day: string, timeSlot: string): string {
     let courseTitle = '';
 
@@ -152,11 +153,6 @@ export class ScheduleComponent implements OnInit {
     return isUserCourse;
   }
 
-  changeEditStatusInDB() {
-    this.AuthService.updateScheduleEditStatus(this.currentMajorId, this.isUserEditing).subscribe(response => {
-      console.log('Updated edit status in DB');
-    });
-  }
   /**********************************************************************Remove timetable*************************************************************************************/
   disableCheckboxForRemoveList(day: string, timeSlot: string): boolean {
     if (day === 'Sunday') {
@@ -306,8 +302,6 @@ export class ScheduleComponent implements OnInit {
       );
     }
 
-    this.isUserEditing = false;
-    this.changeEditStatusInDB();
     this.showTimetableRemove = false;
   }
   updateSelectBeenMadeRemove() {
@@ -337,28 +331,64 @@ export class ScheduleComponent implements OnInit {
     this.showTimetable = false;
   }
   showable() {
+    this.totalCourseHoursLeft = 0;
+    for (let i = 0; i < this.allCourses.length; i++) {
+      if (this.selectedSubject == this.allCourses[i].name) {
+        this.totalCourseHours = this.allCourses[i].semesterHours;
+        console.log('Total course hours:', this.totalCourseHours);
+      }
+    }
+    for (let i = 0; i < this.backupMajor[0].schedule.sunday.length; i++) {
+      if (this.backupMajor[0].schedule.sunday[i].title === this.selectedSubject) {
+        this.totalCourseHoursLeft++;
+      }
+    }
+    for (let i = 0; i < this.backupMajor[0].schedule.monday.length; i++) {
+      if (this.backupMajor[0].schedule.monday[i].title === this.selectedSubject) {
+        this.totalCourseHoursLeft++;
+      }
+    }
+    for (let i = 0; i < this.backupMajor[0].schedule.tuesday.length; i++) {
+      if (this.backupMajor[0].schedule.tuesday[i].title === this.selectedSubject) {
+        this.totalCourseHoursLeft++;
+      }
+    }
+    for (let i = 0; i < this.backupMajor[0].schedule.wednesday.length; i++) {
+      if (this.backupMajor[0].schedule.wednesday[i].title === this.selectedSubject) {
+        this.totalCourseHoursLeft++;
+      }
+    }
+    for (let i = 0; i < this.backupMajor[0].schedule.thursday.length; i++) {
+      if (this.backupMajor[0].schedule.thursday[i].title === this.selectedSubject) {
+        this.totalCourseHoursLeft++;
+      }
+    }
+    for (let i = 0; i < this.backupMajor[0].schedule.friday.length; i++) {
+      if (this.backupMajor[0].schedule.friday[i].title === this.selectedSubject) {
+        this.totalCourseHoursLeft++;
+      }
+
+
+      this.totalCourseHoursLeft = this.totalCourseHoursLeft + this.selectedSlots.length;
+      console.log('Total course hours left:', this.totalCourseHoursLeft);
+    }
+
+
+
     if (this.selectedSubject === false) {
       this.showTimetable = false;
-      this.isUserEditing = false;
-      this.changeEditStatusInDB();
       alert('Please select a subject first.');
     }
     else if (this.selectedSubject === 'empty') {
       this.showTimetable = false;
-      this.isUserEditing = false;
-      this.changeEditStatusInDB();
       alert('Please select a subject first.');
     }
     else if (this.selectedSubject.length < 0) {
       this.showTimetable = false;
-      this.isUserEditing = false;
-      this.changeEditStatusInDB();
       alert('Please select a subject first.');
     }
     else {
       this.showTimetable = true;
-      this.isUserEditing = true;
-      this.changeEditStatusInDB();
     }
   }
   addToSchedule(day: string, timeSlot: string, event: any) {
@@ -375,6 +405,8 @@ export class ScheduleComponent implements OnInit {
       }
     }
 
+
+
     const selectedSlot = {
       day: day,
       timeSlot: timeSlot,
@@ -384,6 +416,7 @@ export class ScheduleComponent implements OnInit {
     };
 
     if (checked) {
+      this.totalCourseHoursLeft++;
       this.selectedSlots.push(selectedSlot);
       console.log('Added slot:', JSON.stringify(selectedSlot));
     } else {
@@ -391,6 +424,8 @@ export class ScheduleComponent implements OnInit {
         slot => slot.day === day && slot.timeSlot === timeSlot
       );
       if (index > -1) {
+        this.totalCourseHoursLeft--;
+        console.log('total left: ', this.totalCourseHoursLeft);
         this.selectedSlots.splice(index, 1);
         console.log('Removed slot:', JSON.stringify(selectedSlot));
       }
@@ -450,11 +485,36 @@ export class ScheduleComponent implements OnInit {
       );
     }
 
-    this.isUserEditing = false;
-    this.changeEditStatusInDB();
+
     this.showTimetable = false;
+    window.location.reload();
   }
+  myIncludes(day: string, timeSlot: string): boolean {
+    for (let i = 0; i < this.selectedSlots.length; i++) {
+      if (this.selectedSlots[i].day === day && this.selectedSlots[i].timeSlot === timeSlot) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   disableCheckboxForAddList(day: string, timeSlot: string): boolean {
+
+    const foundCourse = this.allCourses.find((course: { name: string; }) => course.name === this.selectedSubject);
+    if (foundCourse) {
+      this.courseHours = foundCourse.semesterHours;
+    }
+
+
+    for (let i = 0; i < this.selectedSlots.length; i++) {
+      if (this.totalCourseHoursLeft >= this.totalCourseHours) {
+        let check = this.myIncludes(day, timeSlot);
+        if (check === false)
+          return true;
+      }
+    }
+
+
     if (day === 'Sunday') {
       for (let i = 0; i < this.backupMajor[0].schedule.sunday.length; i++) {
         if (timeSlot === this.backupMajor[0].schedule.sunday[i].timeSlot) {
@@ -512,17 +572,159 @@ export class ScheduleComponent implements OnInit {
 
     return false;
   }
+
+  hasHoursAddTable(subject: string) {
+    let takenHours = 0;
+
+    for (let i = 0; i < this.allCourses.length; i++) {
+      if (this.allCourses[i].name === subject) {
+        this.courseHours = this.allCourses[i].semesterHours;
+      }
+    }
+
+    if (!this.backupMajor || !this.backupMajor[0] || !this.backupMajor[0].schedule) {
+      return false;
+    }
+
+    if (this.backupMajor[0].schedule.sunday) {
+      for (let i = 0; i < this.backupMajor[0].schedule.sunday.length; i++) {
+        if (this.backupMajor[0].schedule.sunday[i].title === subject) {
+          takenHours++;
+        }
+      }
+    }
+
+    if (this.backupMajor[0].schedule.monday) {
+      for (let i = 0; i < this.backupMajor[0].schedule.monday.length; i++) {
+        if (this.backupMajor[0].schedule.monday[i].title === subject) {
+          takenHours++;
+        }
+      }
+    }
+
+    if (this.backupMajor[0].schedule.tuesday) {
+      for (let i = 0; i < this.backupMajor[0].schedule.tuesday.length; i++) {
+        if (this.backupMajor[0].schedule.tuesday[i].title === subject) {
+          takenHours++;
+        }
+      }
+    }
+
+    if (this.backupMajor[0].schedule.wednesday) {
+      for (let i = 0; i < this.backupMajor[0].schedule.wednesday.length; i++) {
+        if (this.backupMajor[0].schedule.wednesday[i].title === subject) {
+          takenHours++;
+        }
+      }
+    }
+
+    if (this.backupMajor[0].schedule.thursday) {
+      for (let i = 0; i < this.backupMajor[0].schedule.thursday.length; i++) {
+        if (this.backupMajor[0].schedule.thursday[i].title === subject) {
+          takenHours++;
+        }
+      }
+    }
+
+    if (this.backupMajor[0].schedule.friday) {
+      for (let i = 0; i < this.backupMajor[0].schedule.friday.length; i++) {
+        if (this.backupMajor[0].schedule.friday[i].title === subject) {
+          takenHours++;
+        }
+      }
+    }
+
+    if (takenHours >= this.courseHours) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+
+  /*************************************************************************** AutoFill **********************************************************************************************/
+  autoComplete(selectedSubjectAutoFill: string) {
+    // General settings for the function to work :)
+    const tempTimeSlots: any[] = ['8:00-9:00AM', '9:10-10:10AM', '10:20-11:20AM', '11:30-12:30PM', '12:40-13:40PM', '13:50-14:50PM', '15:00-16:00PM', '17:10-18:10PM'];
+
+    for (let i = 0; i < this.allCourses.length; i++) {
+      if (this.allCourses[i].name === selectedSubjectAutoFill) {
+        this.totalCourseHours = this.allCourses[i].semesterHours;
+        const courseToAdd = {
+          courseId: this.allCourses[i].id,
+          description: 'autofill course',
+          timeSlot: '',
+          title: selectedSubjectAutoFill,
+        }
+
+        const backupDaysArr = [
+          this.backupMajor[0].schedule.sunday,
+          this.backupMajor[0].schedule.monday,
+          this.backupMajor[0].schedule.tuesday,
+          this.backupMajor[0].schedule.wednesday,
+          this.backupMajor[0].schedule.thursday,
+          this.backupMajor[0].schedule.friday
+        ];
+
+        let totalCourseHoursLeft = 0;
+        for (let i = 0; i < backupDaysArr.length; i++) {
+          const dayCourses = backupDaysArr[i];
+          for (let j = 0; j < dayCourses.length; j++) {
+            if (dayCourses[j].title === selectedSubjectAutoFill) {
+              totalCourseHoursLeft++;
+            }
+          }
+        }
+        console.log('Total course hours left:', totalCourseHoursLeft);
+
+        for (let i = 0; i < backupDaysArr.length; i++) {
+          const dayCourses = backupDaysArr[i];
+          while (totalCourseHoursLeft < this.totalCourseHours) {
+            let takenSlots = dayCourses.map(course => course.timeSlot); // Get the existing time slots
+
+            let availableTimeSlot = '';
+            for (let j = 0; j < tempTimeSlots.length; j++) {
+              if (!takenSlots.includes(tempTimeSlots[j])) {
+                availableTimeSlot = tempTimeSlots[j];
+                break;
+              }
+            }
+
+            if (availableTimeSlot) {
+              courseToAdd.timeSlot = availableTimeSlot;
+              dayCourses.push({ ...courseToAdd }); // Use spread operator to create a new object
+              totalCourseHoursLeft++;
+            } else {
+              console.log('No available time slots on', ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'][i]);
+              break; // Break the loop if no available time slots
+            }
+          }
+        }
+        break;
+      }
+    }
+
+    // Update the schedule and fetch the most recent major
+    this.AuthService.updateSchedule(this.backupMajor[0]).subscribe(
+      response => {
+        console.log('Schedule updated successfully');
+        this.AuthService.getMajorDetails(this.currentMajor).subscribe(response => {
+          this.backupMajor = response;
+        });
+      },
+      error => {
+        console.log('Error occurred while updating schedule:', error);
+      }
+    );
+  }
+
   /********************************************************************Custom event*******************************************************************************************/
   showableCustom() {
     if (this.showTimetableCustom === false) {
       this.showTimetableCustom = true;
-      this.isUserEditing = true;
-      this.changeEditStatusInDB();
     }
     else {
       this.showTimetableCustom = false;
-      this.isUserEditing = false;
-      this.changeEditStatusInDB();
     }
   }
   disableCheckboxForCustom(day: string, timeSlot: string): boolean {
@@ -604,8 +806,6 @@ export class ScheduleComponent implements OnInit {
     }
   }
 
-
-
   submitForm(selectedDay: string, selectedTimeSlot: string, eventTitle: string, eventDescription: string) {
     const backupMajor = this.backupMajorEvent[0];
 
@@ -659,10 +859,10 @@ export class ScheduleComponent implements OnInit {
     );
   }
   customEventChangeStatus() {
-    this.isUserEditing = true;
+
     this.showTimetable = false;
     this.showTimetableRemove = false;
-    this.changeEditStatusInDB();
+
   }
   isDaySelected(): boolean {
     if (this.selectedDay === 'Sunday' || this.selectedDay === 'Monday' || this.selectedDay === 'Tuesday' || this.selectedDay === 'Wednesday' || this.selectedDay === 'Thursday' || this.selectedDay === 'Friday') {

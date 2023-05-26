@@ -6,7 +6,7 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { finalize } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Assignment, Course, Submission, ForgotPasswordResponse, CourseMaterial, LoginRequest, User } from 'src/app/models/allModels';
-
+import { SharedService } from 'src/app/services/SharedService';
 
 @Component({
   selector: 'app-assignments',
@@ -37,61 +37,20 @@ export class AssignmentsComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private storage: AngularFireStorage,
-    private firestore: AngularFirestore
+    private firestore: AngularFirestore,
+    private SharedService: SharedService
   ) { }
 
-  ngOnInit(): void {
-    const email = localStorage.getItem('email');
+  async ngOnInit(): Promise<void> {
+    try {
+      this.userDetails = await this.SharedService.getUserDetails();
+      this.teacherCourses = await this.SharedService.getTeacherCourses();
+      this.teacherCourses = await this.SharedService.getTeacherAssignmentsSubmissions(this.userDetails[0].id!);
 
-    if (email) {
-      this.authService.getID(email).subscribe(
-        (response) => {
-          this.id = response.id;
-          this.authService.getUserDetails(this.id).subscribe(
-            (response) => {
-              this.userDetails = response;
-              this.name = this.userDetails[0].firstname;
-            },
-            (error) => (this.errorMessage = 'Failed to get teacher details')
-          );
-        },
-        (error) => console.log('')
-      );
-    }
 
-    if (email) {
-      this.authService.getID(email).subscribe((response) => {
-        this.id = response.id;
 
-        this.authService.getTeacherCourses(this.id).subscribe(
-          (courses) => {
-            this.successMessage = response;
-            this.teacherCourses = courses;
-          },
-          (error) => {
-            this.errorMessage = error.message;
-          }
-        );
-      });
-    }
-
-    this.currentemail = email;
-    if (email) {
-      this.authService.getID(email).subscribe((response) => {
-        this.id = response.id;
-
-        this.authService.teacherAssignmentsSubmissions(this.id).subscribe(submissions => {
-          this.submissions = submissions;
-        });
-      });
-    }
-  }
-
-  showLiveToast() {
-    const liveToastEl = document.getElementById('liveToast');
-    if (liveToastEl) {
-      const liveToast = new Toast(liveToastEl);
-      liveToast.show();
+    } catch (error) {
+      console.error('Error retrieving data:', error);
     }
   }
 

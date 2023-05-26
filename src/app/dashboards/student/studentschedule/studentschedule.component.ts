@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Major, User } from 'src/app/models/allModels';
+import { CourseInsideMajor, Major, User } from 'src/app/models/allModels';
 import { SharedService } from 'src/app/services/SharedService';
 import { AuthService } from 'src/app/services/AuthService';
 
@@ -14,14 +14,16 @@ export class StudentscheduleComponent implements OnInit {
   userDetails: User[] = [];
   userRegisteredCourses: any[] = [];
   majorArray: Major[] = [];
+  teacherCourses: any[] = [];
   constructor(private AuthService: AuthService, private SharedService: SharedService) { }
 
   async ngOnInit(): Promise<void> {
     try {
-      this.userDetails = await this.SharedService.getUserDetails(); // Assign the resolved value to teacherCourses
+      this.userDetails = await this.SharedService.getUserDetails()
       this.userRegisteredCourses = await this.SharedService.getStudentCourses();
       this.majorArray = await this.SharedService.getMajorDetails();
-
+      this.teacherCourses = await this.SharedService.getCourseTeacher(this.userRegisteredCourses);
+      console.log('test here', this.teacherCourses);
     } catch (error) {
       console.error('Error retrieving data:', error);
     }
@@ -40,10 +42,14 @@ export class StudentscheduleComponent implements OnInit {
           if (courseExists) {
             courseTitle = this.majorArray[0].schedule.sunday[i].title;
           }
+          else if (this.teacherCourses.includes(courseId)) {
+            courseTitle = this.majorArray[0].schedule.sunday[i].title + '(Event)';
+          }
           break;
         }
       }
-    } else if (day === 'Monday') {
+    }
+    else if (day === 'Monday') {
       for (let i = 0; i < this.majorArray[0].schedule.monday.length; i++) {
         if (timeSlot === this.majorArray[0].schedule.monday[i].timeSlot) {
           const courseId = this.majorArray[0].schedule.monday[i].courseId;
@@ -51,10 +57,14 @@ export class StudentscheduleComponent implements OnInit {
           if (courseExists) {
             courseTitle = this.majorArray[0].schedule.monday[i].title;
           }
+          else if (this.teacherCourses.includes(courseId)) {
+            courseTitle = this.majorArray[0].schedule.monday[i].title + '(Event)';
+          }
           break;
         }
       }
-    } else if (day === 'Tuesday') {
+    }
+    else if (day === 'Tuesday') {
       for (let i = 0; i < this.majorArray[0].schedule.tuesday.length; i++) {
         if (timeSlot === this.majorArray[0].schedule.tuesday[i].timeSlot) {
           const courseId = this.majorArray[0].schedule.tuesday[i].courseId;
@@ -62,16 +72,23 @@ export class StudentscheduleComponent implements OnInit {
           if (courseExists) {
             courseTitle = this.majorArray[0].schedule.tuesday[i].title;
           }
+          else if (this.teacherCourses.includes(courseId)) {
+            courseTitle = this.majorArray[0].schedule.tuesday[i].title + '(Event)';
+          }
           break;
         }
       }
-    } else if (day === 'Wednesday') {
+    }
+    else if (day === 'Wednesday') {
       for (let i = 0; i < this.majorArray[0].schedule.wednesday.length; i++) {
         if (timeSlot === this.majorArray[0].schedule.wednesday[i].timeSlot) {
           const courseId = this.majorArray[0].schedule.wednesday[i].courseId;
           const courseExists = this.userRegisteredCourses.some(course => course === courseId);
           if (courseExists) {
             courseTitle = this.majorArray[0].schedule.wednesday[i].title;
+          }
+          else if (this.teacherCourses.includes(courseId)) {
+            courseTitle = this.majorArray[0].schedule.wednesday[i].title + '(Event)';
           }
           break;
         }
@@ -84,6 +101,9 @@ export class StudentscheduleComponent implements OnInit {
           if (courseExists) {
             courseTitle = this.majorArray[0].schedule.thursday[i].title;
           }
+          else if (this.teacherCourses.includes(courseId)) {
+            courseTitle = this.majorArray[0].schedule.thursday[i].title + '(Event)';
+          }
           break;
         }
       }
@@ -95,12 +115,18 @@ export class StudentscheduleComponent implements OnInit {
           if (courseExists) {
             courseTitle = this.majorArray[0].schedule.friday[i].title;
           }
+          else if (this.teacherCourses.includes(courseId)) {
+            courseTitle = this.majorArray[0].schedule.friday[i].title + '(Event)';
+          }
           break;
         }
       }
     }
-
     return courseTitle;
   }
+
+
+
+
 
 }
