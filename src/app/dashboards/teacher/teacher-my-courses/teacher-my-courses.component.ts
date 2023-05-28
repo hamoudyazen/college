@@ -73,9 +73,6 @@ export class TeacherMyCoursesComponent implements OnInit {
     }
   }
 
-
-
-
   updateStudent(formData: any, student: any, originalEmail: string) {
     const newEmail = formData.email;
 

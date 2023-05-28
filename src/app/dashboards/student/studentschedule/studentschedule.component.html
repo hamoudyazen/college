@@ -32,7 +32,9 @@
         <td *ngFor="let day of days">
           <div>
             <span [ngClass]="{'eventColor': getCourseId(day, timeSlot).includes('Event')}">
-              {{ getCourseId(day, timeSlot) }}
+              <a>{{getCourseId(day, timeSlot) }}</a>
+              <br>
+              <a>{{getRoom(day, timeSlot)}}</a>
             </span>
           </div>
         </td>

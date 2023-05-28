@@ -45,9 +45,7 @@ export class AssignmentsComponent implements OnInit {
     try {
       this.userDetails = await this.SharedService.getUserDetails();
       this.teacherCourses = await this.SharedService.getTeacherCourses();
-      this.teacherCourses = await this.SharedService.getTeacherAssignmentsSubmissions(this.userDetails[0].id!);
-
-
+      this.submissions = await this.SharedService.getTeacherAssignmentsSubmissions(this.userDetails[0].id!);
 
     } catch (error) {
       console.error('Error retrieving data:', error);
@@ -102,19 +100,6 @@ export class AssignmentsComponent implements OnInit {
             () => {
               alert('Assignment added successfully');
               window.location.reload();
-
-            },
-            (error) => {
-              if (
-                error.error &&
-                error.error.message &&
-                error.error.message === 'Assignment already exists'
-              ) {
-                alert('Assignment with this name already exists');
-
-              } else {
-                alert('An error occurred during assignment creation. Please try again later');
-              }
             }
           );
         });

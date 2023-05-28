@@ -15,6 +15,8 @@ import { SharedService } from 'src/app/services/SharedService';
 export class ScheduleComponent implements OnInit {
   days: string[] = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
   timeSlots: string[] = ['8:00-9:00AM', '9:10-10:10AM', '10:20-11:20AM', '11:30-12:30PM', '12:40-13:40PM', '13:50-14:50PM', '15:00-16:00PM', '17:10-18:10PM'];
+  rooms: string[] = ['A-001', 'A-002', 'A-003', 'A-004', 'A-005', 'A-006', 'A-007', 'A-008', 'A-009', 'A-010', 'A-011', 'A-012', 'A-013', 'A-014', 'A-015', 'A-016', 'A-017', 'A-018', 'A-019', 'A-020', 'A-021', 'A-022', 'A-023', 'A-024', 'A-025', 'A-026', 'A-027', 'A-028', 'A-029', 'A-030', 'A-031', 'A-032', 'A-033', 'A-034', 'A-035', 'A-036', 'A-037', 'A-038', 'A-039', 'A-040', 'A-041', 'A-042', 'A-043', 'A-044', 'A-045', 'A-046', 'A-047', 'A-048', 'A-049', 'A-050', 'A-051', 'A-052', 'A-053', 'A-054', 'A-055', 'A-056', 'A-057', 'A-058', 'A-059', 'A-060', 'A-061', 'A-062', 'A-063', 'A-064', 'A-065', 'A-066', 'A-067', 'A-068', 'A-069', 'A-070', 'A-071', 'A-072', 'A-073', 'A-074', 'A-075', 'A-076', 'A-077', 'A-078', 'A-079', 'A-080', 'A-081', 'A-082', 'A-083', 'A-084', 'A-085', 'A-086', 'A-087', 'A-088', 'A-089', 'A-090', 'A-091', 'A-092', 'A-093', 'A-094', 'A-095', 'A-096', 'A-097', 'A-098', 'A-099', 'A-100'];
+
   showTimetable: boolean = false;
   showTimetableRemove: boolean = false;
   showTimetableCustom: boolean = false;
@@ -437,7 +439,7 @@ export class ScheduleComponent implements OnInit {
 
       for (let i = 0; i < this.selectedSlots.length; i++) {
         const selectedSlot = this.selectedSlots[i];
-        const { day, timeSlot, courseId, title, description } = selectedSlot;
+        const { day, timeSlot, courseId, title, description, room } = selectedSlot;
         let scheduleDay;
 
         switch (day) {
@@ -467,7 +469,19 @@ export class ScheduleComponent implements OnInit {
         if (scheduleDay) {
           const isSlotExists = scheduleDay.some(slot => slot.timeSlot === timeSlot);
           if (!isSlotExists) {
-            scheduleDay.push({ courseId: courseId, timeSlot: timeSlot, title: title, description: description });
+            let roomAvailable = '';
+
+            for (let j = 0; j < this.rooms.length; j++) {
+              const roomExists = scheduleDay.some(slot => slot.room === this.rooms[j]);
+              if (!roomExists) {
+                roomAvailable = this.rooms[j];
+                break;
+              }
+            }
+
+            if (roomAvailable) {
+              scheduleDay.push({ courseId: courseId, timeSlot: timeSlot, title: title, description: description, room: roomAvailable });
+            }
           }
         }
       }
@@ -485,10 +499,10 @@ export class ScheduleComponent implements OnInit {
       );
     }
 
-
     this.showTimetable = false;
     window.location.reload();
   }
+
   myIncludes(day: string, timeSlot: string): boolean {
     for (let i = 0; i < this.selectedSlots.length; i++) {
       if (this.selectedSlots[i].day === day && this.selectedSlots[i].timeSlot === timeSlot) {
@@ -644,7 +658,6 @@ export class ScheduleComponent implements OnInit {
 
   /*************************************************************************** AutoFill **********************************************************************************************/
   autoComplete(selectedSubjectAutoFill: string) {
-    // General settings for the function to work :)
     const tempTimeSlots: any[] = ['8:00-9:00AM', '9:10-10:10AM', '10:20-11:20AM', '11:30-12:30PM', '12:40-13:40PM', '13:50-14:50PM', '15:00-16:00PM', '17:10-18:10PM'];
 
     for (let i = 0; i < this.allCourses.length; i++) {
@@ -655,7 +668,10 @@ export class ScheduleComponent implements OnInit {
           description: 'autofill course',
           timeSlot: '',
           title: selectedSubjectAutoFill,
-        }
+          room: '',
+        };
+
+        let roomAvailable;
 
         const backupDaysArr = [
           this.backupMajor[0].schedule.sunday,
@@ -667,36 +683,51 @@ export class ScheduleComponent implements OnInit {
         ];
 
         let totalCourseHoursLeft = 0;
-        for (let i = 0; i < backupDaysArr.length; i++) {
-          const dayCourses = backupDaysArr[i];
-          for (let j = 0; j < dayCourses.length; j++) {
-            if (dayCourses[j].title === selectedSubjectAutoFill) {
+        for (let j = 0; j < backupDaysArr.length; j++) {
+          const dayCourses = backupDaysArr[j];
+          for (let k = 0; k < dayCourses.length; k++) {
+            if (dayCourses[k].title === selectedSubjectAutoFill) {
               totalCourseHoursLeft++;
             }
           }
         }
         console.log('Total course hours left:', totalCourseHoursLeft);
 
-        for (let i = 0; i < backupDaysArr.length; i++) {
-          const dayCourses = backupDaysArr[i];
+        for (let j = 0; j < backupDaysArr.length; j++) {
+          const dayCourses = backupDaysArr[j];
           while (totalCourseHoursLeft < this.totalCourseHours) {
-            let takenSlots = dayCourses.map(course => course.timeSlot); // Get the existing time slots
+            let takenSlots = dayCourses.map(course => course.timeSlot);
 
             let availableTimeSlot = '';
-            for (let j = 0; j < tempTimeSlots.length; j++) {
-              if (!takenSlots.includes(tempTimeSlots[j])) {
-                availableTimeSlot = tempTimeSlots[j];
+            for (let k = 0; k < tempTimeSlots.length; k++) {
+              if (!takenSlots.includes(tempTimeSlots[k])) {
+                availableTimeSlot = tempTimeSlots[k];
                 break;
               }
             }
 
             if (availableTimeSlot) {
-              courseToAdd.timeSlot = availableTimeSlot;
-              dayCourses.push({ ...courseToAdd }); // Use spread operator to create a new object
-              totalCourseHoursLeft++;
+              roomAvailable = undefined;
+              for (let k = 0; k < this.rooms.length; k++) {
+                const roomExists = dayCourses.some(slot => slot.room === this.rooms[k]);
+                if (!roomExists) {
+                  roomAvailable = this.rooms[k];
+                  break;
+                }
+              }
+
+              if (roomAvailable) {
+                courseToAdd.timeSlot = availableTimeSlot;
+                courseToAdd.room = roomAvailable;
+                dayCourses.push({ ...courseToAdd });
+                totalCourseHoursLeft++;
+              } else {
+                console.log('No available room on', ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'][j]);
+                break;
+              }
             } else {
-              console.log('No available time slots on', ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'][i]);
-              break; // Break the loop if no available time slots
+              console.log('No available time slots on', ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'][j]);
+              break;
             }
           }
         }
@@ -704,7 +735,6 @@ export class ScheduleComponent implements OnInit {
       }
     }
 
-    // Update the schedule and fetch the most recent major
     this.AuthService.updateSchedule(this.backupMajor[0]).subscribe(
       response => {
         console.log('Schedule updated successfully');
@@ -717,6 +747,7 @@ export class ScheduleComponent implements OnInit {
       }
     );
   }
+
 
   /********************************************************************Custom event*******************************************************************************************/
   showableCustom() {
@@ -834,16 +865,31 @@ export class ScheduleComponent implements OnInit {
         break;
     }
 
-    if (scheduleDay) {
-      const isSlotExists = scheduleDay.some(slot => slot.timeSlot === selectedTimeSlot);
-      if (!isSlotExists) {
-        scheduleDay.push({
-          courseId: this.userId,
-          timeSlot: selectedTimeSlot,
-          title: this.eventTitle,
-          description: this.eventDescription
-        });
+
+    let availableRoom;
+    for (let i = 0; i < this.rooms.length; i++) {
+      if (this.backupMajor[0].schedule.sunday.some(course => course.room === this.rooms[i])) {
+        availableRoom = this.rooms[i];
+        break;
       }
+    }
+
+    if (availableRoom !== undefined) {
+      if (scheduleDay) {
+        const isSlotExists = scheduleDay.some(slot => slot.timeSlot === selectedTimeSlot);
+        if (!isSlotExists) {
+          scheduleDay.push({
+            courseId: this.userId,
+            timeSlot: selectedTimeSlot,
+            title: this.eventTitle,
+            description: this.eventDescription,
+            room: availableRoom,
+          });
+        }
+      }
+    }
+    else {
+      console.log('No available room');
     }
 
     this.showTimetable = false;

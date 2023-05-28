@@ -63,7 +63,6 @@ export interface SundaySchedule {
   teacherId: string;
   scheduleMajor: string;
   sundayArray: string[];
-
 }
 
 
@@ -102,6 +101,7 @@ export interface CourseInsideMajor {
   timeSlot: string;
   title: string;
   description: string;
+  room: string;
 }
 
 

@@ -126,6 +126,53 @@ export class StudentscheduleComponent implements OnInit {
   }
 
 
+  getRoom(day: string, timeSlot: string): string {
+    for (let i = 0; i < this.majorArray[0].schedule.sunday.length; i++) {
+      if (day === 'Sunday') {
+        if (timeSlot === this.majorArray[0].schedule.sunday[i].timeSlot) {
+          return 'Room: ' + this.majorArray[0].schedule.sunday[i].room.toString();
+        }
+      }
+    }
+    for (let i = 0; i < this.majorArray[0].schedule.monday.length; i++) {
+      if (day === 'Monday') {
+        if (timeSlot === this.majorArray[0].schedule.monday[i].timeSlot) {
+          return "Room: " + this.majorArray[0].schedule.monday[i].room.toString();
+        }
+      }
+    }
+    for (let i = 0; i < this.majorArray[0].schedule.tuesday.length; i++) {
+      if (day === 'Tuesday') {
+        if (timeSlot === this.majorArray[0].schedule.tuesday[i].timeSlot) {
+          return "Room: " + this.majorArray[0].schedule.tuesday[i].room.toString();
+        }
+      }
+    }
+    for (let i = 0; i < this.majorArray[0].schedule.wednesday.length; i++) {
+      if (day === 'Wednesday') {
+        if (timeSlot === this.majorArray[0].schedule.wednesday[i].timeSlot) {
+          return "Room: " + this.majorArray[0].schedule.wednesday[i].room.toString();
+        }
+      }
+    }
+    for (let i = 0; i < this.majorArray[0].schedule.thursday.length; i++) {
+      if (day === 'Thursday') {
+        if (timeSlot === this.majorArray[0].schedule.thursday[i].timeSlot) {
+          return "Room: " + this.majorArray[0].schedule.thursday[i].room.toString();
+        }
+      }
+    }
+    for (let i = 0; i < this.majorArray[0].schedule.friday.length; i++) {
+      if (day === 'Friday') {
+        if (timeSlot === this.majorArray[0].schedule.friday[i].timeSlot) {
+          return "Room: " + this.majorArray[0].schedule.friday[i].room.toString();
+        }
+      }
+    }
+    return "";
+  }
+
+
 
 
 
