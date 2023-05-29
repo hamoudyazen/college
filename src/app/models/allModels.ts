@@ -52,6 +52,7 @@ export interface User {
   role: string;
   major: string;
   image?: string;
+  enrollmentDate?: string;
 }
 export interface AuthResponse {
   token: string;

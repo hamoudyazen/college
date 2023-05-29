@@ -262,5 +262,40 @@ export class AuthService {
     return this.http.get<User[]>(`${this.baseUrl}/getAllUsers`);
   }
 
+  deleteUserAdmin(email: any): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/deleteUserAdmin?email=${email}`);
+  }
+
+
+  updateUserEmailAdmin(userId: string, newEmail: string): Observable<any> {
+    const url = `${this.baseUrl}/updateUserEmailAdmin`;
+    const body = {
+      userId: userId,
+      newEmail: newEmail
+    };
+    return this.http.put(url, body);
+  }
+
+  getAllCoursesAdmin(): Observable<Course[]> {
+    return this.http.get<Course[]>(`${this.baseUrl}/getAllCoursesAdmin`);
+  }
+
+  deleteCourseAdmin(courseID: any): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/deleteCourseAdmin?courseID=${courseID}`);
+  }
+
+  getAllMajorsAdmin(): Observable<Major[]> {
+    return this.http.get<Major[]>(`${this.baseUrl}/getAllMajorsAdmin`);
+  }
+
+  getStudentCoursesList(email: string): Observable<Course[]> {
+    return this.http.get<Course[]>(`${this.baseUrl}/getStudentCoursesList?email=${email}`);
+  }
+
+  deleteStudentFromCourse(email: string, courseId: string): Observable<any> {
+    const params = new HttpParams().set('email', email).set('courseId', courseId);
+    return this.http.delete(`${this.baseUrl}/deleteStudentFromCourse`, { params });
+  }
+
 
 }

@@ -190,4 +190,32 @@ export class SharedService {
         });
     }
 
+
+    getAllCoursesAdmin(): Promise<Course[]> {
+        return new Promise<Course[]>((resolve, reject) => {
+            this.authService.getAllCoursesAdmin().subscribe(
+                response => {
+                    resolve(response);
+                },
+                error => {
+                    reject(error);
+                }
+            );
+        });
+    }
+
+    getAllMajorsAdmin(): Promise<Major[]> {
+        return new Promise<Major[]>((resolve, reject) => {
+            this.authService.getAllMajorsAdmin().subscribe(
+                response => {
+                    resolve(response);
+                },
+                error => {
+                    reject(error);
+                }
+            );
+        });
+    }
+
+
 }

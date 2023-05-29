@@ -1,0 +1,47 @@
+<body class="firstBody">
+    <h3 style="text-decoration: underline;">Courses table:</h3>
+
+    <select [(ngModel)]="selectedMajor" (change)="showMajorTableFunc()">
+        <option *ngFor="let major of allMajors" [value]="major.majorName">{{ major.majorName }}</option>
+    </select>
+
+
+    <div *ngIf="showMajorTable" style="padding-top: 20px;">
+        <table>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th *ngFor="let day of days">{{ day }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let timeSlot of timeSlots">
+                    <td>{{ timeSlot }}</td>
+                    <td *ngFor="let day of days">
+                        <div>
+                            <span [ngClass]="{'eventColor': getCourseId(day, timeSlot).includes('Event')}">
+                                <a>{{getCourseId(day, timeSlot) }}</a>
+                                <br>
+                                <a>{{getRoom(day, timeSlot)}}</a>
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</body>
+<br>
+
+<body class="secondBody">
+    <h3 style="text-decoration: underline;">Create Major:</h3>
+    <form (ngSubmit)="onSubmit()" class="myForm" #registerForm="ngForm" style="background-color: #F0F3F9;">
+
+        <label for="validationServer02">Major Name:</label>
+        <input type="text" class="form-control" id="validationServer02" value="Major name" required
+            [(ngModel)]="major.majorName" name="name">
+
+        <button [disabled]="!registerForm.form.valid" type="submit">Add new major</button>
+    </form>
+</body>

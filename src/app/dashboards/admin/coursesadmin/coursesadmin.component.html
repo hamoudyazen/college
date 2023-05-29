@@ -1,0 +1,99 @@
+<body class="firstBody">
+    <h3 style="text-decoration: underline;">Courses table:</h3>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Teacher ID</th>
+                <th scope="col">Course Hours</th>
+                <th scope="col">Course ID</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let course of allCourses; let i=index">
+                <th scope="row">{{i}}</th>
+                <td>{{course.name}}</td>
+                <td>{{course.teacherID}}</td>
+                <td>{{course.semesterHours}}</td>
+                <td>{{course.id}}</td>
+
+                <td class="py-2">
+                    <button (click)="deleteCourse(course.id)" type="button" class="btn btn-sm btn-danger"
+                        title="Delete Course"><i class="fa fa-trash"></i><svg width="21" height="20" viewBox="0 0 21 20"
+                            fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g clip-path="url(#clip0_2_3)">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M7.35001 15.7143H9.45V8.09524H7.35001V15.7143ZM11.55 15.7143H13.65V8.09524H11.55V15.7143ZM5.25 17.619H15.75V6.19048H5.25V17.619ZM7.35001 4.28571H13.65V2.38095H7.35001V4.28571ZM15.75 4.28571V0.476191H5.25V4.28571H0V6.19048H3.15V19.5238H17.85V6.19048H21V4.28571H15.75Z"
+                                    fill="black" />
+                            </g>
+                            <defs>
+                                <clipPath id="clip0_2_3">
+                                    <rect width="21" height="20" fill="white" />
+                                </clipPath>
+                            </defs>
+                        </svg>
+                    </button>
+
+
+                    <!--<button (click)="promptUsersArray(i)" type="button" class="btn btn-sm btn-success"><i
+                        class="fa fa-trash"></i><svg width="20" height="18" viewBox="0 0 20 18" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M4.56008 8.14046C4.56008 8.95767 5.11281 9.66326 5.90824 9.86688C6.50441 11.3564 8.0791 12.3551 9.83723 12.3551C11.5954 12.3551 13.17 11.3564 13.7661 9.86688C14.5616 9.66326 15.1144 8.95795 15.1144 8.14046C15.1144 7.58883 14.8513 7.06285 14.4089 6.7255L14.4737 6.41187C14.4737 6.29504 14.4648 6.18096 14.4546 6.0666L14.4463 5.97544L14.3598 6.02374C13.1539 6.69684 11.2003 6.99792 9.79914 6.99792C8.43781 6.99792 6.52199 6.70915 5.31078 6.06389L5.22254 6.04315L5.21519 6.13294C5.20769 6.22547 5.20019 6.31772 5.20125 6.42227L5.265 6.72634C4.82289 7.0637 4.56008 7.58939 4.56008 8.14046Z"
+                            fill="black" />
+                        <path
+                            d="M13.9121 13.3972C13.5358 13.1874 13.1804 12.9892 12.8925 12.7845L12.8559 12.7585L12.818 12.7828C12.5489 12.9556 11.5991 13.8435 10.8249 14.5818L10.3973 13.8339L10.6199 13.6907V12.9575H9.05465V13.6907L9.27719 13.8339L8.84949 14.5821C8.07508 13.8435 7.12473 12.9556 6.85598 12.7828L6.81797 12.7585L6.78137 12.7845C6.49355 12.9892 6.13805 13.1874 5.76176 13.3972C4.58875 14.0515 3.25934 14.7928 3.25934 16.1164C3.25934 16.8984 5.3 18 9.83699 18C14.3739 18 16.4146 16.8984 16.4146 16.1164C16.4146 14.7928 15.0851 14.0515 13.9121 13.3972Z"
+                            fill="black" />
+                        <path
+                            d="M5.14336 4.63444C5.14336 5.29007 7.33547 6.12176 9.79914 6.12176C12.2628 6.12176 14.4549 5.2901 14.4549 4.63444V3.73071L16.1543 3.10838V5.07579C15.9563 5.10363 15.8041 5.25811 15.8041 5.44317C15.8041 5.60148 15.92 5.73961 16.087 5.78953L15.749 7.79734H17.339L17.0011 5.78953C17.1679 5.73957 17.2836 5.60145 17.2836 5.44317C17.2836 5.25702 17.1305 5.10226 16.9314 5.07523L16.9232 2.71283C16.9372 2.691 16.9372 2.66832 16.9372 2.65634C16.9372 2.64431 16.9372 2.62195 16.9314 2.62195H16.9313C16.9211 2.53596 16.8527 2.45981 16.7532 2.42325L16.3029 2.25731L10.4512 0.113836C10.2485 0.0393047 10.023 0 9.79914 0C9.57523 0 9.34984 0.0393047 9.14719 0.113836L2.84508 2.42353C2.73324 2.46473 2.66098 2.55618 2.66098 2.65634C2.66098 2.75625 2.73316 2.84769 2.84519 2.88942L5.14336 3.73064V4.63444Z"
+                            fill="black" />
+                    </svg>
+                </button>
+-->
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+<br>
+
+<body class="secondBody">
+    <h3 style="text-decoration: underline;">Add a new student:</h3>
+    <form (ngSubmit)="onSubmit()" class="myForm" #registerForm="ngForm">
+
+        <label for="validationServer02">First Name:</label>
+        <input type="text" class="form-control" id="validationServer02" value="John" required
+            [(ngModel)]="user.firstname" name="Password">
+
+        <label for="validationServer02">Last Name:</label>
+        <input type="text" class="form-control" id="validationServer02" value="Dept" required
+            [(ngModel)]="user.lastname" name="lastname">
+
+        <label for="validationServer02">Birthday:</label>
+        <input type="date" class="form-control" id="validationServer02" value="Dept" required
+            [(ngModel)]="user.birthday" name="birthday">
+
+        <label for="validationServer02" class="form-label">Major:</label>
+        <select id="majorSelect" name="major" title="Select your major" required [(ngModel)]="user.major">
+            <option value="" disabled selected>Select your major</option>
+            <option value="Computer Science">Computer Science</option>
+            <option value="Biology">Biology</option>
+            <option value="Engineering">Engineering</option>
+            <option value="Psychology">Psychology</option>
+            <option value="Art">Art</option>
+        </select>
+
+        <label for="validationServer02" class="form-label">Email:</label>
+        <input type="text" id="validationServer02" value="name@email.com" required [(ngModel)]="user.email"
+            name="email">
+
+        <label for="validationServer02">Password:</label>
+        <input type="password" id="validationServer02" value="*******" required [(ngModel)]="user.password"
+            name="password">
+        <!--Submit-->
+        <button [disabled]="!registerForm.form.valid" type="submit">Register</button>
+    </form>
+</body>

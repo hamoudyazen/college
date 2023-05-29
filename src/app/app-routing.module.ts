@@ -16,6 +16,9 @@ import { StudentRegisterForCourseComponent } from './dashboards/student/student-
 import { HttpClientModule } from '@angular/common/http';
 import { ScheduleComponent } from './dashboards/teacher/schedule/schedule.component';
 import { StudentscheduleComponent } from './dashboards/student/studentschedule/studentschedule.component';
+import { StudentsadminComponent } from './dashboards/admin/studentsadmin/studentsadmin.component';
+import { CoursesadminComponent } from './dashboards/admin/coursesadmin/coursesadmin.component';
+import { SchedulesComponent } from './dashboards/admin/schedules/schedules.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -33,6 +36,11 @@ const routes: Routes = [
   { path: 'assignments', component: AssignmentsComponent, canActivate: [AuthGuard], data: { roles: ['teacher'] } },
   { path: 'teacherSchedule', component: ScheduleComponent, canActivate: [AuthGuard], data: { roles: ['teacher'] } },
 
+  //admin
+
+  { path: 'students', component: StudentsadminComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } },
+  { path: 'courses', component: CoursesadminComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } },
+  { path: 'schedules', component: SchedulesComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } },
 
   //student
   { path: 'studentAssignment', component: StudentassignmentComponent, canActivate: [AuthGuard], data: { roles: ['student'] } },

@@ -2,7 +2,7 @@ import { Component, Renderer2, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/AuthService';
 import { Router } from '@angular/router';
 import { Toast } from 'bootstrap';
-import { Assignment, Course, Submission, ForgotPasswordResponse, CourseMaterial, LoginRequest, User } from 'src/app/models/allModels';
+import { Assignment, Course, Submission, ForgotPasswordResponse, CourseMaterial, LoginRequest, User, Major } from 'src/app/models/allModels';
 import { HttpClient } from '@angular/common/http';
 
 
@@ -25,7 +25,7 @@ export class LoginComponent {
   loginForm: any;
   successMessage: any;
   currentRole: any | undefined;
-
+  allMajors: Major[] = [];
   id: string | undefined;
 
   userDetails: User[] = [];
@@ -65,6 +65,9 @@ export class LoginComponent {
     const lastAttemptTime = storedData.lastAttemptTime || 0;
     const loginCounter = storedData.loginCounter || 0;
 
+    this.authService.getAllMajorsAdmin().subscribe(response => {
+      this.allMajors = response;
+    });
     // Check if the user has exceeded the maximum number of login attempts
     const noAccessButton = this.checkUserLimit(loginCounter, lastAttemptTime);
 

@@ -45,6 +45,9 @@ import { StudentscheduleComponent } from './dashboards/student/studentschedule/s
 import { ScheduleComponent } from './dashboards/teacher/schedule/schedule.component';
 import { Socket } from 'ngx-socket-io';
 import { SharedService } from './services/SharedService';
+import { StudentsadminComponent } from './dashboards/admin/studentsadmin/studentsadmin.component';
+import { CoursesadminComponent } from './dashboards/admin/coursesadmin/coursesadmin.component';
+import { SchedulesComponent } from './dashboards/admin/schedules/schedules.component';
 
 @NgModule({
   declarations: [
@@ -64,6 +67,9 @@ import { SharedService } from './services/SharedService';
     ChatComponent,
     StudentscheduleComponent,
     ScheduleComponent,
+    StudentsadminComponent,
+    CoursesadminComponent,
+    SchedulesComponent,
   ],
   imports: [
     BrowserModule,

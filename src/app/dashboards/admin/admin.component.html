@@ -17,23 +17,91 @@
         </div>
 
         <aside class="sidebar">
-            <h3>Menu</h3>
+            <div class="profile">
+                <img type="image" src="{{profileImg}}" class="profile-image">
+                <span class="svg-container">
+                    <img (click)="toggleComponent('Profile')" [class.active-link]="activeLink === 'Profile'"
+                        src="./assets/svg/settings.svg" alt="Courses" class="svg-icon-settings">
+                </span>
+                <p class="profileTitle">{{name}}</p>
+                <p class="profileRole">{{role}}</p>
+            </div>
 
             <nav class="menu">
-                <a href="#" class="menu-item is-active">Home</a>
+                <a class="menu-item" (click)="toggleComponent('Students')"
+                    [class.active-link]="activeLink === 'Students'">
+                    <img src="./assets/svg/courses.svg" alt="Book Icon" style="max-width: 20px; margin-right: 10px;">
+                    <span>Manage Students</span>
+                </a>
+
                 <hr class="myHr">
-                <a href="#" class="menu-item">About</a>
+
+                <a class="menu-item" (click)="toggleComponent('Courses')"
+                    [class.active-link]="activeLink === 'Courses'">
+                    <img src="./assets/svg/courses.svg" alt="Book Icon" style="max-width: 20px; margin-right: 10px;">
+                    <span>Manage Courses</span>
+                </a>
                 <hr class="myHr">
-                <a href="#" class="menu-item">Portfolio</a>
+
+                <a class="menu-item" (click)="toggleComponent('Schedules')"
+                    [class.active-link]="activeLink === 'Schedules'">
+                    <img src="./assets/svg/courses.svg" alt="Book Icon" style="max-width: 20px; margin-right: 10px;">
+                    <span>Manage Schedules</span>
+                </a>
+
+
                 <hr class="myHr">
-                <a href="#" class="menu-item">Contact</a>
+                <a class="menu-item-logout" (click)="logOut()">
+                    <img src="./assets/svg/logout.svg" alt="Logout Icon" style="max-width: 20px; margin-right: 10px;">
+                    <span>Logout</span>
+                </a>
+
             </nav>
+
 
         </aside>
 
         <main class="content">
-            <h1>Welcome, Human</h1>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Officia, explicabo!</p>
+
+
+            <ng-container *ngIf="showStudents">
+                <a class="title">Major: </a>{{major}}
+                <br>
+                <a class="title">Semester: </a>{{semester}}
+                <br>
+                <br>
+                <app-studentsadmin></app-studentsadmin>
+            </ng-container>
+
+            <ng-container *ngIf="showCourses">
+                <a class="title">Major: </a>{{major}}
+                <br>
+                <a class="title">Semester: </a>{{semester}}
+                <br>
+                <br>
+                <app-coursesadmin></app-coursesadmin>
+            </ng-container>
+
+            <ng-container *ngIf="showProfile">
+                <a class="title">Major: </a>{{major}}
+                <br>
+                <a class="title">Semester: </a>{{semester}}
+                <br>
+                <br>
+                <app-profile></app-profile>
+            </ng-container>
+
+            <ng-container *ngIf="showSchedules">
+                <a class="title">Major: </a>{{major}}
+                <br>
+                <a class="title">Semester: </a>{{semester}}
+                <br>
+                <br>
+                <app-schedules></app-schedules>
+            </ng-container>
+
+
+
         </main>
     </div>
 

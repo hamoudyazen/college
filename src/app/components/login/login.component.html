@@ -219,11 +219,7 @@
                     <select class="form-select" id="majorSelect" name="major" title="Select your major" required
                       [(ngModel)]="user.major">
                       <option value="" disabled selected>Select your major</option>
-                      <option value="Computer Science">Computer Science</option>
-                      <option value="Biology">Biology</option>
-                      <option value="Engineering">Engineering</option>
-                      <option value="Psychology">Psychology</option>
-                      <option value="Art">Art</option>
+                      <option *ngFor="let major of allMajors" value="{{major.majorName}}">{{major.majorName}}</option>
                     </select>
                   </div>
                   <!-- Email -->

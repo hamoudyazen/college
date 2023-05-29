@@ -1,3 +1,14 @@
+@import url('https://fonts.cdnfonts.com/css/ibm-plex-mono-3');
+
+body {
+    font-family: 'IBM Plex Mono Medium', sans-serif;
+    background-color: #F5F5F7;
+    color: #1D1D1F;
+    max-height: fit-content;
+    padding: 0;
+    margin: 0;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -80,8 +91,11 @@
     background-color: #FFFFFF;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     z-index: 100;
+    position: sticky;
+    top: 0;
 
 }
+
 
 .sidebar h3 {
     color: #707793;
@@ -92,7 +106,8 @@
 
 .sidebar .menu {
     margin: 0 -1rem;
-
+    position: sticky;
+    top: 0;
 }
 
 .sidebar .menu .menu-item {
@@ -115,19 +130,22 @@
 }
 
 
+
+
 .sidebar .menu .menu-item:hover,
-.sidebar .menu .menu-item.is-active {
-    color: #3bba9c;
+.sidebar .menu .menu-item.active-link {
     background-color: #F0F3FA;
     border-radius: 1rem;
-
 }
 
-.sidebar .menu .menu-item:hover {
+.sidebar .menu .menu-item:active,
+.sidebar .menu .menu-item.active-link:active {
     background-color: #F0F3FA;
     border-radius: 1rem;
-
 }
+
+
+
 
 .content {
     flex: 1 1 0;
@@ -177,4 +195,89 @@
     .sidebar.is-active {
         left: 0;
     }
+}
+
+.profile {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: sticky;
+    top: 0;
+}
+
+.profile-image {
+    max-width: 100px;
+    border-radius: 1rem;
+}
+
+.profileTitle {
+    font-size: 18px;
+    color: black;
+    font-weight: 700;
+}
+
+.profileRole {
+    font-size: 15px;
+    color: black;
+    font-weight: 400;
+    padding-bottom: 50px;
+}
+
+
+/*logout*/
+.sidebar .menu .menu-item-logout {
+    display: block;
+    padding: 1em;
+    color: #000000;
+    text-decoration: none;
+    transition: 0.2s linear;
+    font-weight: 700;
+    background-color: #ff00006f;
+
+    border-radius: 1rem;
+}
+
+.sidebar .menu .menu-item-logout:hover,
+.sidebar .menu .menu-item-logout.active-link {
+    background-color: #ff00006f;
+    border-radius: 1rem;
+}
+
+.sidebar .menu .menu-item-logout:active,
+.sidebar .menu .menu-item-logout.active-link:active {
+    background-color: #F0F3FA;
+    border-radius: 1rem;
+}
+
+.profile {
+    position: relative;
+}
+
+.svg-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(50%, -50%);
+}
+
+.svg-icon {
+    width: 24px;
+    /* Adjust the width and height as needed */
+    height: 24px;
+    /* Additional styling for the SVG if desired */
+}
+
+.svg-icon-settings {
+    width: 24px;
+    /* Adjust the width and height as needed */
+    height: 24px;
+    rotate: 0deg;
+}
+
+.svg-icon-settings:hover {
+    rotate: 90deg;
+    transition: 0.2s linear;
+
 }

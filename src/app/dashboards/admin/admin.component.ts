@@ -1,9 +1,8 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
-import { Assignment, Course, Submission, ForgotPasswordResponse, CourseMaterial, LoginRequest, User } from 'src/app/models/allModels';
-import { ViewChild } from '@angular/core';
-import { MatSidenav } from '@angular/material/sidenav';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/AuthService';
+import { SharedService } from 'src/app/services/SharedService';
+import { Course, Major, User } from 'src/app/models/allModels';
 
 @Component({
   selector: 'app-admin',
@@ -12,20 +11,121 @@ import { Router } from '@angular/router';
 })
 export class AdminComponent implements OnInit {
 
-  constructor(private renderer: Renderer2) { }
+  pagename: string = '';
+  showStudents: boolean = false;
+  showCourses: boolean = false;
+  showSchedules: boolean = true;
+  showProfile: boolean = false;
+  activeLink: string = 'courses';
+
+  // Shared properties
+  userDetails: User[] = [];
+  email: any;
+  id: any;
+  firstname: any;
+  lastname: any;
+  role: any;
+  name: any;
+  profileImg: any;
+  major: any;
+  semester: any;
+  // End of shared properties
+
+  majorId: any;
+  allUsers: any;
+  currentMajorDetails: Major[] = [];
+  isBeingEdited: boolean = true;
+  private pageRefreshed: boolean = false; // Flag to track if page has been refreshed
+
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private sharedService: SharedService
+  ) { }
 
   ngOnInit(): void {
-    const script = this.renderer.createElement('script');
-    script.src = '/assets/js/sidebar.js';
-    script.type = 'text/javascript';
-    script.onload = () => {
-      const ipAddress = (window as any).getIP();
-      console.log(ipAddress); // handle the returned IP address here
-      localStorage.setItem('ipAddress', ipAddress);
-    };
-    this.renderer.appendChild(document.head, script);
+    this.loadData();
+  }
+
+  async loadData(): Promise<void> {
+    try {
+      this.userDetails = await this.sharedService.getUserDetails();
+      this.email = this.sharedService.email;
+      this.id = this.sharedService.id;
+      this.firstname = this.sharedService.firstname;
+      this.lastname = this.sharedService.lastname;
+      this.role = this.sharedService.role;
+      this.name = this.sharedService.name;
+      this.profileImg = this.sharedService.profileImg;
+      this.major = this.sharedService.major;
+      this.semester = this.sharedService.semester;
+
+      await this.authService.getMajorDetails(this.major).toPromise(); // Wait for the HTTP request to complete
+      this.allUsers = await this.sharedService.getAllUsers();
+
+      for (let i = 0; i < this.allUsers.length; i++) {
+        if (this.allUsers[i].editingSchedule === true) {
+          this.isBeingEdited = false;
+        }
+      }
+
+      this.currentMajorDetails = await this.sharedService.getMajorDetails();
+      this.majorId = this.currentMajorDetails[0].id;
+
+      this.authService.getMajorDetails(this.major).subscribe(response => {
+        this.majorId = response[0].id;
+      });
+    } catch (error) {
+      console.error('Error retrieving data:', error);
+    }
+  }
 
 
+
+  toggleComponent(component: string): void {
+    this.showStudents = false;
+    this.showCourses = false;
+    this.showProfile = false;
+    this.showSchedules = false;
+
+    this.activeLink = component;
+
+    if (component === 'Students') {
+      this.showStudents = true;
+      this.showCourses = false;
+      this.showProfile = false;
+      this.showSchedules = false;
+      this.pagename = 'Students';
+      this.activeLink = 'Students';
+    }
+    else if (component === 'Courses') {
+      this.showStudents = false;
+      this.showCourses = true;
+      this.showProfile = false;
+      this.showSchedules = false;
+      this.pagename = 'Courses';
+      this.activeLink = 'Courses';
+    }
+    else if (component === 'Profile') {
+      this.showStudents = false;
+      this.showCourses = false;
+      this.showProfile = true;
+      this.showSchedules = false;
+      this.pagename = 'Profile';
+      this.activeLink = 'Profile';
+    } else if (component === 'Schedules') {
+      this.showStudents = false;
+      this.showCourses = false;
+      this.showProfile = false;
+      this.showSchedules = true;
+      this.pagename = 'Profile';
+      this.activeLink = 'Profile';
+    }
+
+  }
+  logOut() {
+    localStorage.clear();
+    this.router.navigate(['/login']);
   }
 
 }
