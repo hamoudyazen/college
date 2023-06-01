@@ -95,92 +95,84 @@ export class SchedulesComponent {
     if (this.majorArray.length > 0 && this.majorArray[0].schedule) {
       if (day === 'Sunday') {
         for (let i = 0; i < this.majorArray[0].schedule.sunday.length; i++) {
+          const courseId = this.majorArray[0].schedule.sunday[i].courseId;
           if (timeSlot === this.majorArray[0].schedule.sunday[i].timeSlot) {
-            const courseId = this.majorArray[0].schedule.sunday[i].courseId;
-            const courseExists = this.userRegisteredCourses.some(course => course === courseId);
-            if (courseExists) {
-              courseTitle = this.majorArray[0].schedule.sunday[i].title;
-            }
-            else if (this.teacherCourses.includes(courseId)) {
-              courseTitle = this.majorArray[0].schedule.sunday[i].title + '(Event)';
-            }
-            break;
+            return this.majorArray[0].schedule.sunday[i].title.toString();
+          }
+          else if (this.teacherCourses.includes(courseId)) {
+            courseTitle = this.majorArray[0].schedule.monday[i].title + '(Event)';
+          }
+
+        }
+      }
+      else if (day === 'Monday') {
+        for (let i = 0; i < this.majorArray[0].schedule.monday.length; i++) {
+          const courseId = this.majorArray[0].schedule.monday[i].courseId;
+          if (timeSlot === this.majorArray[0].schedule.monday[i].timeSlot) {
+            return this.majorArray[0].schedule.monday[i].title.toString();
+          }
+          else if (this.teacherCourses.includes(courseId)) {
+            courseTitle = this.majorArray[0].schedule.monday[i].title + '(Event)';
           }
         }
       }
       else if (day === 'Monday') {
         for (let i = 0; i < this.majorArray[0].schedule.monday.length; i++) {
+          const courseId = this.majorArray[0].schedule.monday[i].courseId;
           if (timeSlot === this.majorArray[0].schedule.monday[i].timeSlot) {
-            const courseId = this.majorArray[0].schedule.monday[i].courseId;
-            const courseExists = this.userRegisteredCourses.some(course => course === courseId);
-            if (courseExists) {
-              courseTitle = this.majorArray[0].schedule.monday[i].title;
-            }
-            else if (this.teacherCourses.includes(courseId)) {
-              courseTitle = this.majorArray[0].schedule.monday[i].title + '(Event)';
-            }
-            break;
+            return this.majorArray[0].schedule.monday[i].title.toString();
+          }
+          else if (this.teacherCourses.includes(courseId)) {
+            courseTitle = this.majorArray[0].schedule.monday[i].title + '(Event)';
           }
         }
       }
       else if (day === 'Tuesday') {
         for (let i = 0; i < this.majorArray[0].schedule.tuesday.length; i++) {
+          const courseId = this.majorArray[0].schedule.tuesday[i].courseId;
           if (timeSlot === this.majorArray[0].schedule.tuesday[i].timeSlot) {
-            const courseId = this.majorArray[0].schedule.tuesday[i].courseId;
-            const courseExists = this.userRegisteredCourses.some(course => course === courseId);
-            if (courseExists) {
-              courseTitle = this.majorArray[0].schedule.tuesday[i].title;
-            }
-            else if (this.teacherCourses.includes(courseId)) {
-              courseTitle = this.majorArray[0].schedule.tuesday[i].title + '(Event)';
-            }
-            break;
+            return this.majorArray[0].schedule.tuesday[i].title.toString();
+          }
+          else if (this.teacherCourses.includes(courseId)) {
+            courseTitle = this.majorArray[0].schedule.tuesday[i].title + '(Event)';
           }
         }
       }
       else if (day === 'Wednesday') {
         for (let i = 0; i < this.majorArray[0].schedule.wednesday.length; i++) {
+          const courseId = this.majorArray[0].schedule.wednesday[i].courseId;
           if (timeSlot === this.majorArray[0].schedule.wednesday[i].timeSlot) {
-            const courseId = this.majorArray[0].schedule.wednesday[i].courseId;
-            const courseExists = this.userRegisteredCourses.some(course => course === courseId);
-            if (courseExists) {
-              courseTitle = this.majorArray[0].schedule.wednesday[i].title;
-            }
-            else if (this.teacherCourses.includes(courseId)) {
-              courseTitle = this.majorArray[0].schedule.wednesday[i].title + '(Event)';
-            }
-            break;
+            return this.majorArray[0].schedule.wednesday[i].title.toString();
           }
-        }
-      } else if (day === 'Thursday') {
-        for (let i = 0; i < this.majorArray[0].schedule.thursday.length; i++) {
-          if (timeSlot === this.majorArray[0].schedule.thursday[i].timeSlot) {
-            const courseId = this.majorArray[0].schedule.thursday[i].courseId;
-            const courseExists = this.userRegisteredCourses.some(course => course === courseId);
-            if (courseExists) {
-              courseTitle = this.majorArray[0].schedule.thursday[i].title;
-            }
-            else if (this.teacherCourses.includes(courseId)) {
-              courseTitle = this.majorArray[0].schedule.thursday[i].title + '(Event)';
-            }
-            break;
-          }
-        }
-      } else if (day === 'Friday') {
-        for (let i = 0; i < this.majorArray[0].schedule.friday.length; i++) {
-          if (timeSlot === this.majorArray[0].schedule.friday[i].timeSlot) {
-            const courseId = this.majorArray[0].schedule.friday[i].courseId;
-            const courseExists = this.userRegisteredCourses.some(course => course === courseId);
-            if (courseExists) {
-              courseTitle = this.majorArray[0].schedule.friday[i].title;
-            }
-            else if (this.teacherCourses.includes(courseId)) {
-              courseTitle = this.majorArray[0].schedule.friday[i].title + '(Event)';
-            }
-            break;
+          else if (this.teacherCourses.includes(courseId)) {
+            courseTitle = this.majorArray[0].schedule.wednesday[i].title + '(Event)';
           }
         }
       }
+      else if (day === 'Thursday') {
+        for (let i = 0; i < this.majorArray[0].schedule.thursday.length; i++) {
+          const courseId = this.majorArray[0].schedule.thursday[i].courseId;
+          if (timeSlot === this.majorArray[0].schedule.thursday[i].timeSlot) {
+            return this.majorArray[0].schedule.thursday[i].title.toString();
+          }
+          else if (this.teacherCourses.includes(courseId)) {
+            courseTitle = this.majorArray[0].schedule.thursday[i].title + '(Event)';
+          }
+        }
+      }
+      else if (day === 'Friday') {
+        for (let i = 0; i < this.majorArray[0].schedule.friday.length; i++) {
+          const courseId = this.majorArray[0].schedule.friday[i].courseId;
+          if (timeSlot === this.majorArray[0].schedule.friday[i].timeSlot) {
+            return this.majorArray[0].schedule.friday[i].title.toString();
+          }
+          else if (this.teacherCourses.includes(courseId)) {
+            courseTitle = this.majorArray[0].schedule.friday[i].title + '(Event)';
+          }
+        }
+      }
+
+
     }
     return courseTitle;
   }

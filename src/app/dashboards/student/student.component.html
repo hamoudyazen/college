@@ -44,6 +44,11 @@
               [ngClass]="{'active-link': activeLink === 'Schedule'}">Schedule</a>
           </li>
 
+          <li class="nav-item" style="color: white;">
+            <a style="color: white;" class="nav-link" (click)="toggleComponent('Financial')"
+              [ngClass]="{'active-link': activeLink === 'Financial'}">Financial</a>
+          </li>
+
         </ul>
         <!-- Profile -->
 
@@ -107,6 +112,11 @@
   <ng-container *ngIf="showStudentSchedule">
     <div style="padding: 10px; font-weight: 700;"> {{pagename}}</div>
     <app-studentschedule></app-studentschedule>
+  </ng-container>
+
+  <ng-container *ngIf="showFinancial">
+    <div style="padding: 10px; font-weight: 700;"> {{pagename}}</div>
+    <app-financial></app-financial>
   </ng-container>
 
 </body>

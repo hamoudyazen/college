@@ -3,8 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Router } from '@angular/router';
-import { Assignment, Course, Submission, ForgotPasswordResponse, CourseMaterial, LoginRequest, User, SundaySchedule, Major } from '../models/allModels';
+import { Assignment, Course, Submission, ForgotPasswordResponse, CourseMaterial, LoginRequest, User, SundaySchedule, Major, ExpensesAndIncome } from '../models/allModels';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +18,6 @@ export class AuthService {
     private http: HttpClient,
     private fireauth: AngularFireAuth,
     private firestore: AngularFirestore,
-    private router: Router
   ) { }
 
 
@@ -297,5 +295,12 @@ export class AuthService {
     return this.http.delete(`${this.baseUrl}/deleteStudentFromCourse`, { params });
   }
 
+  getExpensesAndIncome(userID: string): Observable<ExpensesAndIncome[]> {
+    return this.http.get<ExpensesAndIncome[]>(`${this.baseUrl}/getExpensesAndIncome?userID=${userID}`);
+  }
+
+  createExpensesAndIncome(expensesAndIncome: ExpensesAndIncome): Observable<any> {
+    return this.http.post(`${this.baseUrl}/createExpensesAndIncome`, expensesAndIncome);
+  }
 
 }

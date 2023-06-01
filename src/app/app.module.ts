@@ -5,7 +5,7 @@ import 'bootstrap';
 import '@popperjs/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgModel } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
 import { AdminComponent } from './dashboards/admin/admin.component';
@@ -48,7 +48,12 @@ import { SharedService } from './services/SharedService';
 import { StudentsadminComponent } from './dashboards/admin/studentsadmin/studentsadmin.component';
 import { CoursesadminComponent } from './dashboards/admin/coursesadmin/coursesadmin.component';
 import { SchedulesComponent } from './dashboards/admin/schedules/schedules.component';
+import { FinancialComponent } from './dashboards/student/Financial Folder/financial/financial.component';
+import { FinancialAddComponent } from './dashboards/student/Financial Folder/financial-add/financial-add.component';
+import { FinancialAnalysisComponent } from './dashboards/student/Financial Folder/financial-analysis/financial-analysis.component';
+import { FinancialCalendarComponent } from './dashboards/student/Financial Folder/financial-calendar/financial-calendar.component';
 
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 @NgModule({
   declarations: [
     AppComponent,
@@ -70,6 +75,10 @@ import { SchedulesComponent } from './dashboards/admin/schedules/schedules.compo
     StudentsadminComponent,
     CoursesadminComponent,
     SchedulesComponent,
+    FinancialComponent,
+    FinancialAddComponent,
+    FinancialAnalysisComponent,
+    FinancialCalendarComponent,
   ],
   imports: [
     BrowserModule,
@@ -89,6 +98,7 @@ import { SchedulesComponent } from './dashboards/admin/schedules/schedules.compo
     NgbModule, MatAutocompleteModule, DatePipe, MatDividerModule,
     provideStorage(() => getStorage()),
     AngularFireStorageModule, MatFormFieldModule,
+    NgxChartsModule,
   ],
   providers: [AuthGuard, SharedService],
   bootstrap: [AppComponent]

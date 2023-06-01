@@ -104,5 +104,13 @@ export interface CourseInsideMajor {
   description: string;
   room: string;
 }
-
+export interface ExpensesAndIncome {
+  type: string;
+  id?: string;
+  amount: number;
+  category: string;
+  description: string;
+  date: Date;
+  userId: string;
+}
 

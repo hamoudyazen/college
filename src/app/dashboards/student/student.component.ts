@@ -22,7 +22,9 @@ export class StudentComponent implements OnInit {
   showAssignments: boolean = false;
   showStudentCourses: boolean = false;
   showAllAvailableCourses: boolean = false;
-  showStudentSchedule: boolean = true;
+  showStudentSchedule: boolean = false;
+  showFinancial: boolean = true;
+
 
   showProfile: boolean = false;
   activeLink: string = '';
@@ -55,12 +57,14 @@ export class StudentComponent implements OnInit {
     this.showAssignments = false;
     this.showProfile = false;
     this.showStudentSchedule = false;
+    this.showFinancial = false;
 
     if (component === 'Assignments') {
       this.showAllAvailableCourses = false;
       this.showStudentCourses = false;
       this.showProfile = false;
       this.showStudentSchedule = false;
+      this.showFinancial = false;
       this.showAssignments = true;
 
       this.pagename = 'Assignments';
@@ -72,6 +76,7 @@ export class StudentComponent implements OnInit {
       this.showStudentCourses = true;
       this.showAssignments = false;
       this.showStudentSchedule = false;
+      this.showFinancial = false;
       this.showProfile = false;
       this.pagename = 'My Courses';
       this.activeLink = 'My Courses';
@@ -80,6 +85,7 @@ export class StudentComponent implements OnInit {
       this.showAllAvailableCourses = true;
       this.showStudentCourses = false;
       this.showAssignments = false;
+      this.showFinancial = false;
       this.showProfile = false;
       this.showStudentSchedule = false;
       this.pagename = 'Available Courses';
@@ -89,6 +95,7 @@ export class StudentComponent implements OnInit {
       this.showStudentCourses = false;
       this.showAssignments = false;
       this.showProfile = true;
+      this.showFinancial = false;
       this.showStudentSchedule = false;
       this.pagename = 'Profile';
       this.activeLink = 'Profile';
@@ -97,9 +104,19 @@ export class StudentComponent implements OnInit {
       this.showStudentCourses = false;
       this.showAssignments = false;
       this.showProfile = false;
+      this.showFinancial = false;
       this.showStudentSchedule = true;
       this.pagename = 'Schedule';
       this.activeLink = 'Schedule';
+    } else if (component === 'Financial') {
+      this.showAllAvailableCourses = false;
+      this.showStudentCourses = false;
+      this.showAssignments = false;
+      this.showProfile = false;
+      this.showFinancial = true;
+      this.showStudentSchedule = false;
+      this.pagename = 'Financial';
+      this.activeLink = 'Financial';
     }
   }
 

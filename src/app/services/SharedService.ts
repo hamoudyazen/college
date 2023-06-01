@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { User, Course, Major } from '../models/allModels';
+import { User, Course, Major, ExpensesAndIncome } from '../models/allModels';
 import { AuthService } from './AuthService';
 
 @Injectable({
@@ -207,6 +207,19 @@ export class SharedService {
     getAllMajorsAdmin(): Promise<Major[]> {
         return new Promise<Major[]>((resolve, reject) => {
             this.authService.getAllMajorsAdmin().subscribe(
+                response => {
+                    resolve(response);
+                },
+                error => {
+                    reject(error);
+                }
+            );
+        });
+    }
+
+    getUserExpensesAndIncome(userID: string): Promise<ExpensesAndIncome[]> {
+        return new Promise<ExpensesAndIncome[]>((resolve, reject) => {
+            this.authService.getExpensesAndIncome(userID).subscribe(
                 response => {
                     resolve(response);
                 },

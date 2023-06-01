@@ -1,0 +1,25 @@
+.firstBody {
+    border-radius: 1rem;
+    background-color: #F0F3F8;
+    padding: 30px;
+}
+
+.myGrid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.card {
+    flex: 0 0 auto;
+    margin: 10px;
+    padding: 30px;
+    width: fit-content;
+}
+
+.myTitle {
+    font-size: 18px;
+    font-weight: 700;
+    text-align: left;
+}

@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
+    <title>Bootstrap Example</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<style>
+    body {
+        background-image: none;
+    }
+</style>
+<a style="text-decoration: underline; font-weight: 700; font-size: 20px;">Analysis :</a>
+
+<body class="firstBody">
+
+    <div class="myGrid">
+        <!--expenses & income pie-->
+        <div class="card">
+            <a class="myTitle">Expenses & Income in Pie chart: </a>
+            <ng-container *ngIf="dataLoaded">
+                <table class="myTable">
+                    <tr>
+                        <td>
+                            <ngx-charts-pie-chart [results]="expensesData" [gradient]="gradient" [labels]="showLabels"
+                                [doughnut]="isDoughnut" [view]="[x, y]" [labels]="showLabels">
+                            </ngx-charts-pie-chart>
+                        </td>
+                    </tr>
+                </table>
+            </ng-container>
+        </div>
+        <!--end-->
+
+
+        <!--expenses & income pie-->
+        <div class="card">
+            <a class="myTitle">Expenses & Income in Bar chart: </a>
+            <ng-container *ngIf="dataLoaded">
+                <table class="myTable">
+                    <tr>
+                        <td>
+                            <ngx-charts-bar-vertical [results]="expensesData" [view]="[x,y]" [gradient]="gradient"
+                                [xAxis]="xAxis" [yAxis]="yAxis" [legend]="legend" [legendTitle]="legendTitle">
+                            </ngx-charts-bar-vertical>
+                        </td>
+                    </tr>
+                </table>
+            </ng-container>
+        </div>
+        <!--end-->
+
+    </div>
+
+</body>
+
+</html>

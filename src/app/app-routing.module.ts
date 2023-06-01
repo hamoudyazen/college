@@ -19,6 +19,10 @@ import { StudentscheduleComponent } from './dashboards/student/studentschedule/s
 import { StudentsadminComponent } from './dashboards/admin/studentsadmin/studentsadmin.component';
 import { CoursesadminComponent } from './dashboards/admin/coursesadmin/coursesadmin.component';
 import { SchedulesComponent } from './dashboards/admin/schedules/schedules.component';
+import { FinancialComponent } from './dashboards/student/Financial Folder/financial/financial.component';
+import { FinancialAddComponent } from './dashboards/student/Financial Folder/financial-add/financial-add.component';
+import { FinancialAnalysisComponent } from './dashboards/student/Financial Folder/financial-analysis/financial-analysis.component';
+import { FinancialCalendarComponent } from './dashboards/student/Financial Folder/financial-calendar/financial-calendar.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -47,6 +51,11 @@ const routes: Routes = [
   { path: 'studentCourse', component: StudentcoursesComponent, canActivate: [AuthGuard], data: { roles: ['student'] } },
   { path: 'studentRegisterForCourses', component: StudentRegisterForCourseComponent, canActivate: [AuthGuard], data: { roles: ['student'] } },
   { path: 'studentSchedule', component: StudentscheduleComponent, canActivate: [AuthGuard], data: { roles: ['student'] } },
+  { path: 'financial', component: FinancialComponent, canActivate: [AuthGuard], data: { roles: ['student'] } },
+  { path: 'financialAdd', component: FinancialAddComponent, canActivate: [AuthGuard], data: { roles: ['student'] } },
+  { path: 'financialAnalysis', component: FinancialAnalysisComponent, canActivate: [AuthGuard], data: { roles: ['student'] } },
+  { path: 'financialCalendar', component: FinancialCalendarComponent, canActivate: [AuthGuard], data: { roles: ['student'] } },
+
 ];
 
 @NgModule({
