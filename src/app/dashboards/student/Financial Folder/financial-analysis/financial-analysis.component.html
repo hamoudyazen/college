@@ -55,8 +55,125 @@
         </div>
         <!--end-->
 
-    </div>
 
+
+        <!--expenses & income pie-->
+        <div class="card">
+            <a class="myTitle">Monthly & Income detailed: </a>
+            <ng-container *ngIf="dataLoaded">
+                <table class="myTable">
+                    <tr>
+                        <td>
+                            <ngx-charts-pie-chart [results]="detailedExpensesData" [gradient]="gradient"
+                                [labels]="showLabels" [doughnut]="isDoughnut" [view]="[x, y]" [labels]="showLabels">
+                            </ngx-charts-pie-chart>
+                        </td>
+                    </tr>
+                </table>
+            </ng-container>
+        </div>
+        <!--end-->
+
+        <div class="card">
+            <a class="myTitle">Show monthly spent on category:</a>
+
+            <label class="subTitle">Category:</label>
+            <div class="dropdown-container">
+                <select id="dropdown1" [(ngModel)]="selectedCategory" name="category"
+                    (change)="showMonthlySpentCategory(selectedCategory)">
+                    <optgroup label="Food & Beverages">
+                        <option value="Food">Food</option>
+                        <option value="Beverages">Beverages</option>
+                        <option value="Groceries">Groceries</option>
+                    </optgroup>
+                    <optgroup label="Transport">
+                        <option value="Fuel">Fuel</option>
+                        <option value="Parking">Parking</option>
+                        <option value="Services & Maintance">Services & Maintenance</option>
+                        <option value="Taxi">Taxi</option>
+                    </optgroup>
+                    <optgroup label="Personal Development">
+                        <option value="Business">Business</option>
+                        <option value="Education">Education</option>
+                        <option value="Investment">Investment</option>
+                    </optgroup>
+                    <optgroup label="Shopping">
+                        <option value="Clothes">Clothes</option>
+                        <option value="Accessories">Accessories</option>
+                        <option value="Electronic Devices">Electronic Devices</option>
+                    </optgroup>
+                    <optgroup label="Entertainment">
+                        <option value="Movies">Movies</option>
+                        <option value="Games">Games</option>
+                        <option value="Music">Music</option>
+                        <option value="Travel">Travel</option>
+                    </optgroup>
+                    <optgroup label="Home">
+                        <option value="Pets">Pets</option>
+                        <option value="Furnishings">Furnishings</option>
+                        <option value="Home Services">Home Services</option>
+                        <option value="Mortgage & Rent">Mortgage & Rent</option>
+                    </optgroup>
+                    <optgroup label="Utility Bills">
+                        <option value="Electricity">Electricity</option>
+                        <option value="Internet">Internet</option>
+                        <option value="Mobile Phone">Mobile Phone</option>
+                        <option value="Water">Water</option>
+                    </optgroup>
+                    <optgroup label="Health">
+                        <option value="Sports">Sports</option>
+                        <option value="Health Insurance">Health Insurance</option>
+                        <option value="Doctor">Doctor</option>
+                        <option value="Medicine">Medicine</option>
+                    </optgroup>
+                    <optgroup label="Gifts & Donations">
+                        <option value="Gifts">Gifts</option>
+                        <option value="Wedding">Wedding</option>
+                        <option value="Funeral">Funeral</option>
+                        <option value="Charity">Charity</option>
+                    </optgroup>
+                    <optgroup label="Kids">
+                        <option value="Pocket Money">Pocket Money</option>
+                        <option value="Baby Products">Baby Products</option>
+                        <option value="Babysitter & Daycare">Babysitter & Daycare</option>
+                        <option value="Tuition">Tuition</option>
+                    </optgroup>
+                    <optgroup label="Other">
+                        <option value="Other">Other</option>
+                    </optgroup>
+                </select>
+            </div>
+            <br>
+            <div *ngIf="categorySpentTable">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Amount</th>
+                            <th>Description</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of detailedCategoryExpensesData">
+                            <td>{{ item.category }}</td>
+                            <td>{{ item.amount }}</td>
+                            <td>{{ item.description }}</td>
+                            <td>{{ item.date | date: 'dd/MM/yyyy' }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+        <!--expenses & income pie-->
+        <div class="card">
+            <a class="myTitle">Prediect next month expenses:</a>
+            <button (click)="predictNextMonthExpenses()">Predict Next Month Expenses</button>
+        </div>
+        <!--end-->
+    </div>
 </body>
 
 </html>

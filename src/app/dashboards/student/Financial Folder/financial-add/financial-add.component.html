@@ -22,23 +22,94 @@
     <div class="firstHalf" style="background-color: #F0F3F9; border-radius: 1rem;">
         <div class="componentGrid">
 
+            <!--DELETE INCOME-->
             <div class="myBody" style="background-color: #fff;padding: 10px;">
                 <p class="myTitle">Monthly-income:</p>
-                {{ income.amount| currency:'₪' }}
+                <table class="table1 table1-bordered">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Category</th>
+                            <th>Amount</th>
+                            <th>Description</th>
+                            <th>Date</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of incomeForUser let i=index">
+                            <td>{{ i }}</td>
+                            <td>{{ item.category }}</td>
+                            <td>{{ item.amount }}</td>
+                            <td>{{ item.description }}</td>
+                            <td>{{ item.date | date: 'dd/MM/yyyy' }}</td>
+                            <td> <button (click)="deleteMonthlyIncomeOrExpense(item.id!)" type="button"
+                                    class="btn btn-sm btn-danger" title="delete user"><i class="fa fa-trash"></i><svg
+                                        width="21" height="20" viewBox="0 0 21 20" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <g clip-path="url(#clip0_2_3)">
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                d="M7.35001 15.7143H9.45V8.09524H7.35001V15.7143ZM11.55 15.7143H13.65V8.09524H11.55V15.7143ZM5.25 17.619H15.75V6.19048H5.25V17.619ZM7.35001 4.28571H13.65V2.38095H7.35001V4.28571ZM15.75 4.28571V0.476191H5.25V4.28571H0V6.19048H3.15V19.5238H17.85V6.19048H21V4.28571H15.75Z"
+                                                fill="black" />
+                                        </g>
+                                        <defs>
+                                            <clipPath id="clip0_2_3">
+                                                <rect width="21" height="20" fill="white" />
+                                            </clipPath>
+                                        </defs>
+                                    </svg>
+                                </button></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
+            <!--END EXPENSE-->
 
+
+
+            <!--DELETE EXPENSE-->
             <div class="myBody" style="background-color: #fff;padding: 10px;">
                 <p class="myTitle">Monthly-expenses:</p>
-                {{ expenses.amount| currency:'₪' }}
+                <table class="table2 table2-bordered">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Category</th>
+                            <th>Amount</th>
+                            <th>Description</th>
+                            <th>Date</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of ExpensesForUser let i=index">
+                            <td>{{ i }}</td>
+                            <td>{{ item.category }}</td>
+                            <td>{{ item.amount }}</td>
+                            <td>{{ item.description }}</td>
+                            <td>{{ item.date | date: 'dd/MM/yyyy' }}</td>
+                            <td> <button (click)="deleteMonthlyIncomeOrExpense(item.id!)" type="button"
+                                    class="btn btn-sm btn-danger" title="delete user"><i class="fa fa-trash"></i><svg
+                                        width="21" height="20" viewBox="0 0 21 20" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <g clip-path="url(#clip0_2_3)">
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                d="M7.35001 15.7143H9.45V8.09524H7.35001V15.7143ZM11.55 15.7143H13.65V8.09524H11.55V15.7143ZM5.25 17.619H15.75V6.19048H5.25V17.619ZM7.35001 4.28571H13.65V2.38095H7.35001V4.28571ZM15.75 4.28571V0.476191H5.25V4.28571H0V6.19048H3.15V19.5238H17.85V6.19048H21V4.28571H15.75Z"
+                                                fill="black" />
+                                        </g>
+                                        <defs>
+                                            <clipPath id="clip0_2_3">
+                                                <rect width="21" height="20" fill="white" />
+                                            </clipPath>
+                                        </defs>
+                                    </svg>
+                                </button></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
+            <!--END-->
 
-            <div class="myBody">
-
-            </div>
-
-            <div class="myBody">
-
-            </div>
         </div>
     </div>
 
@@ -47,9 +118,9 @@
     <div class="secondHalf" style="background-color: #F0F3F9; border-radius: 1rem; margin-left: 5px;">
         <div class="componentGrid">
             <div class="myBody">
-                <a class="myTitleCard">INCOME</a>
+                <a class="myTitleCard" style="color: #7AA3E5;">INCOME</a>
                 <form (ngSubmit)="onSubmitIncome()" class="myForm" #incomeForm="ngForm"
-                    style="background-color: #fff;background-color: #0FC48B;">
+                    style="background-color: #fff;background-color: #7AA3E5;">
                     <label class="myTitle">Amount :</label>
                     <input type="text" class="form-control" id="monthly income" required name="Monthly income"
                         [(ngModel)]="income.amount" maxlength="5" required>
@@ -84,9 +155,9 @@
 
 
             <div class="myBody">
-                <a class="myTitleCard" style="color: #FA6566;">EXPENSES</a>
+                <a class="myTitleCard" style="color: #A7385D;">EXPENSES</a>
                 <form (ngSubmit)="onSubmitExpenses()" class="myForm" #expensesForm="ngForm"
-                    style="background-color: #fff;background-color: #FA6566;">
+                    style="background-color: #fff;background-color: #A7385D;">
                     <label class="myTitle">Amount :</label>
                     <input type="text" class="form-control" id="monthly income" required name="Monthly income"
                         [(ngModel)]="expenses.amount" maxlength="5" required>

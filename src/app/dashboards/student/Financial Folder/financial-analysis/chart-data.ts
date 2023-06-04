@@ -8,3 +8,22 @@ export var expensesData = [
     }
 ];
 
+export var detailedExpensesData = [
+    {
+        "name": "income",
+        "value": 10
+    }, {
+        "name": "expense",
+        "value": 10
+    }
+];
+
+export var detailedCategoryExpensesData = [
+    {
+        "name": "income",
+        "value": 10
+    }, {
+        "name": "expense",
+        "value": 10
+    }
+];

@@ -9,6 +9,10 @@ import { AuthService } from 'src/app/services/AuthService';
   styleUrls: ['./financial-add.component.css']
 })
 export class FinancialAddComponent implements OnInit {
+  incomeAndExpensesForUser: ExpensesAndIncome[] = []
+  incomeForUser: ExpensesAndIncome[] = []
+  ExpensesForUser: ExpensesAndIncome[] = []
+
   userDetails: User[] = [];
   userID: any;
   income: ExpensesAndIncome = {
@@ -38,6 +42,9 @@ export class FinancialAddComponent implements OnInit {
       this.userID = this.userDetails[0].id;
       this.income.userId = this.userID;
       this.expenses.userId = this.userID;
+      this.incomeAndExpensesForUser = await this.sharedService.getUserExpensesAndIncome(this.userID);
+      this.divideUserIncomeAndExpenses(this.incomeAndExpensesForUser);
+
     } catch (error) {
       console.error('Error retrieving data:', error);
     }
@@ -47,10 +54,33 @@ export class FinancialAddComponent implements OnInit {
     this.authService.createExpensesAndIncome(this.income).subscribe(response => {
       alert("Added income successfully");
       location.reload();
+    }, error => {
+      location.reload();
     });
   }
   onSubmitExpenses() {
     this.authService.createExpensesAndIncome(this.expenses).subscribe(response => {
+      location.reload();
+    }, error => {
+      location.reload();
+    });
+  }
+
+  divideUserIncomeAndExpenses(incomeAndExpensesForUser: ExpensesAndIncome[]) {
+    for (let i = 0; i < incomeAndExpensesForUser.length; i++) {
+      if (incomeAndExpensesForUser[i].type === "income") {
+        this.incomeForUser.push(incomeAndExpensesForUser[i]);
+      }
+      else {
+        this.ExpensesForUser.push(incomeAndExpensesForUser[i]);
+      }
+    }
+  }
+
+  deleteMonthlyIncomeOrExpense(itemID: string) {
+    this.authService.deleteIncomeOrExpesnse(itemID).subscribe(response => {
+      location.reload();
+    }, error => {
       location.reload();
     });
   }

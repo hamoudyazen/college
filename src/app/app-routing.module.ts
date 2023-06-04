@@ -22,7 +22,6 @@ import { SchedulesComponent } from './dashboards/admin/schedules/schedules.compo
 import { FinancialComponent } from './dashboards/student/Financial Folder/financial/financial.component';
 import { FinancialAddComponent } from './dashboards/student/Financial Folder/financial-add/financial-add.component';
 import { FinancialAnalysisComponent } from './dashboards/student/Financial Folder/financial-analysis/financial-analysis.component';
-import { FinancialCalendarComponent } from './dashboards/student/Financial Folder/financial-calendar/financial-calendar.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -54,7 +53,6 @@ const routes: Routes = [
   { path: 'financial', component: FinancialComponent, canActivate: [AuthGuard], data: { roles: ['student'] } },
   { path: 'financialAdd', component: FinancialAddComponent, canActivate: [AuthGuard], data: { roles: ['student'] } },
   { path: 'financialAnalysis', component: FinancialAnalysisComponent, canActivate: [AuthGuard], data: { roles: ['student'] } },
-  { path: 'financialCalendar', component: FinancialCalendarComponent, canActivate: [AuthGuard], data: { roles: ['student'] } },
 
 ];
 

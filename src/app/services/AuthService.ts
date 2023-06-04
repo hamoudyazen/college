@@ -303,4 +303,8 @@ export class AuthService {
     return this.http.post(`${this.baseUrl}/createExpensesAndIncome`, expensesAndIncome);
   }
 
+  deleteIncomeOrExpesnse(itemID: any): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/deleteIncomeOrExpesnse?itemID=${itemID}`);
+  }
+
 }

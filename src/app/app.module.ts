@@ -51,7 +51,6 @@ import { SchedulesComponent } from './dashboards/admin/schedules/schedules.compo
 import { FinancialComponent } from './dashboards/student/Financial Folder/financial/financial.component';
 import { FinancialAddComponent } from './dashboards/student/Financial Folder/financial-add/financial-add.component';
 import { FinancialAnalysisComponent } from './dashboards/student/Financial Folder/financial-analysis/financial-analysis.component';
-import { FinancialCalendarComponent } from './dashboards/student/Financial Folder/financial-calendar/financial-calendar.component';
 
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 @NgModule({
@@ -78,7 +77,6 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     FinancialComponent,
     FinancialAddComponent,
     FinancialAnalysisComponent,
-    FinancialCalendarComponent,
   ],
   imports: [
     BrowserModule,

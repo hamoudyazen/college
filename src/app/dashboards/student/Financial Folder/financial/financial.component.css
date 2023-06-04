@@ -410,7 +410,7 @@ td div {
 }
 
 .myHeader {
-    background-color: #0FC48B;
+    background-color: #1D1D1F;
     border-radius: 1rem;
     position: fixed;
     bottom: 0;
@@ -435,7 +435,7 @@ ul li {
     transform: scale(1);
     transition: 300ms;
     color: white;
-    background-color: #0FC48B;
+    background-color: #1D1D1F;
 }
 
 ul li:hover {
@@ -443,13 +443,5 @@ ul li:hover {
     transform: scale(1.1);
     font-size: 20px;
     font-weight: 700;
-    color: rgb(153, 11, 11);
-}
-
-ul li:active {
-
-    transform: scale(1.1);
-    font-size: 20px;
-    font-weight: 700;
-    color: green;
+    color: #7AA3E5;
 }
