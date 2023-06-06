@@ -1,139 +1,81 @@
-<!doctype html>
-<html lang="en">
+<body class="firstBody">
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
-  <title>Bootstrap Example</title>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-</head>
-<style>
-  body {
-    background-image: none;
-  }
-</style>
+  <div class="myGrid">
 
-<body class="p-3 m-0 border-0 bd-example  fade-in" style="background-color: #F5F5F7;">
+    <!--Assignemnts Cards-->
+    <div class="card">
+      <a class="myTitle">Submit Assignment :</a>
+      <br>
+      <br>
+      <form (ngSubmit)="onSubmit(submission.submission_assignment_id)" #registerForm="ngForm">
+        <label>Description</label>
+        <input type="text" id="validationServer02" required="" [(ngModel)]="submission.submission_description"
+          name="description">
+        <label>Select an assignment:</label>
+        <select id="validationServer02" [(ngModel)]="submission.submission_assignment_id" name="course_id" required>
+          <option *ngFor="let assignment of assignments" [value]="assignment.assignment_id">{{ assignment.name }}
+          </option>
+        </select>
+        <br>
+        <input type="file" id="formFile" (change)="choseFile($event)">
+        <br>
+        <button type="submit" (click)="addData()">Add Assignment</button>
+      </form>
 
-  <!------------------------------------------------------------------- Available Assignments  -------------------------------------------------------------------------------------------->
-  <div class="row row-cols-1 row-cols-md-3 g-4">
-    <div *ngFor="let assignment of assignments; let i=index">
-      <div class="col">
-        <div class="card h-100 fade-in" style="background-color: #1D1D1F; border-radius: 30px;">
-          <div class="card-header " style="background-color: #1D1D1F;  border-radius: 30px; border:0px solid black;">
-            <h5 class="card-title" style="color: #F5F5F7; font-weight: 700;">{{ assignment.name }}</h5>
-          </div>
-          <div class="card-body">
-            <p class="card-text" style="color: #F5F5F7;"><strong>Description:</strong> {{ assignment.description }}</p>
-            <p class="card-text" style="color: #F5F5F7;"><strong>DeadLine:</strong> {{ assignment.deadline }}</p>
-            <p class="card-text" style="color: #F5F5F7;"><strong>Course ID:</strong> {{ assignment.course_id }}</p>
-            <p class="card-text" style="color: #F5F5F7;"><strong>Material Link:</strong> <a
-                href="{{ assignment.material_link }}">{{ assignment.material_link }}</a></p>
+    </div>
+    <!--end-->
 
 
-            <div class="toast-container position-fixed bottom-0 end-0 p-3" fade-in>
-              <div id="liveToast" class="toast" [ngClass]="{'bg-danger': errorMessage, 'bg-success': successMessage}"
-                role="alert" aria-live="assertive" aria-atomic="true">
-                <div class="toast-header">
-                  <strong class="me-auto" style="font-weight: 700; color: black;">Result</strong>
-                  <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                </div>
-                <div class="toast-body" style="color: black;">
-                  {{errorMessage}}
-                  {{successMessage}}
-                </div>
-              </div>
-            </div>
+    <!--Submissions card-->
+    <div class="card">
+      <a class="myTitle">My Submissions :</a>
+      <br>
+      <div *ngFor="let submissions of mySubmissions; let i=index">
+        <div class="cardInsideCardInsideCard">
+          <a class="myTitle">{{ submissions.submission_id }}</a>
+          <p><strong>Description:</strong>
+            {{ submissions.submission_description }}</p>
+
+          <button (click)="deleteSubmission()" type="button" class="dangerButton" title="delete user from course"><svg
+              width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g clip-path="url(#clip0_2_3)">
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                  d="M7.35001 15.7143H9.45V8.09524H7.35001V15.7143ZM11.55 15.7143H13.65V8.09524H11.55V15.7143ZM5.25 17.619H15.75V6.19048H5.25V17.619ZM7.35001 4.28571H13.65V2.38095H7.35001V4.28571ZM15.75 4.28571V0.476191H5.25V4.28571H0V6.19048H3.15V19.5238H17.85V6.19048H21V4.28571H15.75Z"
+                  fill="black" />
+              </g>
+              <defs>
+                <clipPath id="clip0_2_3">
+                  <rect width="21" height="20" fill="white" />
+                </clipPath>
+              </defs>
+            </svg>
+          </button>
+
+        </div>
+      </div>
+    </div>
+    <!--end-->
+
+    <!--Assignemnts Cards-->
+    <div class="card">
+      <div class="cardInsideCard">
+        <a class="myTitle">Assignment:</a>
+        <br>
+        <div *ngFor="let assignment of assignments; let i=index" class="myForLoop">
+          <div class="cardInsideCardInsideCard">
+            <p><strong>Name: </strong> {{ assignment.name}}</p>
+            <hr>
+            <p><strong>Description: </strong> {{ assignment.description}}</p>
+            <p><strong>DeadLine: </strong> {{ assignment.deadline }}</p>
+            <p><strong>Course ID: </strong> {{ assignment.course_id }} </p>
+            <p><strong>Material Link: </strong>
+              <a (click)="openWebPage(assignment.material_link)"><button class="myButton">Link</button></a>
+            </p>
           </div>
         </div>
       </div>
     </div>
+    <!--end-->
+
   </div>
-  <!------------------------------------------------------------------- Submission Form  -------------------------------------------------------------------------------------------->
-  <form class="row g-3 col-10 mx-auto justify-content-center" (ngSubmit)="onSubmit(submission.submission_assignment_id)"
-    #registerForm="ngForm">
-
-    <div class="col-md-10 ">
-      <label for="validationServer02" class="form-label" style="color: #F5F5F7;">Description</label>
-      <input type="description" class="form-control is-valid" id="validationServer02" value="Otto" required=""
-        [(ngModel)]="submission.submission_description" name="description">
-    </div>
-
-
-    <div>
-      <label for="validationServer02" class="form-label" style="color: #F5F5F7;">Select a assignment:</label>
-      <select class="form-select is-valid" id="validationServer02" [(ngModel)]="submission.submission_assignment_id"
-        name="course_id" required>
-        <option *ngFor="let assignment of assignments" [value]="assignment.assignment_id">{{ assignment.name }}
-        </option>
-      </select>
-    </div>
-
-    <input class="form-control" type="file" id="formFile" (change)="choseFile($event)">
-    <button class="btn1" type="submit" (click)="addData()">
-      Add Assignment
-    </button>
-
-
-    <div class="toast-container position-fixed bottom-0 end-0 p-3" fade-in>
-      <div id="liveToast" class="toast" [ngClass]="{'bg-danger': errorMessage, 'bg-success': successMessage}"
-        role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-header">
-          <strong class="me-auto" style="font-weight: 700; color: black;">Error</strong>
-
-          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
-        <div class="toast-body" style="color: black;">
-          {{errorMessage}}
-          {{successMessage}}
-        </div>
-      </div>
-    </div>
-  </form>
-
-  <hr style="color: #1D1D1F;">
-  <!------------------------------------------------------------------- My Submissions  -------------------------------------------------------------------------------------------->
-
-  <h1>My submissions</h1>
-
-  <div class="row row-cols-1 row-cols-md-3 g-4">
-    <div *ngFor="let submissions of mySubmissions; let i=index">
-      <div class="col">
-        <div class="card h-100 fade-in" style="background-color: #1D1D1F; border-radius: 30px;">
-          <div class="card-header " style="background-color: #1D1D1F;  border-radius: 30px; border:0px solid black;">
-            <h5 class="card-title" style="color: #F5F5F7; font-weight: 700;">{{ submissions.submission_id }}</h5>
-          </div>
-          <div class="card-body">
-            <p class="card-text" style="color: #F5F5F7;"><strong>Description:</strong> {{
-              submissions.submission_description }}</p>
-            <span class="badge rounded-pill text-bg-danger" (click)="deleteSubmission()"
-              (click)="showLiveToast()">Delete</span>
-
-
-
-            <div class="toast-container position-fixed bottom-0 end-0 p-3" fade-in>
-              <div id="liveToast" class="toast" [ngClass]="{'bg-danger': errorMessage, 'bg-success': successMessage}"
-                role="alert" aria-live="assertive" aria-atomic="true">
-                <div class="toast-header">
-                  <strong class="me-auto" style="font-weight: 700; color: black;">Result</strong>
-                  <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                </div>
-                <div class="toast-body" style="color: black;">
-                  {{errorMessage}}
-                  {{successMessage}}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- End Example Code -->
 </body>
-
-</html>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>

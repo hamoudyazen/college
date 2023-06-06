@@ -15,6 +15,9 @@ import { SharedService } from 'src/app/services/SharedService';
   styleUrls: ['./teacher-my-courses.component.css']
 })
 export class TeacherMyCoursesComponent implements OnInit {
+  showStudentsTableBoolean: boolean = false;
+  studentsInCourse: any[] = [];
+  selectedCourse: any;
   public file: any = {};
   date !: Date;
   showModal: boolean[] = [];
@@ -55,7 +58,7 @@ export class TeacherMyCoursesComponent implements OnInit {
   constructor(private authService: AuthService, private storage: AngularFireStorage, private firestore: AngularFirestore, private sharedService: SharedService) { }
   async ngOnInit(): Promise<void> {
     try {
-      this.userDetails = await this.sharedService.getUserDetails(); // Assign the resolved value to teacherCourses
+      this.userDetails = await this.sharedService.getUserDetails();
       this.teacherCourses = await this.sharedService.getTeacherCourses();
       this.userDetails = this.sharedService.userDetails;
       this.email = this.sharedService.email;
@@ -73,71 +76,27 @@ export class TeacherMyCoursesComponent implements OnInit {
     }
   }
 
-  updateStudent(formData: any, student: any, originalEmail: string) {
-    const newEmail = formData.email;
 
-    if (this.courseID) {
-      this.authService.updateEmail(this.courseID, originalEmail, newEmail)
-        .subscribe(
-          (response) => {
-            // Update the corresponding student email in the array
-            const index = this.teacherCourses.findIndex(course => course.id === this.courseID);
-            const studentIndex = this.teacherCourses[index].studentsArray.indexOf(originalEmail);
-            this.teacherCourses[index].studentsArray[studentIndex] = newEmail;
-            window.location.reload();
+  //ADD / DELETE STUDENT
 
-          },
-          (error) => {
-            alert('error');
-          }
-        );
-    }
-  }
-
-  deleteStudent(email: string) {
-    if (this.courseID) {
-      this.authService.deleteEmail(this.courseID, email)
-        .subscribe(
-          (response) => {
-            // Remove the corresponding student email from the array
-            const index = this.teacherCourses.findIndex(course => course.id === this.courseID);
-            const studentIndex = this.teacherCourses[index].studentsArray.indexOf(email);
-            this.teacherCourses[index].studentsArray.splice(studentIndex, 1);
-            window.location.reload();
-
-          },
-          (error) => {
-            alert('error');
-          });
-    }
-  }
-
-
-  addStudent(addStudentForm: NgForm) {
-    const newEmail = addStudentForm.value.email;
-
+  showStudentsTable() {
     for (let i = 0; i < this.teacherCourses.length; i++) {
-      if (this.teacherCourses[i].id === this.courseID) {
-        if (this.teacherCourses[i].studentsArray.length < this.teacherCourses[i].capacity) {
-
-          if (this.courseID) {
-            this.authService.addStudent(this.courseID, newEmail).subscribe(
-              (response) => {
-                this.teacherCourses.find(course => course.id === this.courseID)?.studentsArray.push(newEmail);
-                addStudentForm.resetForm(); // Clear the input field
-                window.location.reload();
-              },
-              (error) => {
-                alert('error');
-              }
-            );
-          }
+      if (this.teacherCourses[i].name === this.selectedCourse) {
+        for (let j = 0; j < this.teacherCourses[i].studentsArray.length; i++) {
+          this.studentsInCourse.push(this.teacherCourses[i].studentsArray[j]);
         }
       }
     }
+    this.showStudentsTableBoolean = true;
   }
 
+  deleteUserFromCourse(student: string) {
+    this.authService.deleteStudentFromCourse(student, this.selectedCourse).subscribe(response => {
 
+    });
+  }
+
+  //
 
   ////material
   choseFile(event: any) {

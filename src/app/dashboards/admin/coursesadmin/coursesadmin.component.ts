@@ -51,10 +51,5 @@ export class CoursesadminComponent {
   }
 
 
-  onSubmit() {
-    this.authService.register(this.user).subscribe(response => {
-      alert(response);
-    });
-  }
 
 }

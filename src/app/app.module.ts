@@ -53,6 +53,10 @@ import { FinancialAddComponent } from './dashboards/student/Financial Folder/fin
 import { FinancialAnalysisComponent } from './dashboards/student/Financial Folder/financial-analysis/financial-analysis.component';
 
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { ChatFormComponent } from './components/chat/chat-form/chat-form.component';
+import { ChatFeedComponent } from './components/chat/chat-feed/chat-feed.component';
+import { ChatMessageComponent } from './components/chat/chat-message/chat-message.component';
+import { ChatUserListComponent } from './components/chat/chat-user-list/chat-user-list.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -77,6 +81,10 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     FinancialComponent,
     FinancialAddComponent,
     FinancialAnalysisComponent,
+    ChatFormComponent,
+    ChatFeedComponent,
+    ChatMessageComponent,
+    ChatUserListComponent,
   ],
   imports: [
     BrowserModule,

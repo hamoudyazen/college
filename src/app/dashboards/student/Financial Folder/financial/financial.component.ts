@@ -10,8 +10,8 @@ export class FinancialComponent {
   isFirstSubmitDone: boolean = false;
   expensesInput: number = 0;
   incomeInput: number = 0;
-  showAddComponent: boolean = false;
-  showAnalysisComponent: boolean = true;
+  showAddComponent: boolean = true;
+  showAnalysisComponent: boolean = false;
 
   toggleComponent(name: string) {
     this.showAddComponent = false;

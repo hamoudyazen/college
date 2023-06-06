@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Assignment, Course, Submission, ForgotPasswordResponse, CourseMaterial, LoginRequest, User, SundaySchedule, Major, ExpensesAndIncome } from '../models/allModels';
+import { Assignment, Course, Submission, ForgotPasswordResponse, CourseMaterial, LoginRequest, User, SundaySchedule, Major, ExpensesAndIncome, ChatMessage, MessageDetails } from '../models/allModels';
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +13,7 @@ export class AuthService {
   private baseUrl = 'http://localhost:8080';
   errorMessage: string | undefined;
   teacherCourses: Course[] = [];
+
 
   constructor(
     private http: HttpClient,
@@ -306,5 +307,27 @@ export class AuthService {
   deleteIncomeOrExpesnse(itemID: any): Observable<any> {
     return this.http.delete(`${this.baseUrl}/deleteIncomeOrExpesnse?itemID=${itemID}`);
   }
+
+  createMessage(chat: ChatMessage): Observable<any> {
+    return this.http.post(`${this.baseUrl}/createMessage`, chat);
+  }
+
+  addMessage(arr: string[], messageDetails: MessageDetails[]): Observable<any> {
+    const payload = {
+      arr: arr,
+      messageDetails: messageDetails
+    };
+
+    return this.http.post(`${this.baseUrl}/addMessage`, payload);
+  }
+  getMessages(userID1: string, userID2: string): Observable<ChatMessage[]> {
+    return this.http.get<ChatMessage[]>(`${this.baseUrl}/getMessages`, {
+      params: {
+        userID1: userID1,
+        userID2: userID2
+      }
+    });
+  }
+
 
 }

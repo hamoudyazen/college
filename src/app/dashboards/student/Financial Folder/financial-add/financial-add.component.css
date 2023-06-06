@@ -21,7 +21,7 @@
     background-color: #e6e6e6;
 }
 
-.btn {
+.deleteButton {
     display: inline-block;
     padding: 6px 12px;
     margin-bottom: 0;
@@ -37,7 +37,6 @@
     border: 1px solid transparent;
     border-radius: 4px;
     user-select: none;
-
 }
 
 .btn-primary {
@@ -410,104 +409,6 @@ td div {
     text-decoration: none;
 }
 
-.myForm {
-    display: flex;
-    flex-wrap: wrap;
-}
 
-.myTitle {
-    flex: 0 0 100px;
-    text-align: left;
-    margin-right: 10px;
-}
-
-.myForm label,
-.myForm input,
-.myForm select {
-    flex: 1 0 200px;
-    margin-bottom: 10px;
-}
-
-.myForm button {
-    flex-basis: 100%;
-    margin-top: 10px;
-}
-
-.myTitleCard {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    font-weight: 700;
-    font-size: 20px;
-    text-decoration: none;
-    color: #0FC48B;
-}
-
-.dropdown-container {
-    display: flex;
-    flex-wrap: wrap;
-    width: auto;
-}
-
-.dropdown-container select {
-    margin-right: 10px;
-    /* Adjust the spacing between the dropdowns */
-}
-
-
-/*TABLE 1 INCOME*/
-.table1 {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.table1-bordered th,
-.table1-bordered td {
-    border: 1px solid #000;
-    padding: 8px;
-
-}
-
-.table1-bordered th {
-    background-color: #7AA3E5;
-    color: #f9f9f9;
-}
-
-.table1-bordered tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-.table1-bordered tbody tr:hover {
-    background-color: #7AA3E5;
-}
-
-/*END*/
-
-/*TABLE 2 INCOME*/
-.table2 {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.table2-bordered th,
-.table2-bordered td {
-    border: 1px solid #000;
-    padding: 8px;
-
-}
-
-.table2-bordered th {
-    background-color: #A7385D;
-    color: #f9f9f9;
-}
-
-.table2-bordered tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-.table2-bordered tbody tr:hover {
-    background-color: #A7385D;
-}
 
 /*END*/

@@ -1,123 +1,140 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="node_modules/bootstrap/dist/css/bootstrap.min.css"> <!-- Updated link -->
-  <title>Bootstrap Example</title>
-  <script src="node_modules/@popperjs/core/dist/umd/popper.min.js"></script> <!-- Added Popper.js -->
-  <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script> <!-- Updated script -->
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsive Navbar</title>
 </head>
 
-<body class="p-3 m-0 border-0 bd-example fade-in">
-  <!-- Example Code -->
-  <!-- This is the navigation bar. It is a bootstrap component that is styled with custom css. -->
-  <nav class="navbar navbar-expand-lg" style="background-color: #1D1D1F; box-shadow: 0 6px 6px -6px #0E1119;">
-    <div class="container-fluid">
-      <a class="navbar-brand" style="color: #F5F5F7; text-transform: uppercase;">Academy</a>
-      <button class="navbar-toggler" type="button" (click)="navbarCollapsed = !navbarCollapsed"
-        [attr.aria-expanded]="!navbarCollapsed" aria-controls="navbarSupportedContent" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon" style="color: #F5F5F7; background-color: #F5F5F7;"></span>
-      </button>
-      <div class="collapse navbar-collapse" [ngbCollapse]="navbarCollapsed" id="navbarSupportedContent">
-
-        <!-- Navigation links -->
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item" style="color: white;">
-            <a style="color: white;" class="nav-link" (click)="toggleComponent('Assignments')"
-              [ngClass]="{'active-link': activeLink === 'Assignments'}">Assignments</a>
-          </li>
-
-          <li class="nav-item" style="color: white;">
-            <a style="color: white;" class="nav-link" (click)="toggleComponent('My Courses')"
-              [ngClass]="{'active-link': activeLink === 'My Courses'}">My Courses</a>
-          </li>
-
-          <li class="nav-item" style="color: white;">
-            <a style="color: white;" class="nav-link" (click)="toggleComponent('Available Courses')"
-              [ngClass]="{'active-link': activeLink === 'Available Courses'}">Available Courses</a>
-          </li>
-
-          <li class="nav-item" style="color: white;">
-            <a style="color: white;" class="nav-link" (click)="toggleComponent('Schedule')"
-              [ngClass]="{'active-link': activeLink === 'Schedule'}">Schedule</a>
-          </li>
-
-          <li class="nav-item" style="color: white;">
-            <a style="color: white;" class="nav-link" (click)="toggleComponent('Financial')"
-              [ngClass]="{'active-link': activeLink === 'Financial'}">Financial</a>
-          </li>
-
-        </ul>
-        <!-- Profile -->
-
-        <!-- Button trigger modal -->
-        <img type="image" src="{{profileImg}}" class="rounded-circle" data-bs-toggle="modal"
-          data-bs-target="#exampleModal" style="max-width: 35px;">
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
-          data-bs-backdrop="false" style="background-color: #f5f5f774;">
-          <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
-            <div class="modal-content" style="background-color: #1D1D1F; color: #F5F5F7;">
-              <div class="modal-header"
-                style="background-color: #1D1D1F; color: #F5F5F7; border-bottom: 1px solid #F5F5F7;">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Welcome {{name|titlecase}}</h1>
-              </div>
-              <div class="modal-body">
-                <span class="badge text-bg-light" (click)="toggleComponent('Profile')"
-                  [ngClass]="{'active-link': activeLink === 'profile'}">Profile Settings</span>
-                <br>
-                <span class="badge text-bg-danger" (click)="logOut()">Logout</span>
-
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn1" data-bs-dismiss="modal"
-                  style="background-color: #F5F5F7; border: 1px solid #F5F5F7; color: #1D1D1F;">Close</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-
-
-
+<body>
+  <div class="app">
+    <div class="menu-toggle">
+      <div class="hamburger">
+        <span></span>
       </div>
     </div>
-  </nav>
-  <!-- This is the title of the page. It is styled with custom css. -->
-  <!-- End Example Code -->
-  <!-- This is the container for the component that we want to show.-->
-  <ng-container *ngIf="showAssignments">
-    <div style="padding: 10px; font-weight: 700;"> {{pagename}}</div>
-    <app-studentassignment></app-studentassignment>
-  </ng-container>
 
-  <ng-container *ngIf="showStudentCourses">
-    <div style="padding: 10px; font-weight: 700;"> {{pagename}}</div>
-    <app-studentcourses></app-studentcourses>
-  </ng-container>
+    <aside class="sidebar">
+      <div class="profile">
+        <img type="image" src="{{profileImg}}" class="profile-image">
+        <span class="svg-container">
+          <img (click)="toggleComponent('Profile')" [class.active-link]="activeLink === 'Profile'"
+            src="./assets/svg/settings.svg" alt="Courses" class="svg-icon-settings">
+        </span>
+        <p class="profileTitle">{{name}}</p>
+        <p class="profileRole">{{role}}</p>
+      </div>
 
-  <ng-container *ngIf="showAllAvailableCourses">
-    <div style="padding: 10px; font-weight: 700;"> {{pagename}}</div>
-    <app-student-register-for-course></app-student-register-for-course>
-  </ng-container>
+      <nav class="menu">
+        <a class="menu-item" (click)="toggleComponent('showAssignments')"
+          [class.active-link]="activeLink === 'Assignments' ">
+          <img src="./assets/svg/courses.svg" alt="Book Icon" style="max-width: 20px; margin-right: 10px;">
+          <span>Assignments</span>
+        </a>
 
-  <ng-container *ngIf="showProfile">
-    <div style="padding: 10px; font-weight: 700;"> {{pagename}}</div>
-    <app-profile></app-profile>
-  </ng-container>
+        <hr class="myHr">
+        <a class="menu-item" (click)="toggleComponent('showStudentCourses')"
+          [class.active-link]="activeLink === 'My Courses' ">
+          <img src="./assets/svg/edit.svg" alt="Register Icon" style="max-width: 20px; margin-right: 10px;">
+          <span>My Courses</span>
+        </a>
 
-  <ng-container *ngIf="showStudentSchedule">
-    <div style="padding: 10px; font-weight: 700;"> {{pagename}}</div>
-    <app-studentschedule></app-studentschedule>
-  </ng-container>
+        <hr class="myHr">
+        <a class="menu-item" (click)="toggleComponent('showAllAvailableCourses')"
+          [class.active-link]="activeLink === 'Course Registeration' ">
+          <img src="./assets/svg/todo.svg" alt="Assignment Icon" style="max-width: 20px; margin-right: 10px;">
+          <span>Course Registeration</span>
+        </a>
 
-  <ng-container *ngIf="showFinancial">
-    <div style="padding: 10px; font-weight: 700;"> {{pagename}}</div>
-    <app-financial></app-financial>
-  </ng-container>
+
+        <hr class="myHr">
+        <a class="menu-item" (click)="toggleComponent('showStudentSchedule')"
+          [class.active-link]="activeLink === 'Schedule' ">
+          <img src="./assets/svg/todo.svg" alt="Assignment Icon" style="max-width: 20px; margin-right: 10px;">
+          <span>Schedule</span>
+        </a>
+
+        <hr class="myHr">
+        <a class="menu-item" (click)="toggleComponent('showFinancial')"
+          [class.active-link]="activeLink === 'Financial' ">
+          <img src="./assets/svg/todo.svg" alt="Assignment Icon" style="max-width: 20px; margin-right: 10px;">
+          <span>Financial</span>
+        </a>
+
+
+        <hr class="myHr">
+        <a class="menu-item-logout" (click)="logOut()">
+          <img src="./assets/svg/logout.svg" alt="Logout Icon" style="max-width: 20px; margin-right: 10px;">
+          <span>Logout</span>
+        </a>
+
+      </nav>
+
+
+    </aside>
+
+    <main class="content">
+
+
+      <ng-container *ngIf="showAllAvailableCourses">
+        <a class="title">Major: </a>{{major}}
+        <br>
+        <a class="title">Semester: </a>{{semester}}
+        <br>
+        <br>
+        <app-student-register-for-course></app-student-register-for-course>
+      </ng-container>
+
+      <ng-container *ngIf="showAssignments">
+        <a class="title">Major: </a>{{major}}
+        <br>
+        <a class="title">Semester: </a>{{semester}}
+        <br>
+        <br>
+        <app-studentassignment></app-studentassignment>
+      </ng-container>
+
+      <ng-container *ngIf="showFinancial">
+        <a class="title">Major: </a>{{major}}
+        <br>
+        <a class="title">Semester: </a>{{semester}}
+        <br>
+        <br>
+        <app-financial></app-financial>
+      </ng-container>
+
+      <ng-container *ngIf="showProfile">
+        <a class="title">Major: </a>{{major}}
+        <br>
+        <a class="title">Semester: </a>{{semester}}
+        <br>
+        <br>
+        <app-profile></app-profile>
+      </ng-container>
+
+      <ng-container *ngIf="showStudentCourses">
+        <a class="title">Major: </a>{{major}}
+        <br>
+        <a class="title">Semester: </a>{{semester}}
+        <br>
+        <br>
+        <app-studentcourses></app-studentcourses>
+      </ng-container>
+
+      <ng-container *ngIf="showStudentSchedule">
+        <a class="title">Major: </a>{{major}}
+        <br>
+        <a class="title">Semester: </a>{{semester}}
+        <br>
+        <br>
+        <app-studentschedule></app-studentschedule>
+      </ng-container>
+
+
+    </main>
+  </div>
 
 </body>
 

@@ -22,6 +22,7 @@ import { SchedulesComponent } from './dashboards/admin/schedules/schedules.compo
 import { FinancialComponent } from './dashboards/student/Financial Folder/financial/financial.component';
 import { FinancialAddComponent } from './dashboards/student/Financial Folder/financial-add/financial-add.component';
 import { FinancialAnalysisComponent } from './dashboards/student/Financial Folder/financial-analysis/financial-analysis.component';
+import { ChatComponent } from './components/chat/chat.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -29,10 +30,11 @@ const routes: Routes = [
   { path: 'admin', component: AdminComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } },
   { path: 'teacher', component: TeacherComponent, canActivate: [AuthGuard], data: { roles: ['teacher'] } },
   { path: 'student', component: StudentComponent, canActivate: [AuthGuard], data: { roles: ['student'] } },
-
+  //all
+  { path: 'verify-email', component: VerifyEmailComponent },
+  { path: 'chat', component: ChatComponent },
 
   //teacher
-  { path: 'verify-email', component: VerifyEmailComponent },
   { path: 'register course', component: RegisterCourseComponent, canActivate: [AuthGuard], data: { roles: ['teacher'] } },
   { path: 'teacher courses', component: TeacherMyCoursesComponent, canActivate: [AuthGuard], data: { roles: ['teacher'] } },
   { path: 'profile', component: ProfileComponent },

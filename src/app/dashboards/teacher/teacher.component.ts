@@ -13,9 +13,9 @@ export class TeacherComponent implements OnInit {
 
   pagename: string = '';
   showRegisterCourse: boolean = false;
-  showTeacherCourse: boolean = true;
+  showTeacherCourse: boolean = false;
   showAssignment: boolean = false;
-  showSchedule: boolean = false;
+  showSchedule: boolean = true;
   showProfile: boolean = false;
   activeLink: string = 'courses';
 

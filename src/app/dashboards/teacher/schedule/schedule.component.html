@@ -1,25 +1,22 @@
-<!-- Insert timetable-->
-<div class="componentGrid">
+<div class="myGrid">
 
-    <div class="myBody">
-        <p class="myCardTitle">Add Course To Schedule:</p>
-        <div class="myCardBody">
-            <label class="myFormLabel" for="selectedDay">Subject:</label>
-            <div class="select-wrapper">
+    <!--Add course to timetable-->
+    <div class="card">
+        <a class="myTitle">Add course to timetable : </a>
+        <hr>
+        <label for="selectedDay">Subject:</label>
+        <br>
+        <br>
+        <select id="selectedDay" name="selectedDay" [(ngModel)]="selectedSubject" (change)="updateSelectBeenMade()">
+            <option *ngFor="let subject of coursesList" [value]="subject" [disabled]="hasHoursAddTable(subject)">{{
+                subject }}
+            </option>
+        </select>
+        <br>
+        <br>
 
-                <select id="selectedDay" name="selectedDay" [(ngModel)]="selectedSubject"
-                    (change)="updateSelectBeenMade()">
-                    <option class="myFormInput" *ngFor="let subject of coursesList" [value]="subject"
-                        [disabled]="hasHoursAddTable(subject)">{{ subject }}
-                    </option>
-                </select>
-
-            </div>
-            <button class="editSchedule" (click)="showable()">Add course to
-                schedule</button>
-        </div>
+        <button class="myButton" (click)="showable()">Show add table</button>
         <div *ngIf="showTimetable" style="padding:50px">
-
             <table>
                 <thead>
                     <tr>
@@ -31,33 +28,41 @@
                     <tr *ngFor="let timeSlot of timeSlots">
                         <td>{{ timeSlot }}</td>
                         <td *ngFor="let day of days">
-                            <div>
-                                <input type="checkbox" [disabled]="disableCheckboxForAddList(day, timeSlot)"
-                                    (change)="addToSchedule(day, timeSlot, $event)">
-                                <span>{{ getCourseId(day, timeSlot) }}</span>
-                            </div>
+                            <input class="myInput" type="checkbox" [disabled]="disableCheckboxForAddList(day, timeSlot)"
+                                (change)="addToSchedule(day, timeSlot, $event)">
+                            <span>{{ getCourseId(day, timeSlot) }}</span>
                         </td>
                     </tr>
                 </tbody>
             </table>
-            <button class="editSchedule" (click)="saveSlots()">Save</button>
+            <button class="myButton" (click)="saveSlots()">Save</button>
         </div>
     </div>
-    <!-- Delet timetable-->
-    <br>
-    <div class="myBody">
-        <p class="myCardTitle">Remove Course From Schedule:</p>
-        <div class="myCardBody">
-            <label class="myFormLabel" for="selectedDay">Subject:</label>
-            <div class="select-wrapper">
-                <select id="selectedDay" name="selectedDay" [(ngModel)]="selectedSubjectRemove"
-                    (change)="updateSelectBeenMadeRemove()">
-                    <option class="myFormInput" *ngFor="let subject of coursesList" [value]="subject">{{ subject }}
-                    </option>
-                </select>
-            </div>
-            <button class="editScheduleRemove" (click)="showableRemove()">Add course to schedule</button>
-        </div>
+    <!--End-->
+
+
+
+
+
+
+
+    <!--Delete course to timetable-->
+    <div class="card">
+        <a class="myTitle">Delete course from timetable :</a>
+        <hr>
+        <label for="selectedDay">Subject:</label>
+        <br>
+        <br>
+
+        <select id="selectedDay" name="selectedDay" [(ngModel)]="selectedSubjectRemove"
+            (change)="updateSelectBeenMadeRemove()">
+            <option *ngFor="let subject of coursesList" [value]="subject">{{ subject }}
+            </option>
+        </select>
+        <br>
+        <br>
+
+        <button class="myButton" (click)="showableRemove()">Show remove table</button>
         <div *ngIf="showTimetableRemove" style="padding:50px">
             <table>
                 <thead>
@@ -70,73 +75,80 @@
                     <tr *ngFor="let timeSlot of timeSlots">
                         <td>{{ timeSlot }}</td>
                         <td *ngFor="let day of days">
-                            <div>
-                                <input type="checkbox" [disabled]="disableCheckboxForRemoveList(day, timeSlot)"
-                                    (change)="addToScheduleRemove(day, timeSlot, $event)">
-                                <span>{{ getCourseId(day, timeSlot) }}</span>
-                            </div>
+
+                            <input class="myInput" type="checkbox"
+                                [disabled]="disableCheckboxForRemoveList(day, timeSlot)"
+                                (change)="addToScheduleRemove(day, timeSlot, $event)">
+                            <span>{{ getCourseId(day, timeSlot) }}</span>
                         </td>
                     </tr>
                 </tbody>
             </table>
-            <button class="editScheduleRemove" (click)="saveSlotsRemove()">Save</button>
+            <button class="myButton" (click)="saveSlotsRemove()">Save</button>
         </div>
     </div>
-    <!-- Custom Event Selector-->
-    <br>
-    <div class="myBody">
-        <p class="myCardTitle">Add Custom Event:</p>
+    <!--End-->
+
+
+
+
+
+
+
+
+
+
+
+    <!--Add custom to timetable-->
+    <div class="card">
+        <a class="myTitle">Add custom event :</a>
+        <hr>
         <form class="myForm"
             (ngSubmit)="submitForm(selectedDay, selectedTimeSlot, eventTitle.value, eventDescription.value)"
             #myForm="ngForm">
-            <div class="form-group">
-                <label class="myFormLabel" for="selectedDay">Day:</label>
-                <select [(ngModel)]="selectedDay" id="selectedDay" name="selectedDay"
-                    (change)="customEventChangeStatus()">
-                    <option class="myFormInput" *ngFor="let day of days" [value]="day">{{day}}</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label class="myFormLabel" for="timeSlot">Time Slot:</label>
-                <select [disabled]="isDaySelected()" [(ngModel)]="selectedTimeSlot" id="timeSlot" name="timeSlot"
-                    (change)="customEventChangeStatus()">
-                    <option class="myFormInput" *ngFor="let timeSlot of timeSlots" [value]="timeSlot"
-                        [disabled]="disableCheckboxForCustom(selectedDay, timeSlot)">
-                        {{timeSlot}}
-                    </option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label class="myFormLabel" for="title">Event title:</label>
-                <input class="myFormInput" type="text" id="title" name="title" [(ngModel)]="eventTitle" required>
-            </div>
-
-            <div class="form-group">
-                <label class="myFormLabel" for="description">Event Description:</label>
-                <input class="myFormInput" type="text" id="description" name="description"
-                    [(ngModel)]="eventDescription" required>
-            </div>
-
-            <input class="myFormButton" type="submit" value="Submit" [disabled]="myForm.invalid">
-        </form>
-
-
-    </div>
-
-    <div class="myBody">
-
-        <p class="myCardTitle"> AutoFill Course:</p>
-        <div class="form-group" style="padding: 10px;">
-            <label class="myFormLabel" for="selectedDay">Day:</label>
-            <select id="selectedDay" name="selectedDay" [(ngModel)]="selectedSubjectAutoFill">
-                <option class="myFormInput" *ngFor="let subject of coursesList" [value]="subject"
-                    [disabled]="hasHoursAddTable(subject)">{{ subject }}</option>
+            <label for="selectedDay">Day:</label>
+            <select [(ngModel)]="selectedDay" id="selectedDay" name="selectedDay" (change)="customEventChangeStatus()">
+                <option *ngFor="let day of days" [value]="day">{{day}}</option>
             </select>
-        </div>
-        <button class="editSchedule" (click)="autoComplete(selectedSubjectAutoFill)"
+            <br>
+
+            <label for="timeSlot">Time Slot:</label>
+            <select [disabled]="isDaySelected()" [(ngModel)]="selectedTimeSlot" id="timeSlot" name="timeSlot"
+                (change)="customEventChangeStatus()">
+                <option *ngFor="let timeSlot of timeSlots" [value]="timeSlot"
+                    [disabled]="disableCheckboxForCustom(selectedDay, timeSlot)">
+                    {{timeSlot}}
+                </option>
+            </select>
+            <br>
+            <label for="title">Event title:</label>
+            <input class="myInput" type="text" id="title" name="title" [(ngModel)]="eventTitle" required>
+            <br>
+            <label for="description">Event Description:</label>
+            <input class="myInput" type="text" id="description" name="description" [(ngModel)]="eventDescription"
+                required>
+            <br>
+            <input class="myInput" type="submit" value="Submit" [disabled]="myForm.invalid">
+        </form>
+    </div>
+    <!--End-->
+
+
+    <!--AutoFill-->
+    <div class="card">
+        <a class="myTitle">Auto fill :</a>
+        <hr>
+        <label for="selectedDay">Day:</label>
+        <br>
+        <br>
+        <select id="selectedDay" name="selectedDay" [(ngModel)]="selectedSubjectAutoFill">
+            <option class="myFormInput" *ngFor="let subject of coursesList" [value]="subject"
+                [disabled]="hasHoursAddTable(subject)">{{ subject }}</option>
+        </select>
+        <br>
+        <br>
+        <button class="myButton" (click)="autoComplete(selectedSubjectAutoFill)"
             style="margin-bottom: 10px;">AutoFill</button>
     </div>
-
+    <!--End-->
 </div>

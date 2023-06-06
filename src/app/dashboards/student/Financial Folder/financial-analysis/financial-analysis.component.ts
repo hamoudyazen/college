@@ -11,14 +11,18 @@ import { sum } from 'd3';
   styleUrls: ['./financial-analysis.component.css']
 })
 export class FinancialAnalysisComponent implements OnInit {
+  finalExpensesExpectationArrayTotal: number = 0;
   categorySpentTable: boolean = false;
+  finalExpensesExpectationArray: any[] = [];
   detailedCategoryExpensesData: any = [];
   selectedCategory: any;
   userDetails: User[] = [];
   expensesData: any = [];
   detailedExpensesData: any = [];
-
+  showNextMonthPredictionTable: boolean = false;
   userExpensesAndIncome: ExpensesAndIncome[] = [];
+  userExpensesAndIncomeBackUp: ExpensesAndIncome[] = [];
+
   x = 350;
   y = 350;
   // options for pie 1
@@ -53,6 +57,8 @@ export class FinancialAnalysisComponent implements OnInit {
       this.userDetails = await this.sharedService.getUserDetails();
       this.userExpensesAndIncome = await this.sharedService.getUserExpensesAndIncome(this.userDetails[0].id!);
       this.update();
+      this.userExpensesAndIncomeBackUp = this.userExpensesAndIncome;
+      this.predictNextMonthExpenses();
       this.dataLoaded = true;
     } catch (error) {
       console.error('Error retrieving data:', error);
@@ -65,12 +71,11 @@ export class FinancialAnalysisComponent implements OnInit {
         if (this.userExpensesAndIncome[i].type === 'expense') {
           const currentDate = new Date();
           const date = new Date(this.userExpensesAndIncome[i].date);
-          if (currentDate.getMonth() == date.getMonth()) {
-            for (let j = 0; j < expensesData.length; j++) {
-              if (expensesData[j].name === 'expense') {
-                expensesData[j].value += this.userExpensesAndIncome[i].amount;
-                this.addFunc(this.userExpensesAndIncome[i].category, this.userExpensesAndIncome[i].amount);
-              }
+          for (let j = 0; j < expensesData.length; j++) {
+            if (expensesData[j].name === 'expense') {
+              expensesData[j].value += this.userExpensesAndIncome[i].amount;
+              this.addFunc(this.userExpensesAndIncome[i].category, this.userExpensesAndIncome[i].amount);
+
             }
           }
         }
@@ -110,8 +115,9 @@ export class FinancialAnalysisComponent implements OnInit {
 
   predictNextMonthExpenses(): void {
     //Filter (add) for the past 3 months out of the userExpensesAndIncome array and add them accordingly to 1st month,2st,3st
+    this.finalExpensesExpectationArray = [];
     const currentDate = new Date();
-    const firstMonthExpenses = this.userExpensesAndIncome.filter((i) => {
+    const firstMonthExpenses = this.userExpensesAndIncomeBackUp.filter((i) => {
       const date = new Date(i.date);
       return date.getMonth() + 1 === currentDate.getMonth() && i.type === "expense";
     })
@@ -153,7 +159,7 @@ export class FinancialAnalysisComponent implements OnInit {
           count++;
         }
       }
-      finalArray.push({ category: sumArray[i].category, amunt: sumArray[i].amount / count });
+      finalArray.push({ category: sumArray[i].category, amount: sumArray[i].amount / count });
     }
     //end
 
@@ -162,9 +168,20 @@ export class FinancialAnalysisComponent implements OnInit {
       const date = new Date(i.date);
       return date.getMonth() === currentDate.getMonth() + 1;
     })
-    const returnArray = finalArray.concat(nextMonthFromDatabase);
+
+    const finalArrayAndNextMonth = finalArray.concat(nextMonthFromDatabase);
+    this.finalExpensesExpectationArray = this.finalExpensesExpectationArray.concat(finalArrayAndNextMonth);
+    this.showNextMonthPredictionTable = true;
+    console.log(this.finalExpensesExpectationArray);
     //end
 
-    console.log(returnArray);
+    //total for table
+    for (let i = 0; i < this.finalExpensesExpectationArray.length; i++) {
+      this.finalExpensesExpectationArrayTotal += this.finalExpensesExpectationArray[i].amount;
+
+    }
+    //end
   }
+
+
 }

@@ -1,291 +1,476 @@
-/* You can add global styles to this file, and also import other style files */
-
-html,
-body {
-  height: 100%;
+/*CARD AND BODIES (ENDS  AT 48)*/
+.firstBody {
+  border-radius: 1rem;
+  background-color: #F0F3F7;
+  padding: 30px;
+  height: fit-content;
 }
 
+.myGrid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-bottom: 100px;
+}
+
+.card {
+  flex: 0 0 auto;
+  margin: 10px;
+  padding: 30px;
+  width: fit-content;
+  border-radius: 1rem;
+  background-color: white;
+  width: 80%;
+}
+
+.cardInsideCard {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(500px, max-content));
+  grid-gap: 10px;
+  justify-content: start;
+  border-radius: 1rem;
+  background-color: white;
+  width: 100%;
+}
+
+
+
+
+.cardInsideCardInsideCard {
+  border-radius: 1rem;
+  background-color: #F0F3F7;
+  padding: 30px;
+  margin: 10px;
+  flex: 1 0 300px;
+}
+
+/*END CARDS AND BODIE (STARTS  AT 1)*/
+
+/*TABLE (ENDS  AT 74)*/
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-bordered th,
+.table-bordered td {
+  border: 1px solid #000;
+  padding: 8px;
+
+}
+
+.table-bordered th {
+  background-color: #A7385D;
+  color: #f9f9f9;
+}
+
+.table-bordered tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.table-bordered tbody tr:hover {
+  background-color: #A7385D;
+}
+
+/*END TABLE (STARTS  AT 50)*/
+
+/*FORM (ENDS  AT 120)*/
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+form div {
+  margin-bottom: 10px;
+}
+
+label {
+  font-weight: bold;
+}
+
+input[type="text"],
+select {
+  width: 100%;
+  padding: 5px;
+  border-radius: 1rem;
+  border: 1px solid #ccc;
+}
+
+.myInput {
+  width: 100%;
+  padding: 5px;
+  border-radius: 1rem;
+  border: 1px solid #ccc;
+}
+
+button[type="submit"] {
+  padding: 10px 20px;
+  background-color: #286090;
+  color: #fff;
+  border: none;
+  border-radius: 1rem;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover {
+  background-color: #286090;
+}
+
+/*END FORM (STARTS  AT 78)*/
+
+/*TEXTS (ENDS  AT 135)*/
+.myTitle {
+  font-size: 18px;
+  font-weight: 700;
+  text-align: left;
+}
+
+.subTitle {
+  font-size: 15px;
+  font-weight: 500;
+  text-align: left;
+}
+
+/*END TEXTS (STARTS  AT 122)*/
+
+/*BUTTONS (STARTS  AT 189)*/
+.dangerButton {
+  color: #fff;
+  background-color: #dc3545;
+  border-color: #dc3545;
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.42857143;
+  text-align: center;
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+
+.dangerButton:hover {
+  color: #fff;
+  background-color: #c82333;
+  border-color: #bd2130;
+}
+
+.myButton {
+  padding: 10px 20px;
+  background-color: #286090;
+  color: #fff;
+  border: none;
+  border-radius: 1rem;
+  cursor: pointer;
+}
+
+.myButton:hover {
+  background-color: #286090;
+}
+
+.deleteButton {
+  display: inline-block;
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  user-select: none;
+}
+
+/*END BUTTONS (STARTS  AT 137)*/
+
+/*SIDEBAR AND DASHBOARD (ENDS ON 475)*/
 @import url('https://fonts.cdnfonts.com/css/ibm-plex-mono-3');
 
 body {
   font-family: 'IBM Plex Mono Medium', sans-serif;
   background-color: #F5F5F7;
   color: #1D1D1F;
+  max-height: fit-content;
   padding: 0;
   margin: 0;
-  max-height: fit-content;
 }
 
-.btn1 {
-  background-color: #F5F5F7;
-  color: #1D1D1F;
-  border: 1px solid #1D1D1F;
-  border-radius: 20px;
-  transition: 0.5s;
-  height: 40px;
-  font-weight: 700;
-}
-
-.btn1:hover {
-  background-color: #1D1D1F;
-  color: #F5F5F7;
-  border: 1px solid #F5F5F7;
-}
-
-
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
-
-@import '~bootstrap/dist/css/bootstrap.min.css';
-@import '~flowbite/dist/css/flowbite.min.css';
-
-
-/*START OF FORMS*/
-.button {
-  background-color: #A41D30;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  border: 2px solid #a51c30;
-  width: 100%;
-  max-height: 50px;
-  /* set max-height to an appropriate pixel value */
-  /* set height to an appropriate pixel value */
-  border-radius: 7px;
-  outline: none;
-  color: #ffffff;
-  cursor: pointer;
-  transition: transform 0.3s ease-out;
-  /* add transition property for smooth animation */
-  text-transform: uppercase;
-}
-
-
-.button:hover {
-  transform: scale(1.03);
-  /* increase the scale to 1.1 to make the button grow on hover */
-  color: white;
-  background-color: #c4961a;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  border: 2px solid #c4961a;
-
-}
-
-.title {
+* {
   margin: 0;
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: #a41d30;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
 }
 
-.subtitle {
-  font-size: .725rem;
-  max-width: 80%;
-  text-align: center;
-  line-height: 1.1rem;
-  color: #000;
-}
 
-.form_container {
-  max-width: 30%;
-  max-height: 90%;
+.app {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 15px;
-  padding: 50px 40px 20px 40px;
-  background-color: #ffffff;
-  box-shadow: 0px 106px 42px rgba(0, 0, 0, 0.01),
-    0px 59px 36px rgba(0, 0, 0, 0.05), 0px 26px 26px rgba(0, 0, 0, 0.09),
-    0px 7px 15px rgba(0, 0, 0, 0.1), 0px 0px 0px rgba(0, 0, 0, 0.1);
-  border-radius: 11px;
-  font-family: "Inter", sans-serif;
+  min-height: 100vh;
+
+}
+
+
+
+.menu-toggle {
+  display: none;
   position: fixed;
-  top: 50%;
+  top: 2rem;
+  right: 2rem;
+  width: 60px;
+  height: 60px;
+  border-radius: 99px;
+  background-color: #2e3047;
+  cursor: pointer;
+
+}
+
+.hamburger {
+  position: relative;
+  top: calc(50% - 2px);
   left: 50%;
   transform: translate(-50%, -50%);
-  height: 100vh;
-  /* set height to 100% viewport height */
+  width: 32px;
 }
 
-.form_container .link_container {
-  display: flex;
-  justify-content: space-between;
-  width: 70%;
-  text-decoration: none;
-  text-underline-offset: 5px;
-}
-
-.logo_container {
-  box-sizing: border-box;
-  width: 80px;
-  height: 80px;
-  display: flex;
-  /* make container a flex container */
-  justify-content: center;
-  /* center horizontally */
-  align-items: center;
-  /* center vertically */
-  filter: drop-shadow(0px 0.5px 0.5px #efefef) drop-shadow(0px 1px 0.5px rgba(239, 239, 239, 0.5));
-  border-radius: 11px;
-}
-
-
-.title_container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-}
-
-.title {
-  margin: 0;
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: #A41D30;
-}
-
-.subtitle {
-  font-size: 0.725rem;
-  max-width: 80%;
-  text-align: center;
-  line-height: 1.1rem;
-  color: black;
-}
-
-.input_container {
-  width: 100%;
-  height: fit-content;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 0px;
-}
-
-.icon {
-  width: 20px;
-  position: absolute;
-  z-index: 99;
-  left: 12px;
-  bottom: 9px;
-}
-
-.input_label {
-  font-size: 0.75rem;
-  color: black;
-  font-weight: 600;
-}
-
-.input_field {
-  width: auto;
-  height: 40px;
-  padding: 0 0 0 40px;
-  border-radius: 7px;
-  outline: none;
-  border: 1px solid #e5e5e5;
-  filter: drop-shadow(0px 1px 0px #efefef) drop-shadow(0px 1px 0.5px rgba(239, 239, 239, 0.5));
-  transition: all 0.3s cubic-bezier(0.15, 0.83, 0.66, 1);
-}
-
-.input_field:focus {
-  border: 1px solid transparent;
-  box-shadow: 0px 0px 0px 2px #242424;
-  background-color: transparent;
-}
-
-.separator {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 30px;
-  color: black;
-}
-
-.separator .line {
+.hamburger>span,
+.hamburger>span::before,
+.hamburger>span::after {
   display: block;
+  position: absolute;
   width: 100%;
-  height: 1px;
-  border: 0;
-  background-color: black;
+  height: 4px;
+  border-radius: 99px;
+  background-color: #FFF;
+  transition-duration: .25s;
 }
 
-.note {
+.hamburger>span::before {
+  content: '';
+  top: -8px;
+}
+
+.hamburger>span::after {
+  content: '';
+  top: 8px;
+}
+
+.menu-toggle.is-active .hamburger>span {
+  transform: rotate(45deg);
+}
+
+.menu-toggle.is-active .hamburger>span::before {
+  top: 0;
+  transform: rotate(0deg);
+}
+
+.menu-toggle.is-active .hamburger>span::after {
+  top: 0;
+  transform: rotate(90deg);
+}
+
+.sidebar {
+  flex: 1 1 0;
+  max-width: 300px;
+  padding: 2rem 2rem;
+  background-color: #2e3047;
+  border-radius: 1rem;
+  background-color: #FFFFFF;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  z-index: 100;
+  position: sticky;
+  top: 0;
+
+}
+
+
+.sidebar h3 {
+  color: #707793;
   font-size: 0.75rem;
-  color: #8b8e98;
-  text-decoration: underline;
+  text-transform: uppercase;
+  margin-bottom: 0.5em;
 }
 
-.form_container {
+.sidebar .menu {
+  margin: 0 -1rem;
+  position: sticky;
+  top: 0;
+}
+
+.sidebar .menu .menu-item {
+  display: block;
+  padding: 1em;
+  color: #000000;
+  text-decoration: none;
+  transition: 0.2s linear;
+  font-weight: 700;
+
+  background-color: #fff;
+  border-radius: 1rem;
+
+}
+
+.myHr {
+  background-color: white;
+  color: white;
+  border: 1px solid white;
+}
+
+
+
+
+.sidebar .menu .menu-item:hover,
+.sidebar .menu .menu-item.active-link {
+  background-color: #F0F3FA;
+  border-radius: 1rem;
+}
+
+.sidebar .menu .menu-item:active,
+.sidebar .menu .menu-item.active-link:active {
+  background-color: #F0F3FA;
+  border-radius: 1rem;
+}
+
+
+
+
+.content {
+  flex: 1 1 0;
+  padding: 2rem;
+  border-radius: 1rem;
+  background-color: #F0F3FA;
+
+}
+
+.content h1 {
+  color: #3C3F58;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.content p {
+  color: #707793;
+}
+
+@media (max-width: 1024px) {
+  .sidebar {
+    max-width: 200px;
+  }
+}
+
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  .content {
+    padding-top: 8rem;
+
+
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: -300px;
+    height: 100vh;
+    width: 100%;
+    max-width: 300px;
+    transition: 0.2s linear;
+  }
+
+  .sidebar.is-active {
+    left: 0;
+  }
+}
+
+.profile {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-}
-
-/*END OF FORMS*/
-/* Define the fade-in animation */
-.title {
-  color: black;
-  font-family: 700;
-  text-decoration: none;
-  font-size: 18px;
-}
-
-.subTitle {
-  color: black;
-  font-family: 700;
-  text-decoration: none;
-  font-size: 18px;
-}
-
-.title {
-  color: black;
-  font-family: 700;
-  text-decoration: none;
-  font-size: 18px;
-}
-
-.subTitle {
-  color: black;
-  font-family: 700;
-  text-decoration: none;
-  font-size: 18px;
-}
-
-.myTitle {
-  color: black;
-  font-family: 700;
-  text-decoration: underline;
   text-align: center;
-  font-size: 25px;
+  position: sticky;
+  top: 0;
 }
 
-.mySubTitle {
-  color: rgb(55, 54, 54);
-  font-family: 700;
-  text-decoration: none;
-  font-size: 18px;
-}
-
-.myDescription {
-  color: black;
-  font-family: 400;
-  text-decoration: none;
-  font-size: 16px;
-}
-
-.myButton {
-  background-color: #F5F5F7;
+.profile-image {
+  max-width: 100px;
   border-radius: 1rem;
-  border: 1px solid #F5F5F7;
-  transition-duration: 300ms;
-  transform: scale(1);
 }
 
-.myButton:hover {
-  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.3);
-  /* Replace #FF0000 with the desired hover color */
+.profileTitle {
+  font-size: 18px;
+  color: black;
+  font-weight: 700;
 }
+
+.profileRole {
+  font-size: 15px;
+  color: black;
+  font-weight: 400;
+  padding-bottom: 50px;
+}
+
+
+/*logout*/
+.sidebar .menu .menu-item-logout {
+  display: block;
+  padding: 1em;
+  color: #000000;
+  text-decoration: none;
+  transition: 0.2s linear;
+  font-weight: 700;
+  background-color: #ff00006f;
+
+  border-radius: 1rem;
+}
+
+.sidebar .menu .menu-item-logout:hover,
+.sidebar .menu .menu-item-logout.active-link {
+  background-color: #ff00006f;
+  border-radius: 1rem;
+}
+
+.sidebar .menu .menu-item-logout:active,
+.sidebar .menu .menu-item-logout.active-link:active {
+  background-color: #F0F3FA;
+  border-radius: 1rem;
+}
+
+.profile {
+  position: relative;
+}
+
+.svg-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(50%, -50%);
+}
+
+.svg-icon {
+  width: 24px;
+  /* Adjust the width and height as needed */
+  height: 24px;
+  /* Additional styling for the SVG if desired */
+}
+
+.svg-icon-settings {
+  width: 24px;
+  /* Adjust the width and height as needed */
+  height: 24px;
+  rotate: 0deg;
+}
+
+.svg-icon-settings:hover {
+  rotate: 90deg;
+  transition: 0.2s linear;
+
+}
+
+/*END SIDEBAR AND DASHBOARD (STARTS  AT 192)*/

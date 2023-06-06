@@ -114,3 +114,22 @@ export interface ExpensesAndIncome {
   userId: string;
 }
 
+
+export interface ChatMessage {
+  chatID?: string;
+  user1ID: string;
+  user2ID: string;
+  messagesArray: {
+    user1IDMessages: {
+      message: MessageDetails[];
+    }
+    user2IDMessages: {
+      message: MessageDetails[];
+    }
+  };
+}
+export interface MessageDetails {
+  message: string;
+  date: Date;
+  senderID: string;
+}

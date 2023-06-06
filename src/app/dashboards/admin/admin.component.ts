@@ -14,8 +14,10 @@ export class AdminComponent implements OnInit {
   pagename: string = '';
   showStudents: boolean = false;
   showCourses: boolean = false;
-  showSchedules: boolean = true;
+  showSchedules: boolean = false;
   showProfile: boolean = false;
+  showChat: boolean = true;
+
   activeLink: string = 'courses';
 
   // Shared properties
@@ -87,6 +89,7 @@ export class AdminComponent implements OnInit {
     this.showCourses = false;
     this.showProfile = false;
     this.showSchedules = false;
+    this.showChat = false;
 
     this.activeLink = component;
 
@@ -95,6 +98,7 @@ export class AdminComponent implements OnInit {
       this.showCourses = false;
       this.showProfile = false;
       this.showSchedules = false;
+      this.showChat = false;
       this.pagename = 'Students';
       this.activeLink = 'Students';
     }
@@ -103,6 +107,7 @@ export class AdminComponent implements OnInit {
       this.showCourses = true;
       this.showProfile = false;
       this.showSchedules = false;
+      this.showChat = false;
       this.pagename = 'Courses';
       this.activeLink = 'Courses';
     }
@@ -111,6 +116,7 @@ export class AdminComponent implements OnInit {
       this.showCourses = false;
       this.showProfile = true;
       this.showSchedules = false;
+      this.showChat = false;
       this.pagename = 'Profile';
       this.activeLink = 'Profile';
     } else if (component === 'Schedules') {
@@ -118,8 +124,17 @@ export class AdminComponent implements OnInit {
       this.showCourses = false;
       this.showProfile = false;
       this.showSchedules = true;
+      this.showChat = false;
       this.pagename = 'Profile';
       this.activeLink = 'Profile';
+    } else if (component === 'Chat') {
+      this.showStudents = false;
+      this.showCourses = false;
+      this.showProfile = false;
+      this.showSchedules = false;
+      this.showChat = true;
+      this.pagename = 'Chat';
+      this.activeLink = 'Chat';
     }
 
   }

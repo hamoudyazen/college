@@ -31,4 +31,7 @@ export class StudentcoursesComponent implements OnInit {
   };
 
 
+  openWebPage(link: string): void {
+    window.open(link, '_blank');
+  }
 }

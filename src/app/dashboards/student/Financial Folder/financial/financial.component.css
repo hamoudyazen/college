@@ -89,14 +89,14 @@
     padding: 30px;
     height: fit-content;
     border-radius: 1rem;
-    background-color: #fff;
+    background-color: #ffffff;
 }
 
 .secondBody {
     padding: 30px;
     height: fit-content;
     border-radius: 1rem;
-    background-color: #fff;
+    background-color: #ffffff;
 
 }
 
@@ -372,36 +372,7 @@ td div {
     color: green;
 }
 
-.componentGrid {
-    max-height: fit-content;
-    width: 100%;
-    padding-right: 30px;
-    flex-wrap: wrap;
-    display: flex;
-}
 
-.componentGrid .myBody {
-    margin-left: 30px;
-    margin-bottom: 30px;
-
-}
-
-.firstBody {
-    flex-wrap: wrap;
-    display: flex;
-    width: 100%;
-}
-
-.firstBody .firstHalf {
-    width: 45%;
-    padding: 10px;
-}
-
-.firstBody .secondHalf {
-    width: 45%;
-    padding: 10px;
-
-}
 
 .myTitle {
     font-weight: 700;
@@ -414,12 +385,13 @@ td div {
     border-radius: 1rem;
     position: fixed;
     bottom: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    margin-bottom: 20px;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    width: fit-content;
+    margin-bottom: 50px;
 
 }
+
 
 
 

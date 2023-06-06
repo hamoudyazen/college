@@ -1,6 +1,9 @@
 <body class="firstBody">
-    <h3 style="text-decoration: underline;">Courses table:</h3>
-
+    <a class="myTitle">Courses table:</a>
+    <br>
+    <a class="subTitle">*select a course to show it's schedule timetable*</a>
+    <br>
+    <br>
     <select [(ngModel)]="selectedMajor" (change)="showMajorTableFunc()">
         <option *ngFor="let major of allMajors" [value]="major.majorName">{{ major.majorName }}</option>
     </select>

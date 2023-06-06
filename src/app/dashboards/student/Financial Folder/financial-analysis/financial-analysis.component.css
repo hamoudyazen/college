@@ -47,11 +47,11 @@
 }
 
 .table-bordered tbody tr:hover {
-    background-color: #7AA3E5;
+    background-color: #A7385D;
 }
 
 .subTitle {
     font-size: 15px;
-    font-weight: 700;
+    font-weight: 500;
     text-align: left;
 }

@@ -1,162 +1,81 @@
-<!doctype html>
-<html lang="en">
+<div class="myGrid">
+  <!--My Submissoins-->
+  <div class="card">
+    <a class="myTitle">Add course Material :</a>
+    <hr>
+    <form class="myForm" (ngSubmit)="onSubmit()" #registerForm="ngForm">
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
-  <title>Bootstrap Example</title>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-</head>
-<style>
-  body {
-    background-image: none;
-  }
-</style>
+      <label for="validationServer02">Select a course:</label>
+      <select id="validationServer02" [(ngModel)]="courseMaterial.materialCourseId" name="course_id" required>
+        <option *ngFor="let course of teacherCourses" [value]="course.id">{{ course.name }}</option>
+      </select>
+      <br>
+
+      <label for="validationServer01">Name</label>
+      <input type="text" id="validationServer01" value="Mark" required=""
+        [(ngModel)]="courseMaterial.materialCourseName" name="name">
+      <br>
+
+      <label for="validationServer02">Description</label>
+      <input type="description" id="validationServer02" value="Otto" required=""
+        [(ngModel)]="courseMaterial.materialCourseDescription" name="description">
+      <br>
+
+      <input class="form-control" type="file" id="formFile" (change)="choseFile($event)">
+      <br>
+
+      <button class="myButton" type="submit" (click)="addData()">
+        Add Material
+      </button>
+    </form>
+  </div>
+  <!--End-->
+
+  <!--Edit Course-->
+  <div class="card">
+    <a class="myTitle">Edit Course :</a>
+    <hr>
+
+    <select [(ngModel)]="selectedCourse" (change)="showStudentsTable()">
+      <option *ngFor="let course of teacherCourses" [value]="course.name">{{ course.name }}</option>
+    </select>
+    <br>
+    <br>
+
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">User Email</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let student of studentsInCourse; let i=index">
+          <th scope="row">{{i}}</th>
+          <td>{{student}}s</td>
 
 
-<body class="p-3 m-0 border-0 bd-example  fade-in"
-  style="background-color: #fff; border-radius: 1rem; height: fit-content;">
-
-  <!-- Example Code -->
-  <div class="row row-cols-1 row-cols-md-3 g-4">
-    <ng-container *ngFor="let course of teacherCourses; let i = index">
-      <ng-container *ngIf="!showModal[i]">
-        <div class="col">
-          <div class="card h-100 fade-in" style="background-color: #c1cbde; border-radius: 1rem; border: 0px;">
-            <div class="card-header " style="background-color: #c1cbde;  border: 0px; border-radius: 1rem;">
-              <h5 class="myTitle">{{ course.name }}</h5>
-            </div>
-            <div class="card-body">
-              <p class="myDescription"><strong>Description:</strong> {{ course.description }}</p>
-              <p class="mySubTitle"><strong>Credits:</strong> {{ course.credits }}</p>
-              <p class="mySubTitle"><strong>Semester:</strong> {{ course.semester }}</p>
-              <!-- Button trigger modal -->
-              <button type="myButton" class="myButton" data-bs-toggle="modal"
-                [attr.data-bs-target]="'#staticBackdrop'+i" (click)="courseID=course.id; showModal[i] = true">
-                Edit students
-              </button>
-            </div>
-          </div>
-        </div>
-
-      </ng-container>
-
-      <!-- Students modal -->
-      <div class="modal fade" [id]="'staticBackdrop'+i" data-bs-backdrop="false" data-bs-keyboard="false" tabindex="-1"
-        [attr.aria-labelledby]="'staticBackdropLabel'+i" [attr.aria-hidden]="!showModal[i] ? 'true' : null"
-        (shown.bs.modal)="onModalShow(i)" (hidden.bs.modal)="onModalHide(i)" style="background-color: #000000d6;">
-        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-header" style="background-color: #c1cbde; border: 1px solid #c1cbde; border-radius: 0px;">
-              <h1 class="myTitle" [id]="'staticBackdropLabel'+i">Edit Students</h1>
-            </div>
-            <div class="modal-body">
-              <ul>
-                <div *ngFor="let student of course.studentsArray" style="margin-bottom: 10px">
-                  <div class="input-group">
-                    <form #updateStudentForm="ngForm"
-                      (submit)="updateStudent(updateStudentForm.value, student, student); $event.preventDefault()">
-                      <div class="input-group">
-                        <input type="text" class="form-control" placeholder="{{ student }}" name="email" ngModel
-                          #emailInput="ngModel">
-                        <input type="hidden" name="originalEmail" [value]="student" ngModel
-                          #originalEmailInput="ngModel">
-                        <div class="input-group-append">
-                          <button class="btn btn-outline-danger" type="button" (click)="deleteStudent(student)">
-                            <i class="bi bi-trash"></i>
-                          </button>
-                          <button class="btn btn-outline-success" type="submit">
-                            <i class="bi bi-check2"></i>
-                          </button>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </ul>
-            </div>
-            <div class="modal-footer" class="btn btn-secondary ml-auto"
-              style="border-radius: 0rem; background-color: #c1cbde; border: 0px;">
-              <form #addStudentForm="ngForm" (submit)="addStudent(addStudentForm)">
-                <div class="input-group mb-3">
-                  <input type="email" class="form-control" placeholder="Enter new student's email" name="email" ngModel
-                    required #emailInput="ngModel" email>
-                  <div class="input-group-append">
-                    <button type="submit" class="myButton" [disabled]="!emailInput.valid">Add Student</button>
-                  </div>
-                </div>
-              </form>
-              <button type="submit" class="myButton" data-bs-dismiss="modal">Close</button>
-            </div>
-
-          </div>
-        </div>
-      </div>
-
-      <!--End of students-->
-    </ng-container>
+          <td> <button (click)="deleteUserFromCourse(student)" type="deleteButton" class="deleteButton"
+              title="delete user"><i class="fa fa-trash"></i><svg width="21" height="20" viewBox="0 0 21 20" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_2_3)">
+                  <path fill-rule="evenodd" clip-rule="evenodd"
+                    d="M7.35001 15.7143H9.45V8.09524H7.35001V15.7143ZM11.55 15.7143H13.65V8.09524H11.55V15.7143ZM5.25 17.619H15.75V6.19048H5.25V17.619ZM7.35001 4.28571H13.65V2.38095H7.35001V4.28571ZM15.75 4.28571V0.476191H5.25V4.28571H0V6.19048H3.15V19.5238H17.85V6.19048H21V4.28571H15.75Z"
+                    fill="black" />
+                </g>
+                <defs>
+                  <clipPath id="clip0_2_3">
+                    <rect width="21" height="20" fill="white" />
+                  </clipPath>
+                </defs>
+              </svg>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
 
   </div>
-</body>
 
-
-
-
-<br>
-
-<body class="p-3 m-0 border-0 bd-example fade-in"
-  style="background-color: #fff; border-radius: 1rem; height: fit-content; border: 0px;">
-  <div class="form-container d-flex justify-content-center">
-    <div class="card p-2" style="width: 450px; background-color: #c1cbde; border-radius: 1rem; border: 0px;">
-      <h1 class="myTitle">Add Course Material</h1>
-
-      <form class="row g-3 col-10 mx-auto justify-content-center" (ngSubmit)="onSubmit()" #registerForm="ngForm">
-
-
-        <div class="col-md-10">
-          <div>
-            <label for="validationServer02" class="form-label" style="color:black;">Select a course:</label>
-            <select class="form-select is-valid" id="validationServer02" [(ngModel)]="courseMaterial.materialCourseId"
-              name="course_id" required>
-              <option *ngFor="let course of teacherCourses" [value]="course.id">{{ course.name }}</option>
-            </select>
-          </div>
-        </div>
-
-
-        <div class="col-md-10">
-          <label for="validationServer01" class="form-label" style="color: black;">Name</label>
-          <input type="text" class="form-control is-valid" id="validationServer01" value="Mark" required=""
-            [(ngModel)]="courseMaterial.materialCourseName" name="name">
-        </div>
-
-
-        <div class="col-md-10 ">
-          <label for="validationServer02" class="form-label" style="color: black;">Description</label>
-          <input type="description" class="form-control is-valid" id="validationServer02" value="Otto" required=""
-            [(ngModel)]="courseMaterial.materialCourseDescription" name="description">
-        </div>
-
-        <input class="form-control" type="file" id="formFile" (change)="choseFile($event)">
-        <button class="myButton" type="submit" (click)="addData()">
-          Add Material
-        </button>
-
-      </form>
-
-
-    </div>
-  </div>
-</body>
-
-
-<!------------------------------------------------------------------------- Material -------------------------------------------------------------------------->
-
-
-
-
-</html>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!--End-->

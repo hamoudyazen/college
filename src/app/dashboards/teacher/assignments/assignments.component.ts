@@ -107,4 +107,7 @@ export class AssignmentsComponent implements OnInit {
     ).subscribe();
   }
 
+  openWebPage(link: string): void {
+    window.open(link, '_blank');
+  }
 }

@@ -1,47 +1,38 @@
-<!doctype html>
-<html lang="en">
+<body class="firstBody">
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
-  <title>Bootstrap Example</title>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-</head>
-<style>
-  body {
-    background-image: none;
-  }
-</style>
+  <div class="myGrid">
 
-<body class="p-3 m-0 border-0 bd-example fade-in" style="background-color: #F5F5F7;">
+    <!--My Courses-->
+    <div class="card">
+      <a class="myTitle">Schedule:</a>
+      <br>
+      <br>
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th *ngFor="let day of days">{{ day }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let timeSlot of timeSlots">
+            <td>{{ timeSlot }}</td>
+            <td *ngFor="let day of days">
+              <div>
+                <span [ngClass]="{'eventColor': getCourseId(day, timeSlot).includes('Event')}">
+                  <a>{{getCourseId(day, timeSlot) }}</a>
+                  <br>
+                  <a>{{getRoom(day, timeSlot)}}</a>
+                </span>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!--end-->
 
 
-  <table>
-    <thead>
-      <tr>
-        <th></th>
-        <th *ngFor="let day of days">{{ day }}</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let timeSlot of timeSlots">
-        <td>{{ timeSlot }}</td>
-        <td *ngFor="let day of days">
-          <div>
-            <span [ngClass]="{'eventColor': getCourseId(day, timeSlot).includes('Event')}">
-              <a>{{getCourseId(day, timeSlot) }}</a>
-              <br>
-              <a>{{getRoom(day, timeSlot)}}</a>
-            </span>
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
 
+  </div>
 </body>
-
-</html>

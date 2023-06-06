@@ -1,28 +1,9 @@
-<!doctype html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
-    <title>Bootstrap Example</title>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-</head>
-<style>
-    body {
-        background-image: none;
-    }
-</style>
-<a style="text-decoration: underline; font-weight: 700; font-size: 20px;">Analysis :</a>
-
 <body class="firstBody">
 
     <div class="myGrid">
         <!--expenses & income pie-->
         <div class="card">
-            <a class="myTitle">Expenses & Income in Pie chart: </a>
+            <a class="myTitle">Expenses & Income in Pie chart (OVERALL) : </a>
             <ng-container *ngIf="dataLoaded">
                 <table class="myTable">
                     <tr>
@@ -40,7 +21,7 @@
 
         <!--expenses & income pie-->
         <div class="card">
-            <a class="myTitle">Expenses & Income in Bar chart: </a>
+            <a class="myTitle">Expenses & Income in Bar chart (OVERALL) : </a>
             <ng-container *ngIf="dataLoaded">
                 <table class="myTable">
                     <tr>
@@ -59,7 +40,7 @@
 
         <!--expenses & income pie-->
         <div class="card">
-            <a class="myTitle">Monthly & Income detailed: </a>
+            <a class="myTitle">Expenses & Income detailed (OVERALL): </a>
             <ng-container *ngIf="dataLoaded">
                 <table class="myTable">
                     <tr>
@@ -74,8 +55,10 @@
         </div>
         <!--end-->
 
+
+        <!--Show monthly spent on category-->
         <div class="card">
-            <a class="myTitle">Show monthly spent on category:</a>
+            <a class="myTitle">Show monthly spent on category (OVERALL) :</a>
 
             <label class="subTitle">Category:</label>
             <div class="dropdown-container">
@@ -165,15 +148,40 @@
                 </table>
             </div>
         </div>
+        <!--end-->
 
 
-        <!--expenses & income pie-->
+
+
+        <!--Show Next Month Spending Expectation-->
         <div class="card">
-            <a class="myTitle">Prediect next month expenses:</a>
-            <button (click)="predictNextMonthExpenses()">Predict Next Month Expenses</button>
+            <a class="myTitle">Next month expenses expectation:</a>
+            <a class="subTitle">Requeries the dataset of past 3 months historical expenses.</a>
+            <br>
+            <div>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of finalExpensesExpectationArray">
+                            <td>{{ item.category }}</td>
+                            <td>{{ item.amount | currency: '₪' }}</td>
+                        </tr>
+                        <td style="background-color: #7AA3E5; font-weight: 700;">Total:</td>
+                        <td style="background-color: #7AA3E5; font-weight: 700;"> {{finalExpensesExpectationArrayTotal |
+                            currency:'₪'}}
+                        </td>
+                    </tbody>
+                </table>
+            </div>
         </div>
         <!--end-->
+
+
+
     </div>
 </body>
-
-</html>

@@ -16,6 +16,17 @@ export class StudentsadminComponent implements OnInit {
   studentIndex: number = 0;
   courseIndex: number = 0;
   userCourses: Course[] = [];
+  user: User = {
+    editingSchedule: false,
+    firstname: '',
+    lastname: '',
+    birthday: new Date(),
+    email: '',
+    password: '',
+    role: '',
+    major: '',
+    image: ''
+  };
   constructor(private authService: AuthService, private sharedService: SharedService) { }
 
   ngOnInit(): void {
@@ -74,4 +85,13 @@ export class StudentsadminComponent implements OnInit {
       location.reload();
     });
   }
+
+
+
+  onSubmit() {
+    this.authService.register(this.user).subscribe(response => {
+      alert(response);
+    });
+  }
+
 }
