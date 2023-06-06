@@ -15,8 +15,9 @@ export class TeacherComponent implements OnInit {
   showRegisterCourse: boolean = false;
   showTeacherCourse: boolean = false;
   showAssignment: boolean = false;
-  showSchedule: boolean = true;
+  showSchedule: boolean = false;
   showProfile: boolean = false;
+  showChat: boolean = false;
   activeLink: string = 'courses';
 
   // Shared properties
@@ -105,6 +106,7 @@ export class TeacherComponent implements OnInit {
     this.showProfile = false;
     this.showAssignment = false;
     this.showSchedule = false;
+    this.showChat = false;
     this.activeLink = component;
 
     if (component === 'Add Course') {
@@ -132,6 +134,11 @@ export class TeacherComponent implements OnInit {
       this.chageStatus();
       this.pagename = 'Schedule';
       this.activeLink = 'Schedule';
+    } else if (component === 'Chat') {
+      this.showChat = true;
+      this.chageStatus();
+      this.pagename = 'Chat';
+      this.activeLink = 'Chat';
     }
   }
 

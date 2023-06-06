@@ -31,6 +31,8 @@ export class StudentComponent implements OnInit {
   showStudentSchedule: boolean = false;
   showFinancial: boolean = true;
   showProfile: boolean = false;
+  showChat: boolean = false;
+
   activeLink: string = '';
   currentEmail: any;
   majorId: any;
@@ -78,6 +80,7 @@ export class StudentComponent implements OnInit {
     this.showStudentSchedule = false;
     this.showFinancial = false;
     this.showProfile = false;
+    this.showChat = false;
     this.activeLink = component;
 
     if (component === 'showAssignments') {
@@ -87,6 +90,7 @@ export class StudentComponent implements OnInit {
       this.showStudentSchedule = false;
       this.showFinancial = false;
       this.showProfile = false;
+      this.showChat = false;
       this.activeLink = component;
     }
     else if (component === 'showStudentCourses') {
@@ -96,6 +100,7 @@ export class StudentComponent implements OnInit {
       this.showStudentSchedule = false;
       this.showFinancial = false;
       this.showProfile = false;
+      this.showChat = false;
       this.activeLink = component;
     }
     else if (component === 'showAllAvailableCourses') {
@@ -105,6 +110,7 @@ export class StudentComponent implements OnInit {
       this.showStudentSchedule = false;
       this.showFinancial = false;
       this.showProfile = false;
+      this.showChat = false;
       this.activeLink = component;
     }
     else if (component === 'showStudentSchedule') {
@@ -114,6 +120,7 @@ export class StudentComponent implements OnInit {
       this.showStudentSchedule = true;
       this.showFinancial = false;
       this.showProfile = false;
+      this.showChat = false;
       this.activeLink = component;
     }
     else if (component === 'showFinancial') {
@@ -123,6 +130,7 @@ export class StudentComponent implements OnInit {
       this.showStudentSchedule = false;
       this.showFinancial = true;
       this.showProfile = false;
+      this.showChat = false;
       this.activeLink = component;
     }
     else if (component === 'showProfile') {
@@ -132,11 +140,21 @@ export class StudentComponent implements OnInit {
       this.showStudentSchedule = false;
       this.showFinancial = false;
       this.showProfile = true;
+      this.showChat = false;
+      this.activeLink = component;
+    }
+    else if (component === 'Chat') {
+      this.showAssignments = false;
+      this.showStudentCourses = false;
+      this.showAllAvailableCourses = false;
+      this.showStudentSchedule = false;
+      this.showFinancial = false;
+      this.showProfile = false;
+      this.showChat = true;
       this.activeLink = component;
     }
 
   }
-
   logOut() {
     localStorage.clear();
     this.router.navigate(['/login']);

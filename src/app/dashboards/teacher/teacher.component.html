@@ -54,6 +54,11 @@
         </a>
 
 
+        <a class="menu-item" (click)="toggleComponent('Chat')" [class.active-link]="activeLink === 'Chat'">
+          <img src="./assets/svg/chat.svg" alt="Book Icon" style="max-width: 20px; margin-right: 10px;">
+          <span>Chat</span>
+        </a>
+
 
 
         <hr class="myHr">
@@ -114,6 +119,16 @@
         <br>
         <app-schedule></app-schedule>
       </ng-container>
+
+      <ng-container *ngIf="showChat">
+        <a class="title">Major: </a>{{major}}
+        <br>
+        <a class="title">Semester: </a>{{semester}}
+        <br>
+        <br>
+        <app-chat></app-chat>
+      </ng-container>
+
     </main>
   </div>
 

@@ -1,3 +1,39 @@
-<app-chat-user-list></app-chat-user-list>
-<app-chat-feed></app-chat-feed>
-<app-chat-form></app-chat-form>
+<div class="chatGrid">
+    <div class="chatGridItem">
+        <div class="usersList">
+            <ul>
+                <li *ngFor="let user of userList" (click)="userSelected(user)">
+                    {{ user.firstname | titlecase }} {{ user.lastname | titlecase }}
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="chatGridItem">
+        <div class="chatGridOnTop">
+            <a class="myTitle">Talking to {{ talkingToUserName | titlecase }}</a>
+            <div class="myFormBody">
+                <div class="messageBox" #messageBox>
+                    <div class="messageContainer" *ngFor="let message of messages">
+                        <div [ngClass]="{
+                'myMessageContainer': isUserMessage(message.senderID, userID),
+                'otherMessageContainer': !isUserMessage(message.senderID, userID)
+              }">
+                            <a [ngClass]="{
+                  'myMessageText': isUserMessage(message.senderID, userID),
+                  'otherMessageText': !isUserMessage(message.senderID, userID)
+                }">
+                                {{ message.message }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="chatComponent">
+                <div class="messageSendingForm">
+                    <input type="text" [(ngModel)]="message" class="messageInput">
+                    <button (click)="sendMessage()" class="myButton">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

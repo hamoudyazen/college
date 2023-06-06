@@ -12,11 +12,11 @@ import { Course, Major, User } from 'src/app/models/allModels';
 export class AdminComponent implements OnInit {
 
   pagename: string = '';
-  showStudents: boolean = false;
+  showStudents: boolean = true;
   showCourses: boolean = false;
   showSchedules: boolean = false;
   showProfile: boolean = false;
-  showChat: boolean = true;
+  showChat: boolean = false;
 
   activeLink: string = 'courses';
 

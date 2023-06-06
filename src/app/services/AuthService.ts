@@ -312,14 +312,7 @@ export class AuthService {
     return this.http.post(`${this.baseUrl}/createMessage`, chat);
   }
 
-  addMessage(arr: string[], messageDetails: MessageDetails[]): Observable<any> {
-    const payload = {
-      arr: arr,
-      messageDetails: messageDetails
-    };
 
-    return this.http.post(`${this.baseUrl}/addMessage`, payload);
-  }
   getMessages(userID1: string, userID2: string): Observable<ChatMessage[]> {
     return this.http.get<ChatMessage[]>(`${this.baseUrl}/getMessages`, {
       params: {
@@ -329,5 +322,14 @@ export class AuthService {
     });
   }
 
+  //addStudent
+  sendMessage(currentChatID: string, senderID: string, message: string): Observable<any> {
+    const request = {
+      currentChatID: currentChatID,
+      senderID: senderID,
+      message: message,
+    };
+    return this.http.post(`${this.baseUrl}/sendMessage`, request);
+  }
 
 }
