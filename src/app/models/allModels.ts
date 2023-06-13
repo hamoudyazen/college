@@ -9,10 +9,6 @@ export interface CourseMaterial {
   materialCourseName: any;
   materialCourseDescription: any;
 }
-export interface LoginRequest {
-  email: string;
-  password: string;
-}
 export interface Submission {
   submission_id?: string;
   submission_description: string;
@@ -73,16 +69,6 @@ interface CourseSchudle {
 }
 
 
-export interface PublicSchedule {
-  id?: string;
-  majorName: string;
-  sunday: CourseSchudle[];
-  monday: CourseSchudle[];
-  tuesday: CourseSchudle[];
-  wednesday: CourseSchudle[];
-  thursday: CourseSchudle[];
-  friday: CourseSchudle[];
-}
 export interface Major {
   id?: string;
   majorName: string;
@@ -132,4 +118,19 @@ export interface MessageDetails {
   message: string;
   date: Date;
   senderID: string;
+}
+export interface uploadZoomTeacher {
+  id: string;
+  courseName: string;
+  courseId: string;
+  zoomLink: string;
+}
+
+
+export interface Grade {
+  id: string;
+  studentEmail: string;
+  courseId: string;
+  courseName: string;
+  grade: number;
 }

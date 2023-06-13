@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/AuthService';
 import { Toast } from 'bootstrap';
-import { Assignment, Course, Submission, ForgotPasswordResponse, CourseMaterial, LoginRequest, User } from 'src/app/models/allModels';
+import { Assignment, Course, Submission, ForgotPasswordResponse, CourseMaterial, User } from 'src/app/models/allModels';
 
 @Component({
   selector: 'app-student-register-for-course',
@@ -11,8 +11,7 @@ import { Assignment, Course, Submission, ForgotPasswordResponse, CourseMaterial,
 export class StudentRegisterForCourseComponent implements OnInit {
   courseList!: Course[];
   currentemail!: any;
-  successMessage: any;
-  errorMessage: string | undefined;
+
 
   constructor(private AuthService: AuthService) { }
 
@@ -30,20 +29,12 @@ export class StudentRegisterForCourseComponent implements OnInit {
       if (result) {
         // Course registration successful
         window.location.reload();
-        this.errorMessage = '';
-        this.successMessage = 'Course registration successful!';
+
       } else {
         // Course registration failed
-        this.errorMessage = 'Could not register for course.';
-        this.successMessage = '';
+
       }
     });
   }
-  showLiveToast() {
-    const liveToastEl = document.getElementById('liveToast');
-    if (liveToastEl) {
-      const liveToast = new Toast(liveToastEl);
-      liveToast.show();
-    }
-  }
+
 }

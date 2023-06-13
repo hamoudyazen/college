@@ -29,9 +29,10 @@ export class StudentComponent implements OnInit {
   showStudentCourses: boolean = false;
   showAllAvailableCourses: boolean = false;
   showStudentSchedule: boolean = false;
-  showFinancial: boolean = true;
+  showFinancial: boolean = false;
   showProfile: boolean = false;
   showChat: boolean = false;
+  showGrades: boolean = true;
 
   activeLink: string = '';
   currentEmail: any;
@@ -64,6 +65,7 @@ export class StudentComponent implements OnInit {
       this.majorId = this.currentMajorDetails[0].id;
       this.authService.getMajorDetails(this.major).subscribe(response => {
         this.majorId = response[0].id;
+
       });
     } catch (error) {
       console.error('Error retrieving data:', error);
@@ -81,6 +83,7 @@ export class StudentComponent implements OnInit {
     this.showFinancial = false;
     this.showProfile = false;
     this.showChat = false;
+    this.showGrades = false;
     this.activeLink = component;
 
     if (component === 'showAssignments') {
@@ -91,6 +94,7 @@ export class StudentComponent implements OnInit {
       this.showFinancial = false;
       this.showProfile = false;
       this.showChat = false;
+      this.showGrades = false;
       this.activeLink = component;
     }
     else if (component === 'showStudentCourses') {
@@ -101,6 +105,7 @@ export class StudentComponent implements OnInit {
       this.showFinancial = false;
       this.showProfile = false;
       this.showChat = false;
+      this.showGrades = false;
       this.activeLink = component;
     }
     else if (component === 'showAllAvailableCourses') {
@@ -111,6 +116,7 @@ export class StudentComponent implements OnInit {
       this.showFinancial = false;
       this.showProfile = false;
       this.showChat = false;
+      this.showGrades = false;
       this.activeLink = component;
     }
     else if (component === 'showStudentSchedule') {
@@ -121,6 +127,7 @@ export class StudentComponent implements OnInit {
       this.showFinancial = false;
       this.showProfile = false;
       this.showChat = false;
+      this.showGrades = false;
       this.activeLink = component;
     }
     else if (component === 'showFinancial') {
@@ -131,9 +138,10 @@ export class StudentComponent implements OnInit {
       this.showFinancial = true;
       this.showProfile = false;
       this.showChat = false;
+      this.showGrades = false;
       this.activeLink = component;
     }
-    else if (component === 'showProfile') {
+    else if (component === 'Profile') {
       this.showAssignments = false;
       this.showStudentCourses = false;
       this.showAllAvailableCourses = false;
@@ -141,6 +149,7 @@ export class StudentComponent implements OnInit {
       this.showFinancial = false;
       this.showProfile = true;
       this.showChat = false;
+      this.showGrades = false;
       this.activeLink = component;
     }
     else if (component === 'Chat') {
@@ -151,6 +160,17 @@ export class StudentComponent implements OnInit {
       this.showFinancial = false;
       this.showProfile = false;
       this.showChat = true;
+      this.showGrades = false;
+      this.activeLink = component;
+    } else if (component === 'Grades') {
+      this.showAssignments = false;
+      this.showStudentCourses = false;
+      this.showAllAvailableCourses = false;
+      this.showStudentSchedule = false;
+      this.showFinancial = false;
+      this.showProfile = false;
+      this.showChat = false;
+      this.showGrades = true;
       this.activeLink = component;
     }
 

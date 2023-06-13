@@ -1,6 +1,6 @@
 <div class="myGrid">
   <!--My Submissoins-->
-  <div class="card">
+  <div class="card" *ngIf="dataLoaded">
     <a class="myTitle">Add course Material :</a>
     <hr>
     <form class="myForm" (ngSubmit)="onSubmit()" #registerForm="ngForm">
@@ -77,5 +77,77 @@
     </table>
 
   </div>
-
   <!--End-->
+  <!--My Submissoins-->
+  <div class="card">
+    <a class="myTitle">Add course Material: </a>
+    <hr>
+    <form class="myForm" (ngSubmit)="onSubmit()" #uploadZoomForm="ngForm">
+      <br>
+      <label for="validationServer02">Select a course:</label>
+      <select id="validationServer02" [(ngModel)]="uploadZoomTeacher.courseId"
+        [(ngModel)]="uploadZoomTeacher.courseName" name="course_id" required>
+        <option *ngFor="let course of teacherCourses" [value]="course.id">{{ course.name }}</option>
+      </select>
+      <br>
+
+      <label for="validationServer02">Zoom link: </label>
+      <input type="description" id="validationServer02" value="Otto" required=""
+        [(ngModel)]="uploadZoomTeacher.zoomLink" name="zoomLink">
+      <br>
+
+
+      <button class="myButton" type="submit" (click)="uploadZoom()">
+        Upload Zoom Link
+      </button>
+    </form>
+  </div>
+  <!--End-->
+
+  <div class="card">
+    <h3 style="text-decoration: underline;">Zoom Links table:</h3>
+
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">courseId</th>
+          <th scope="col">courseName</th>
+          <th scope="col">id</th>
+          <th scope="col">zoomLink</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let zoomLink of allZoomLinksArray; let i=index">
+          <th scope="row">{{i}}</th>
+          <td>{{zoomLink.courseId}}</td>
+          <td>{{zoomLink.courseName}}</td>
+          <td>{{zoomLink.id}}</td>
+          <td>{{zoomLink.zoomLink}}</td>
+
+          <td class="py-2">
+            <button (click)="deleteZoomLink(zoomLink.id)" type="button" class="btn btn-sm btn-danger"
+              title="Delete Course"><i class="fa fa-trash"></i><svg width="21" height="20" viewBox="0 0 21 20"
+                fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_2_3)">
+                  <path fill-rule="evenodd" clip-rule="evenodd"
+                    d="M7.35001 15.7143H9.45V8.09524H7.35001V15.7143ZM11.55 15.7143H13.65V8.09524H11.55V15.7143ZM5.25 17.619H15.75V6.19048H5.25V17.619ZM7.35001 4.28571H13.65V2.38095H7.35001V4.28571ZM15.75 4.28571V0.476191H5.25V4.28571H0V6.19048H3.15V19.5238H17.85V6.19048H21V4.28571H15.75Z"
+                    fill="black" />
+                </g>
+                <defs>
+                  <clipPath id="clip0_2_3">
+                    <rect width="21" height="20" fill="white" />
+                  </clipPath>
+                </defs>
+              </svg>
+            </button>
+
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <br>
+
+</div>

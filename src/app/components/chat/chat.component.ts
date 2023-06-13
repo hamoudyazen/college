@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild, Renderer2 } from '@angular/core';
-import { Assignment, Course, Submission, ForgotPasswordResponse, CourseMaterial, LoginRequest, User, ChatMessage, MessageDetails } from 'src/app/models/allModels';
+import { Assignment, Course, Submission, ForgotPasswordResponse, CourseMaterial, User, ChatMessage, MessageDetails } from 'src/app/models/allModels';
 import { SharedService } from 'src/app/services/SharedService';
 import { AuthService } from 'src/app/services/AuthService';
 import { data } from 'jquery';

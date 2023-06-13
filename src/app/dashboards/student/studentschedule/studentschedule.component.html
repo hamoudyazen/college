@@ -1,4 +1,4 @@
-<body class="firstBody">
+<body class="firstBody" *ngIf="dataLoaded">
 
   <div class="myGrid">
 
@@ -11,16 +11,16 @@
         <thead>
           <tr>
             <th></th>
-            <th *ngFor="let day of days">{{ day }}</th>
+            <th style="color: white;" *ngFor="let day of days">{{ day }}</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let timeSlot of timeSlots">
-            <td>{{ timeSlot }}</td>
+            <td style="background-color: #A6385D; color: white;">{{ timeSlot }}</td>
             <td *ngFor="let day of days">
               <div>
-                <span [ngClass]="{'eventColor': getCourseId(day, timeSlot).includes('Event')}">
-                  <a>{{getCourseId(day, timeSlot) }}</a>
+                <span class="infoBlock">
+                  <a class="myTitle">{{getCourseId(day, timeSlot) }}</a>
                   <br>
                   <a>{{getRoom(day, timeSlot)}}</a>
                 </span>

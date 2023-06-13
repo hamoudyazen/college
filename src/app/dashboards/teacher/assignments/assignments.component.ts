@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { finalize } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Assignment, Course, Submission, ForgotPasswordResponse, CourseMaterial, LoginRequest, User } from 'src/app/models/allModels';
+import { Assignment, Course, Submission, ForgotPasswordResponse, CourseMaterial, User } from 'src/app/models/allModels';
 import { SharedService } from 'src/app/services/SharedService';
 
 @Component({

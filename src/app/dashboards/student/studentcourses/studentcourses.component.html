@@ -1,6 +1,6 @@
 <body class="firstBody">
 
-  <div class="myGrid">
+  <div class="myGrid" *ngIf="dataLoaded">
 
     <!--My Courses-->
     <div class="card">
@@ -13,6 +13,7 @@
           <p><strong>Description:</strong> {{ course.description }}</p>
           <p><strong>Credits:</strong> {{ course.credits }}</p>
           <p><strong>Semester:</strong> {{ course.semester }}</p>
+          <a (click)="openZoomLink(course.name)"><button class="myButton">Zoom Link</button></a>
         </div>
       </div>
     </div>

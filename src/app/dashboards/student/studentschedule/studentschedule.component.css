@@ -7,19 +7,20 @@ th,
 td {
     padding: 10px;
     text-align: center;
-    border: 1px solid #000;
+    border: 1px solid #fff;
 }
 
 th {
-    background-color: #c1cbde;
+    background-color: #A6385D;
 }
 
 tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
+    background-color: #7AA3E5;
 }
 
 tbody td {
     vertical-align: middle;
+    background-color: #7AA3E5;
 }
 
 tbody td:first-child {
@@ -42,7 +43,7 @@ ul li {
     padding: 5px;
     margin: 5px;
     border-radius: 1rem;
-    background-color: #c1cbde;
+    background-color: #A6385D;
 }
 
 .myBody {
@@ -51,27 +52,6 @@ ul li {
     border-radius: 1rem;
     max-width: fit-content;
 }
-
-.editSchedule {
-    border-radius: 1rem;
-    background-color: rgb(32, 138, 32);
-    color: white;
-    border: 1px solid green;
-    pointer-events: auto;
-    padding: 10px;
-    font-weight: 700;
-    margin-left: 50px;
-    transform: scale(1);
-    transition-duration: 0.2s;
-}
-
-.editSchedule:hover {
-    transform: scale(1.1);
-    background-color: rgb(32, 138, 32);
-    color: white;
-    border: 1px solid green;
-}
-
 
 
 .pickLabel {
@@ -93,29 +73,6 @@ ul li {
     text-align: center;
 
 }
-
-.editScheduleRemove {
-    border-radius: 1rem;
-    background-color: rgb(192, 0, 0);
-    color: white;
-    border: 1px solid red;
-    pointer-events: auto;
-    padding: 10px;
-    font-weight: 700;
-    margin-left: 50px;
-    transform: scale(1);
-    transition-duration: 0.2s;
-
-}
-
-.editScheduleRemove:hover {
-    transform: scale(1.1);
-    background-color: rgb(192, 0, 0);
-    color: white;
-    border: 1px solid red;
-}
-
-
 
 
 
@@ -218,12 +175,12 @@ ul li {
 }
 
 td div {
-    color: #6929b3;
-    font-weight: 700;
-    text-transform: uppercase;
-    background-color: #C1CBDE;
+    color: white;
+    font-weight: 500;
+    background-color: #7AA3E5;
     padding: 0;
     margin: 0;
+    font-size: 16px;
 }
 
 .eventColor {

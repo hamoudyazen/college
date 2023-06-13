@@ -59,6 +59,15 @@
           <span>Chat</span>
         </a>
 
+        <a class="menu-item" (click)="toggleComponent('Grades')" [class.active-link]="activeLink === 'Grades'">
+          <img src="./assets/svg/grade.svg" alt="Book Icon" style="max-width: 20px; margin-right: 10px;">
+          <span>Grades</span>
+        </a>
+
+        <a class="menu-item" (click)="toggleComponent('showFinance')" [class.active-link]="activeLink === 'Finance'">
+          <img src="./assets/svg/finance.svg" alt="Book Icon" style="max-width: 20px; margin-right: 10px;">
+          <span>Chat</span>
+        </a>
 
 
         <hr class="myHr">
@@ -127,6 +136,24 @@
         <br>
         <br>
         <app-chat></app-chat>
+      </ng-container>
+
+      <ng-container *ngIf="showFinance">
+        <a class="title">Major: </a>{{major}}
+        <br>
+        <a class="title">Semester: </a>{{semester}}
+        <br>
+        <br>
+        <app-financial></app-financial>
+      </ng-container>
+
+      <ng-container *ngIf="showGrades">
+        <a class="title">Major: </a>{{major}}
+        <br>
+        <a class="title">Semester: </a>{{semester}}
+        <br>
+        <br>
+        <app-teacher-grades></app-teacher-grades>
       </ng-container>
 
     </main>

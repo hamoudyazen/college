@@ -5,9 +5,11 @@ import { Validators, FormControl } from '@angular/forms';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { finalize } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Assignment, Course, Submission, ForgotPasswordResponse, CourseMaterial, LoginRequest, User } from 'src/app/models/allModels';
+import { Assignment, Course, Submission, ForgotPasswordResponse, CourseMaterial, User, uploadZoomTeacher } from 'src/app/models/allModels';
 import { error } from 'jquery';
 import { SharedService } from 'src/app/services/SharedService';
+
+
 
 @Component({
   selector: 'app-teacher-my-courses',
@@ -18,10 +20,12 @@ export class TeacherMyCoursesComponent implements OnInit {
   showStudentsTableBoolean: boolean = false;
   studentsInCourse: any[] = [];
   selectedCourse: any;
+  allZoomLinksArray: uploadZoomTeacher[] = [];
   public file: any = {};
   date !: Date;
   showModal: boolean[] = [];
   courseID: any;
+  dataLoaded: boolean = false;
 
   courseMaterial: CourseMaterial = {
     materialCourseLink: '',
@@ -37,6 +41,13 @@ export class TeacherMyCoursesComponent implements OnInit {
   onModalHide(index: number) {
     this.showModal[index] = false;
   }
+
+  uploadZoomTeacher: uploadZoomTeacher = {
+    id: '',
+    courseName: '',
+    courseId: '',
+    zoomLink: '',
+  };
 
   //shared
   teacherCourses: Course[] = [];
@@ -71,6 +82,9 @@ export class TeacherMyCoursesComponent implements OnInit {
       this.profileImg = this.sharedService.profileImg;
       this.major = this.sharedService.major;
       this.semester = this.sharedService.semester;
+      this.allZoomLinksArray = await this.sharedService.getAllZoomLinks();
+      this.dataLoaded = true;
+
     } catch (error) {
       console.error('Error retrieving data:', error);
     }
@@ -147,4 +161,20 @@ export class TeacherMyCoursesComponent implements OnInit {
   }
 
 
+  uploadZoom() {
+    const course = this.teacherCourses.find(item => item.id === this.uploadZoomTeacher.courseId);
+    if (course) {
+      const courseName = course.name;
+      this.uploadZoomTeacher.courseName = courseName;
+      this.authService.addZoomLink(this.uploadZoomTeacher).subscribe(response => {
+        console.log(response);
+        location.reload();
+      })
+    }
+  }
+  deleteZoomLink(zoomLink: string) {
+    this.authService.deleteZoomLink(zoomLink).subscribe(response => {
+      console.log(response);
+    })
+  }
 }

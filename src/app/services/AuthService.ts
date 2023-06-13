@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Assignment, Course, Submission, ForgotPasswordResponse, CourseMaterial, LoginRequest, User, SundaySchedule, Major, ExpensesAndIncome, ChatMessage, MessageDetails } from '../models/allModels';
+import { Assignment, Course, Submission, ForgotPasswordResponse, CourseMaterial, User, SundaySchedule, Major, ExpensesAndIncome, ChatMessage, MessageDetails, uploadZoomTeacher, Grade } from '../models/allModels';
 
 @Injectable({
   providedIn: 'root',
@@ -43,7 +43,7 @@ export class AuthService {
 
 
   //logs the user in
-  loginn(loginRequest: any): Observable<any> {
+  login(loginRequest: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/login`, loginRequest);
   }
 
@@ -330,6 +330,35 @@ export class AuthService {
       message: message,
     };
     return this.http.post(`${this.baseUrl}/sendMessage`, request);
+  }
+
+  addZoomLink(zoomLink: uploadZoomTeacher): Observable<any> {
+    console.log('Sending zoomLink request:', zoomLink);
+    return this.http.post(`${this.baseUrl}/addZoomLink`, zoomLink);
+  }
+
+  deleteZoomLink(id: string): Observable<any> {
+    console.log('Sending delete zoomLink request:', id);
+    return this.http.delete(`${this.baseUrl}/deleteZoomLink/${id}`);
+  }
+
+  getAllZoomLinks(): Observable<uploadZoomTeacher[]> {
+    return this.http.get<uploadZoomTeacher[]>(`${this.baseUrl}/getAllZoomLinks`);
+  }
+
+
+  addGrade(grade: Grade): Observable<any> {
+    console.log('Sending zoomLink request:', grade);
+    return this.http.post(`${this.baseUrl}/addGrade`, grade);
+  }
+
+  deleteGrade(id: string): Observable<any> {
+    console.log('Sending delete zoomLink request:', id);
+    return this.http.delete(`${this.baseUrl}/deleteGrade/${id}`);
+  }
+
+  getAllGrades(): Observable<Grade[]> {
+    return this.http.get<Grade[]>(`${this.baseUrl}/getAllGrades`);
   }
 
 }

@@ -1,302 +1,205 @@
-import { Component, Renderer2, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/AuthService';
 import { Router } from '@angular/router';
-import { Toast } from 'bootstrap';
-import { Assignment, Course, Submission, ForgotPasswordResponse, CourseMaterial, LoginRequest, User, Major } from 'src/app/models/allModels';
 import { HttpClient } from '@angular/common/http';
-
-
+import { error } from 'jquery';
+import { User } from 'src/app/models/allModels';
+import { Major } from 'src/app/models/allModels';
+import { SharedService } from 'src/app/services/SharedService';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent {
-  noAccessButton: boolean = false;
-  current_ip_address: any;
-  loginCounter: number = 0;
-  myMap = new Map<any, any>();
-  errorMessage: string | undefined;
-  email: any;
-  password: string | undefined;
-  name: string | undefined;
-  counter: number = 5;
-  isRedirecting: boolean = false;
-  loginForm: any;
-  successMessage: any;
-  currentRole: any | undefined;
-  allMajors: Major[] = [];
-  id: string | undefined;
+export class LoginComponent implements OnInit {
+  // Login
+  loginRequest: any = {
+    email: '',
+    password: ''
+  };
+  // END
 
-  userDetails: User[] = [];
-  isAccountExists: boolean = false;
-  isBirthdaySame: boolean = false;
-  formValue1: string = '';
-  formValue2: string = '';
-  formValue3: string = '';
-
-  emailToRest: string = '';
-
-
-  user: User = {
+  // Register
+  date = new Date();
+  majors: Major[] = [];
+  registerRequest: User = {
+    id: '',
     editingSchedule: false,
     firstname: '',
     lastname: '',
-    birthday: new Date(),
+    birthday: this.date,
     email: '',
     password: '',
     role: '',
     major: '',
-    image: ''
+    image: '',
+    enrollmentDate: this.date.toString()
   };
+  // END
 
-  constructor(private authService: AuthService, private router: Router, private renderer: Renderer2,
-    private http: HttpClient) { }
-  showLiveToast() {
-    const liveToastEl = document.getElementById('liveToast');
-    if (liveToastEl) {
-      const liveToast = new Toast(liveToastEl);
-      liveToast.show();
-    }
-  }
+  // Register
+  allUsers: User[] = [];
+  showForgotPasswordEmailCard = true;
+  showForgotPasswordBirthdate = false;
+  showForgotPasswordPassword = false;
+  forgotPasswordEmail: string = "";
+  forgotPasswordBirthdate!: Date;
+  forgotPasswordPassword: string = "";
+  // END
+
+  //page settings
+  showLogin: boolean = true;
+  showRegister: boolean = false;
+  showForgotPassword: boolean = false;
+  //END
+
+  constructor(private authService: AuthService, private router: Router, private http: HttpClient, private SharedService: SharedService) { }
 
   ngOnInit(): void {
-    const storedData = JSON.parse(localStorage.getItem('loginData') || '{}');
-    const lastAttemptTime = storedData.lastAttemptTime || 0;
-    const loginCounter = storedData.loginCounter || 0;
-
-    this.authService.getAllMajorsAdmin().subscribe(response => {
-      this.allMajors = response;
-    });
-    // Check if the user has exceeded the maximum number of login attempts
-    const noAccessButton = this.checkUserLimit(loginCounter, lastAttemptTime);
-
-    const script = this.renderer.createElement('script');
-    script.src = '/assets/js/login.js';
-    script.type = 'text/javascript';
-    script.onload = () => {
-      const ipAddress = (window as any).getIP();
-      console.log(ipAddress); // handle the returned IP address here
-      localStorage.setItem('ipAddress', ipAddress);
-      this.current_ip_address = ipAddress;
-    };
-    this.renderer.appendChild(document.head, script);
-    //forgot password
-    //to call the getID function
-    const email = localStorage.getItem('email');
-    if (email) {
-      this.authService.getID(email).subscribe(
-        response => {
-          this.id = response.id;
-          this.authService.getUserDetails(this.id).subscribe(
-            response => {
-              this.userDetails = response;
-              this.name = this.userDetails[0].firstname;
-            },
-            error => this.errorMessage = 'Failed to get teacher details'
-          );
-
-          // Call getRole() method here
-          this.authService.getRole(this.id).subscribe(
-            response => {
-              localStorage.setItem('role', response.role);
-            }
-          );
-        },
-        error => console.log('')
-      );
-    }
-
-
-
+    this.loadData();
   }
 
+  async loadData(): Promise<void> {
+    try {
+      //get all the majors names for sign up purposes
+      this.majors = await this.SharedService.getAllMajorsAdmin();
+      this.allUsers = await this.SharedService.getAllUsers();
 
-  //////////////////////////////////////////////////////////////////////////////////////////////////// LOGIN  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  login() {
-    const loginRequest = {
-      email: this.email,
-      password: this.password,
-    };
+    } catch (error) {
+      console.error('Error retrieving data:', error);
+    }
+  }
 
-    localStorage.setItem('email', this.email);
-    console.log('email is : ', this.email);
-    const storedData = JSON.parse(localStorage.getItem('loginData') || '{}');
-    const lastAttemptTime = storedData.lastAttemptTime || 0;
-    const loginCounter = storedData.loginCounter || 0;
+  //toggle component to show which card
+  toggleComponent(card: string) {
+    this.showLogin = true;
+    this.showRegister = false;
+    this.showForgotPassword = false;
+    if (card === 'login') {
+      this.showLogin = true;
+      this.showRegister = false;
+      this.showForgotPassword = false;
+    } else if (card === 'Register') {
+      this.showLogin = false;
+      this.showRegister = true;
+      this.showForgotPassword = false;
+    } else if (card === 'Forgot password') {
+      this.showLogin = false;
+      this.showRegister = false;
+      this.showForgotPassword = true;
+    }
+  }
+  //end
 
-    // Check if the user has exceeded the maximum number of login attempts
-    const noAccessButton = this.checkUserLimit(loginCounter, lastAttemptTime);
 
-    if (!noAccessButton) {
-      this.authService.loginn(loginRequest).subscribe(
-        (response) => {
-          console.log(response);
-          localStorage.setItem('email', this.email || '');
-          if (response === 1) {
-            console.log(1);
-            this.authService.getRole(this.email || '').subscribe(
-              (roleResponse) => {
-                localStorage.setItem('role', roleResponse.role);
-                this.authService.getUserDetails(this.email || '').subscribe(
-                  userDetailsResponse => {
-                    localStorage.setItem('userDetails', JSON.stringify(userDetailsResponse));
-                    this.userDetails = userDetailsResponse;
-                  },
-                );
-                if (roleResponse.role === 'teacher') {
-                  this.router.navigateByUrl('/teacher');
-                } else if (roleResponse.role === 'student') {
-                  this.router.navigateByUrl('/student');
-                } else if (roleResponse.role === 'admin') {
-                  this.router.navigateByUrl('/admin');
-                } else {
-                  console.log("Invalid role");
-                }
-              },
-            );
-          } else if (response === 0) {
-            console.log("0");
+
+  //Login functionality
+  loginOnSubmit() {
+    this.authService.login(this.loginRequest).subscribe(res => {
+      //if login was a success (1) , move depedning on the role
+      if (res === 1) {
+        //save the email for later on usage
+        localStorage.setItem('email', this.loginRequest.email);
+        //get the role
+        this.authService.getRole(this.loginRequest.email).subscribe(roleRes => {
+          //set the role in the storage for Guard authentacation
+          localStorage.setItem('role', roleRes.role);
+          if (roleRes.role === 'student') {
+            this.router.navigateByUrl('/student');
           }
-        }
-      );
-    } else {
-      alert('You have exceeded the maximum number of login attempts. Please try again later.');
-    }
-  }
-
-
-  checkUserLimit(loginCounter: string, lastAttemptTime: number) {
-    const storedData = JSON.parse(localStorage.getItem('loginData') || '{}');
-
-    if (Date.now() - lastAttemptTime > 5 * 60 * 1000) {
-      // Reset the login counter if the last attempt was more than 5 minutes ago
-      storedData.loginCounter = 1;
-    } else {
-      // Increment the login counter if the last attempt was less than 5 minutes ago
-      storedData.loginCounter = loginCounter + 1;
-    }
-
-    storedData.lastAttemptTime = Date.now();
-    localStorage.setItem('loginData', JSON.stringify(storedData));
-
-    if (storedData.loginCounter >= 50) {
-      // Disable the login button if the user has exceeded the maximum number of login attempts
-      this.noAccessButton = true;
-      setTimeout(() => {
-        this.noAccessButton = false;
-      }, 5 * 60 * 1000); // re-enable the button after 5 minutes
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-
-
-  //////////////////////////////////////////////////////////////////////////////////////////////////// FORGOT PASSWORD ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-  isValidPassword(value: any) {
-    const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    const newPassword = value.password?.trim();
-    const oldPassword = value.originalPassword?.trim();
-    return newPassword && newPassword.length >= 8 && pattern.test(newPassword) && newPassword !== oldPassword;
-  }
-  //EMAIL - STEP 1
-  verifyform1(value: string) {
-    this.checkEmailExists(value);
-  }
-
-  isValidEmail(value: any) {
-    const newName = value.email?.trim();
-    const emailPattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    return newName && emailPattern.test(newName);
-  }
-
-  checkEmailExists(email: string): void {
-    this.authService.isEmailExists(email).subscribe(result => {
-      this.emailToRest = email;
-      this.isAccountExists = result;
-      this.successMessage = 'Email matches';
-      this.errorMessage = '';
+          if (roleRes.role === 'admin') {
+            this.router.navigateByUrl('/admin');
+          }
+          if (roleRes.role === 'teacher') {
+            this.router.navigateByUrl('/teacher');
+          }
+        }, error => {
+          alert('role not valid , view Error in console');
+          console.log(error);
+        });
+      }
     }, error => {
-      this.successMessage = '';
-      this.errorMessage = 'email doesnt match';
+      alert('login credential not valid , view Error in console')
+      console.log(error);
     });
   }
+  //End login
 
-  //VERIFY - STEP 2
 
-  verifyform2(value: string) {
-    this.checkBirthdaySame(value);
+
+
+  //Register functionality
+  registerOnSubmit() {
+    this.authService.register(this.registerRequest).subscribe(res => {
+      alert('Registeration sucessful , verify you email')
+    }, error => {
+      alert('Registeration failed, check console');
+      console.log(error);
+    });
   }
-  clearMessages(): void {
-    this.successMessage = '';
-    this.errorMessage = '';
-  }
+  //End register 
 
 
-  checkBirthdaySame(birthday: string): void {
-    this.authService.isBirthdaySame(birthday).subscribe(
-      result => {
-        if (result) {
-          this.successMessage = 'Birthday Correct';
-          this.errorMessage = '';
-        } else {
-          this.successMessage = '';
-          this.errorMessage = 'Birthday Incorrect';
-        }
-        this.isBirthdaySame = result;
-      },
-      error => {
-        this.successMessage = '';
-        this.errorMessage = 'An error occurred while checking the birthday';
+
+
+  //Forgot password functionality
+
+  //verify email
+  forgotPasswordEmailOnSubmit() {
+    let isFound: boolean = false;
+    for (let i = 0; i < this.allUsers.length; i++) {
+      if (this.allUsers[i].email === this.forgotPasswordEmail) {
+        isFound = true;
       }
-    );
+    }
+
+    if (isFound) {
+      this.showForgotPasswordEmailCard = false;
+      this.showForgotPasswordBirthdate = true;
+    }
+    else {
+      alert('Email not valid');
+    }
   }
 
+  //verify birthdate
+  forgotPasswordBirthdateOnSubmit() {
+    let isValidBirthDate: boolean = false;
+    console.log(this.allUsers[0].birthday);
+    for (let i = 0; i < this.allUsers.length; i++) {
+      if (this.allUsers[i].email === this.forgotPasswordEmail) {
+        if (this.allUsers[i].birthday === this.forgotPasswordBirthdate) {
+          isValidBirthDate = true;
+        }
+      }
+    }
 
+    if (isValidBirthDate) {
+      this.showForgotPasswordEmailCard = false;
+      this.showForgotPasswordBirthdate = false;
+      this.showForgotPasswordPassword = true;
+    }
+    else {
+      alert('Birthdate not valid');
 
-  /// PASSWORD RESET - STEP 3
+    }
+  }
 
-  updateProfilePassword(formData: any) {
+  //change password
+  forgotPasswordPasswordOnSubmit(formData: any, originalPassword: any, userId: any) {
     const newPassword = formData.password;
-    this.authService.updatePassword(newPassword, this.emailToRest).subscribe(
+    this.authService.updateProfilePassword(newPassword, originalPassword, userId).subscribe(
       (response) => {
+        alert('Password updated successfully');
         setTimeout(() => {
-          location.reload();
-        }, 2000);
-      },
-    );
-  }
-
-  //////////////////////////////////////////////////////////////////////////////////////////////////// REGISTER ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-  onSubmit() {
-    this.authService.register(this.user).subscribe(
-      () => {
-        this.router.navigateByUrl('/login');
-        this.successMessage = 'Registration successfully , please check your mailbox';
-        setTimeout(() => {
-          location.reload();
+          window.location.reload();
         }, 2000);
       },
       (error) => {
-        if (error.error && error.error.message && error.error.message === 'User Already Exist') {
-          this.errorMessage = 'User with this email already exist';
-        }
-        else if (error.error && error.error.message && error.error.message === 'Password Short') {
-          this.errorMessage = 'Password Short';
-        }
-        else {
-          this.errorMessage = 'An error occurred during registration , Please try again later..';
-        }
-      }
+        alert('Password didnt update')
+      },
     );
   }
-
-  goToLogin() {
-    this.router.navigate(['/login']);
-  }
+  //End Forgot password 
 
 }

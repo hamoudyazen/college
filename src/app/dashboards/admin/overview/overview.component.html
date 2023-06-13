@@ -1,0 +1,64 @@
+<body class="firstBody">
+
+    <div class="myGrid">
+        <!--Grades  pie-->
+        <div class="card">
+            <a class="myTitle">Grades in Pie chart (OVERALL) : </a>
+            <ng-container *ngIf="dataLoaded">
+                <table class="myTable">
+                    <tr>
+                        <td>
+                            <ngx-charts-pie-chart [results]="gradesData" [view]="[x, y]"> </ngx-charts-pie-chart>
+                        </td>
+                    </tr>
+                </table>
+            </ng-container>
+            <a class="myTitle">Student passed percentage:</a><span> %{{passPercentage}} </span>
+            <br>
+            <a class="myTitle">Student failed percentage:</a><span> %{{failPercentage}} </span>
+            <br>
+            <a class="myTitle">Total students grades :</a><span> {{totalStudents}}</span>
+        </div>
+        <!--end-->
+
+        <!--Total Students-->
+        <div class="card">
+            <a class="myTitle">Total Students/Courses in college: </a>
+            <ng-container *ngIf="dataLoaded">
+                <br>
+                <ul>
+                    <li><span>Currently there are : </span><a class="myTitle">{{allUsers.length}}</a> students in
+                        college
+                    </li>
+
+                    <li><span>Currently there are : </span><a class="myTitle">{{allCourses.length}}</a> courses in
+                        college
+                    </li>
+                </ul>
+            </ng-container>
+        </div>
+        <!--end-->
+
+
+        <!--Grades  pie-->
+        <div class="card">
+            <a class="myTitle">Total Users expenses & Income in college: </a>
+            <ng-container *ngIf="dataLoaded">
+                <table class="myTable">
+                    <tr>
+                        <td>
+                            <ngx-charts-pie-chart [results]="incomeAndExpensesData" [view]="[x, y]">
+                            </ngx-charts-pie-chart>
+                        </td>
+                    </tr>
+                </table>
+            </ng-container>
+            <a class="myTitle">Income percentage:</a><span> %{{incomePercentage}} </span>
+            <br>
+            <a class="myTitle">Expenses percentage:</a><span> %{{expensePercentage}} </span>
+            <br>
+            <a class="myTitle">Total users income & Expenses :</a><span> {{allUsers.length}}</span>
+        </div>
+        <!--end-->
+    </div>
+</body>

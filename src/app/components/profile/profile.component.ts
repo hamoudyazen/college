@@ -6,7 +6,7 @@ import { Storage, ref, uploadBytesResumable, getDownloadURL } from '@angular/fir
 import { storage } from 'firebase-admin';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { finalize } from 'rxjs';
-import { Assignment, Course, Submission, ForgotPasswordResponse, CourseMaterial, LoginRequest, User } from 'src/app/models/allModels';
+import { Assignment, Course, Submission, ForgotPasswordResponse, CourseMaterial, User } from 'src/app/models/allModels';
 
 @Component({
   selector: 'app-profile',
@@ -136,12 +136,6 @@ export class ProfileComponent implements OnInit {
     const oldName = value.originalEmail?.trim();
     return newName && newName.length >= 3 && pattern.test(newName) && newName !== old;
   }
-
-
-
-
-
-
 
 
 

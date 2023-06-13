@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Alert, Toast } from 'bootstrap';
 import { AuthService } from 'src/app/services/AuthService';
-import { Assignment, Course, Submission, ForgotPasswordResponse, CourseMaterial, LoginRequest, User } from 'src/app/models/allModels';
+import { Assignment, Course, Submission, ForgotPasswordResponse, CourseMaterial, User } from 'src/app/models/allModels';
 import { SharedService } from 'src/app/services/SharedService';
 
 @Component({

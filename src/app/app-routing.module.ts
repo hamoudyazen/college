@@ -19,9 +19,9 @@ import { StudentscheduleComponent } from './dashboards/student/studentschedule/s
 import { StudentsadminComponent } from './dashboards/admin/studentsadmin/studentsadmin.component';
 import { CoursesadminComponent } from './dashboards/admin/coursesadmin/coursesadmin.component';
 import { SchedulesComponent } from './dashboards/admin/schedules/schedules.component';
-import { FinancialComponent } from './dashboards/student/Financial Folder/financial/financial.component';
-import { FinancialAddComponent } from './dashboards/student/Financial Folder/financial-add/financial-add.component';
-import { FinancialAnalysisComponent } from './dashboards/student/Financial Folder/financial-analysis/financial-analysis.component';
+import { FinancialComponent } from './components/Financial Folder/financial/financial.component';
+import { FinancialAddComponent } from './components/Financial Folder/financial-add/financial-add.component';
+import { FinancialAnalysisComponent } from './components/Financial Folder/financial-analysis/financial-analysis.component';
 import { ChatComponent } from './components/chat/chat.component';
 
 const routes: Routes = [

@@ -6,11 +6,16 @@
     <div class="card">
       <a class="myTitle">Profile :</a>
       <br>
+
       <img class="myImage" src="{{image}}">
+      <br>
       <hr>
+
+      <br>
       <input type="file" id="formFile" (change)="choseFile($event)">
       <button class="myButton" type="submit" (click)="addData()">Upload</button>
-
+      <br>
+      <br>
       <hr>
       <form #updateEmailForm="ngForm" (submit)="updateProfileEmail(updateEmailForm2.value, email, id)">
         <label for="email">Email:</label>
@@ -40,8 +45,10 @@
       <hr>
       <form #updateEmailForm3="ngForm" (submit)="updateProfileLastname(updateEmailForm3.value, lastname, id)">
         <label for="email">Lastname:</label>
+        <br>
         <input type="text" class="form-control" placeholder="{{ lastname }}" name="email" ngModel #emailInput="ngModel"
           id="email">
+        <br>
         <input type="hidden" name="originalEmail" value="{{lastname}}" ngModel #originalEmail Input="ngModel">
         <button class="myButton" type="submit"
           [disabled]="!isValidLastname(lastname, updateEmailForm3.value)">Update</button>
@@ -51,8 +58,11 @@
       <hr>
       <form #updateEmailForm4="ngForm" (submit)="updateProfilePassword(updateEmailForm4.value, password, id)">
         <label for="password">Password:</label>
+        <br>
         <input type="password" class="form-control" placeholder="{{ password }}" name="password" ngModel
           #passwordInput="ngModel" id="password">
+        <br>
+
         <input type="hidden" name="originalPassword" [value]="password" ngModel #originalPasswordInput="ngModel">
         <button class="myButton" type="submit" [disabled]="!isValidPassword(updateEmailForm4.value)">Update</button>
         <br>
@@ -61,6 +71,7 @@
       <hr>
       <form #updateEmailFor="ngForm">
         <label for="role">Role:</label>
+        <br>
         <input type="password" class="form-control" placeholder="{{ role }}" id="role" disabled>
         <br>
       </form>

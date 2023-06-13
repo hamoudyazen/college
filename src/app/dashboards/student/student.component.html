@@ -27,6 +27,7 @@
         <p class="profileRole">{{role}}</p>
       </div>
 
+
       <nav class="menu">
         <a class="menu-item" (click)="toggleComponent('showAssignments')"
           [class.active-link]="activeLink === 'Assignments' ">
@@ -59,15 +60,21 @@
         <hr class="myHr">
         <a class="menu-item" (click)="toggleComponent('showFinancial')"
           [class.active-link]="activeLink === 'Financial' ">
-          <img src="./assets/svg/todo.svg" alt="Assignment Icon" style="max-width: 20px; margin-right: 10px;">
+          <img src="./assets/svg/finance.svg" alt="Assignment Icon" style="max-width: 20px; margin-right: 10px;">
           <span>Financial</span>
         </a>
 
+
+        <a class="menu-item" (click)="toggleComponent('Grades')" [class.active-link]="activeLink === 'Grades'">
+          <img src="./assets/svg/grade.svg" alt="Book Icon" style="max-width: 20px; margin-right: 10px;">
+          <span>Grades</span>
+        </a>
 
         <a class="menu-item" (click)="toggleComponent('Chat')" [class.active-link]="activeLink === 'Chat'">
           <img src="./assets/svg/chat.svg" alt="Book Icon" style="max-width: 20px; margin-right: 10px;">
           <span>Chat</span>
         </a>
+
 
 
         <hr class="myHr">
@@ -145,6 +152,15 @@
         <br>
         <br>
         <app-chat></app-chat>
+      </ng-container>
+
+      <ng-container *ngIf="showGrades">
+        <a class="title">Major: </a>{{major}}
+        <br>
+        <a class="title">Semester: </a>{{semester}}
+        <br>
+        <br>
+        <app-student-grades></app-student-grades>
       </ng-container>
 
 

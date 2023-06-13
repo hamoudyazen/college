@@ -164,6 +164,46 @@ export class SharedService {
         });
     }
 
+    getAllZoomLinks(): Promise<any[]> {
+        return new Promise<any[]>((resolve, reject) => {
+            this.authService.getAllZoomLinks().subscribe(
+                response => {
+                    resolve(response);
+                },
+                error => {
+                    reject(error);
+                }
+            );
+        });
+    }
+
+    getAllGrades(): Promise<any[]> {
+        return new Promise<any[]>((resolve, reject) => {
+            this.authService.getAllGrades().subscribe(
+                response => {
+                    resolve(response);
+                },
+                error => {
+                    reject(error);
+                }
+            );
+        });
+    }
+
+    showAllCourseMaterials(): Promise<any[]> {
+        return new Promise<any[]>((resolve, reject) => {
+            this.authService.showAllCourseMaterials().subscribe(
+                response => {
+                    resolve(response);
+                },
+                error => {
+                    reject(error);
+                }
+            );
+        });
+    }
+
+
     createMajor(major: Major): Promise<any[]> {
         return new Promise<any[]>((resolve, reject) => {
             this.authService.createMajor(major).subscribe(
@@ -189,6 +229,21 @@ export class SharedService {
             );
         });
     }
+
+    StudentCourses(currentemail: string): Promise<any[]> {
+        return new Promise<any[]>((resolve, reject) => {
+            this.authService.StudentCourses(this.userDetails[0].email).subscribe(
+                response => {
+                    resolve(response);
+                },
+                error => {
+                    reject(error);
+                }
+            );
+        });
+    }
+
+
 
 
     getAllCoursesAdmin(): Promise<Course[]> {

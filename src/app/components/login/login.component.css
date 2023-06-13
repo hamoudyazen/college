@@ -1,189 +1,47 @@
-@import url('https://fonts.cdnfonts.com/css/ibm-plex-mono-3');
-
-#card {
-  position: relative;
-  background-color: white;
-  /* any other styles for your card */
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+.myHeader {
+  background-color: #1D1D1F;
   border-radius: 1rem;
-  border: 0px white solid;
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  width: fit-content;
+  margin-bottom: 50px;
 
 }
 
-.form-control:focus {
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
-
-}
-
-.form-label {
-  color: black;
-}
 
 
 
-
-body {
-  font-family: 'IBM Plex Mono Medium', sans-serif;
-  background-color: #f1f1f1;
-  background-size: 400% 400%;
-  animation: animateGradient 10s ease infinite;
-}
-
-@keyframes animateGradient {
-  0% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 100% 50%;
-  }
-
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-
-.form-container {
+ul {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
 }
 
-
-
-.content {
-  width: 330px;
-  padding: 40px 30px;
-  background: #dde1e7;
-  border-radius: 10px;
-  box-shadow: -3px -3px 7px #ffffff73,
-    2px 2px 5px rgba(94, 104, 121, 0.288);
-}
-
-.content .text {
-  font-size: 33px;
-  font-weight: 600;
-  margin-bottom: 35px;
-  color: #595959;
-}
-
-.field {
-  height: 50px;
-  width: 100%;
-  display: flex;
-  position: relative;
-}
-
-.field:nth-child(2) {
-  margin-top: 20px;
-}
-
-.field .input {
-  height: 100%;
-  width: 100%;
-  padding-left: 45px;
-  outline: none;
-  border: none;
+ul li {
   font-size: 18px;
-  background: #dde1e7;
-  color: #595959;
-  border-radius: 25px;
-  box-shadow: inset 2px 2px 5px #BABECC,
-    inset -5px -5px 10px #ffffff73;
-}
-
-.field .input:focus {
-  box-shadow: inset 1px 1px 2px #BABECC,
-    inset -1px -1px 2px #ffffff73;
-}
-
-.field .span {
-  position: absolute;
-  color: #595959;
-  width: 50px;
-  line-height: 55px;
-}
-
-.field .label {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  left: 45px;
-  pointer-events: none;
-  color: #666666;
-}
-
-.field .input:valid~.label {
-  opacity: 0;
-}
-
-
-.button_custom {
-  color: black;
-  width: 100%;
-  height: 50px;
-  background-color: white;
-  border-color: 1px solid white;
-  border-radius: 1rem;
-  box-shadow: 2px 2px 5px #BABECC,
-    -5px -5px 10px #ffffff73;
-  transition: all 0.3s ease-in-out;
-  text-transform: uppercase;
   font-weight: 700;
+  transform: scale(1);
+  transition: 300ms;
+  color: white;
+  background-color: #1D1D1F;
+  padding: 5px;
+  margin: 5px;
+  border-radius: 1rem;
+  list-style: none;
 }
 
-.button_custom:hover {
-  transform: scale(1.05);
+ul li:hover {
+
+  transform: scale(1.1);
+  font-size: 20px;
+  font-weight: 700;
+  color: #7AA3E5;
 }
 
+.headers {
+  flex-wrap: nowrap;
+  text-align: center;
 
-
-@media screen and (max-width: 600px) {
-  .content {
-    width: 80%;
-  }
-
-  .field {
-    width: 100%;
-  }
-
-  .field .span {
-    width: 50px;
-  }
-
-  .field .label {
-    left: 45px;
-  }
-
-  .field .input {
-    padding-left: 45px;
-  }
-
-  .field .input:valid~.label {
-    opacity: 0;
-  }
-
-  .forgot-pass {
-    text-align: left;
-    margin: 10px 0 10px 5px;
-  }
-
-
-}
-
-.fade-in {
-  animation: fade-in 0.3s forwards;
-  background-color: transparent !important;
-}
-
-@keyframes fade-in {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
 }

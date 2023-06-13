@@ -15,19 +15,30 @@ export class StudentscheduleComponent implements OnInit {
   userRegisteredCourses: any[] = [];
   majorArray: Major[] = [];
   teacherCourses: any[] = [];
+  dataLoaded: boolean = false;
+  allMajors: Major[] = [];
+  currentMajor?: Major;
+
   constructor(private AuthService: AuthService, private SharedService: SharedService) { }
 
-  async ngOnInit(): Promise<void> {
+
+  ngOnInit(): void {
+    this.loadData();
+  }
+
+  async loadData(): Promise<void> {
     try {
       this.userDetails = await this.SharedService.getUserDetails()
       this.userRegisteredCourses = await this.SharedService.getStudentCourses();
       this.majorArray = await this.SharedService.getMajorDetails();
       this.teacherCourses = await this.SharedService.getCourseTeacher(this.userRegisteredCourses);
-      console.log('test here', this.teacherCourses);
+      this.allMajors = await this.SharedService.getAllMajorsAdmin();
+      this.currentMajor = this.allMajors.find(major => major.majorName === this.userDetails[0].major);
+
+      this.dataLoaded = true;
     } catch (error) {
       console.error('Error retrieving data:', error);
     }
-
   }
 
 
@@ -126,46 +137,73 @@ export class StudentscheduleComponent implements OnInit {
   }
 
 
+
+
+
   getRoom(day: string, timeSlot: string): string {
     for (let i = 0; i < this.majorArray[0].schedule.sunday.length; i++) {
       if (day === 'Sunday') {
         if (timeSlot === this.majorArray[0].schedule.sunday[i].timeSlot) {
-          return 'Room: ' + this.majorArray[0].schedule.sunday[i].room.toString();
+          const courseId = this.majorArray[0].schedule.sunday[i].courseId;
+          const courseExists = this.userRegisteredCourses.some(course => course === courseId);
+          if (courseExists) {
+            return 'Room: ' + this.majorArray[0].schedule.sunday[i].room.toString();
+          }
         }
       }
     }
     for (let i = 0; i < this.majorArray[0].schedule.monday.length; i++) {
       if (day === 'Monday') {
         if (timeSlot === this.majorArray[0].schedule.monday[i].timeSlot) {
-          return "Room: " + this.majorArray[0].schedule.monday[i].room.toString();
+          const courseId = this.majorArray[0].schedule.monday[i].courseId;
+          const courseExists = this.userRegisteredCourses.some(course => course === courseId);
+          if (courseExists) {
+            return 'Room: ' + this.majorArray[0].schedule.monday[i].room.toString();
+          }
         }
       }
     }
     for (let i = 0; i < this.majorArray[0].schedule.tuesday.length; i++) {
       if (day === 'Tuesday') {
         if (timeSlot === this.majorArray[0].schedule.tuesday[i].timeSlot) {
-          return "Room: " + this.majorArray[0].schedule.tuesday[i].room.toString();
+          const courseId = this.majorArray[0].schedule.tuesday[i].courseId;
+          const courseExists = this.userRegisteredCourses.some(course => course === courseId);
+          if (courseExists) {
+            return 'Room: ' + this.majorArray[0].schedule.tuesday[i].room.toString();
+          }
         }
       }
     }
     for (let i = 0; i < this.majorArray[0].schedule.wednesday.length; i++) {
       if (day === 'Wednesday') {
         if (timeSlot === this.majorArray[0].schedule.wednesday[i].timeSlot) {
-          return "Room: " + this.majorArray[0].schedule.wednesday[i].room.toString();
+          const courseId = this.majorArray[0].schedule.wednesday[i].courseId;
+          const courseExists = this.userRegisteredCourses.some(course => course === courseId);
+          if (courseExists) {
+            return 'Room: ' + this.majorArray[0].schedule.wednesday[i].room.toString();
+          }
         }
       }
     }
     for (let i = 0; i < this.majorArray[0].schedule.thursday.length; i++) {
       if (day === 'Thursday') {
         if (timeSlot === this.majorArray[0].schedule.thursday[i].timeSlot) {
-          return "Room: " + this.majorArray[0].schedule.thursday[i].room.toString();
+          const courseId = this.majorArray[0].schedule.thursday[i].courseId;
+          const courseExists = this.userRegisteredCourses.some(course => course === courseId);
+          if (courseExists) {
+            return 'Room: ' + this.majorArray[0].schedule.thursday[i].room.toString();
+          }
         }
       }
     }
     for (let i = 0; i < this.majorArray[0].schedule.friday.length; i++) {
       if (day === 'Friday') {
         if (timeSlot === this.majorArray[0].schedule.friday[i].timeSlot) {
-          return "Room: " + this.majorArray[0].schedule.friday[i].room.toString();
+          const courseId = this.majorArray[0].schedule.friday[i].courseId;
+          const courseExists = this.userRegisteredCourses.some(course => course === courseId);
+          if (courseExists) {
+            return 'Room: ' + this.majorArray[0].schedule.friday[i].room.toString();
+          }
         }
       }
     }

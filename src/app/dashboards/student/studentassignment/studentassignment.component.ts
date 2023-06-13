@@ -4,8 +4,8 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { finalize } from 'rxjs';
 import { Router } from '@angular/router';
 import { Toast } from 'bootstrap';
-import { Assignment, Course, Submission, ForgotPasswordResponse, CourseMaterial, LoginRequest, User } from 'src/app/models/allModels';
-
+import { Assignment, Course, Submission, ForgotPasswordResponse, CourseMaterial, User } from 'src/app/models/allModels';
+import { SharedService } from 'src/app/services/SharedService';
 
 @Component({
   selector: 'app-studentassignment',
@@ -14,8 +14,6 @@ import { Assignment, Course, Submission, ForgotPasswordResponse, CourseMaterial,
 })
 export class StudentassignmentComponent implements OnInit {
   public file: any = {}
-  currentID: any;
-  currentemail: any;
   assignments: Assignment[] = [];
   mySubmissions: Submission[] = [];
 
@@ -32,79 +30,31 @@ export class StudentassignmentComponent implements OnInit {
     submission_student_id: '',
     answerURL: '',
   };
-  constructor(private authService: AuthService, private router: Router, private storage: AngularFireStorage) { }
+  constructor(private authService: AuthService, private router: Router, private storage: AngularFireStorage, private SharedService: SharedService) { }
 
   ngOnInit(): void {
+    this.loadData();
+  }
 
-    const email = localStorage.getItem('email');
-    if (email) {
-      this.authService.getID(email).subscribe(
-        (response) => {
-          this.id = response.id;
-          this.authService.getUserDetails(this.id).subscribe(
-            (response) => {
-              this.userDetails = response;
-              this.name = this.userDetails[0].firstname;
-            },
-            (error) => (this.errorMessage = 'Failed to get teacher details')
-          );
-        },
-        (error) => console.log('')
-      );
-    }
-
-    if (email) {
-      this.authService.getID(email).subscribe((response) => {
-        this.id = response.id;
-
-        this.authService.getTeacherCourses(this.id).subscribe(
-          (courses) => {
-            this.successMessage = response;
-            this.teacherCourses = courses;
-          },
-          (error) => {
-            this.errorMessage = error.message;
-          }
-        );
+  async loadData(): Promise<void> {
+    try {
+      this.userDetails = await this.SharedService.getUserDetails();
+      this.getMySubmissions();
+      this.authService.studentAssignments(this.userDetails[0].email).subscribe(assignments => {
+        this.assignments = assignments;
       });
-    }
-    ////////////////////////////////////////////////////////////////////////
-    this.currentemail = email;
-    this.authService.studentAssignments(this.currentemail).subscribe(assignments => {
-      this.assignments = assignments;
-    });
-    ////////////////////////////////////////////////////////////////////////////////////
-    if (email) {
-      this.authService.getID(email).subscribe(
-        response => {
-          this.id = response.id;
-          localStorage.setItem('id', this.id);
-          this.authService.getUserDetails(this.id).subscribe(
-            response => {
-              this.userDetails = response;
-              this.name = this.userDetails[0].firstname;
-            },
-            error => this.errorMessage = 'Failed to get teacher details'
 
-          );
-        },
-        error => console.log(''));
-    }
-    this.getMySubmissions();
-  }
-
-  showLiveToast() {
-    const liveToastEl = document.getElementById('liveToast');
-    if (liveToastEl) {
-      const liveToast = new Toast(liveToastEl);
-      liveToast.show();
+    } catch (error) {
+      console.error('Error retrieving data:', error);
     }
   }
 
+  //for chosing a file to upload to db
   choseFile(event: any) {
     this.file = event.target.files[0];
   }
 
+  //called to add a new item to firebase storage.
   addData() {
     const userId = this.submission.submission_id;
     const storageRef = this.storage.ref(`submission/${userId}`).child(this.file.name);
@@ -122,8 +72,8 @@ export class StudentassignmentComponent implements OnInit {
                 }, 2000);
               },
               (error) => {
-
-
+                alert('error , check console , addData()');
+                console.log(error);
               }
             );
         });
@@ -131,54 +81,31 @@ export class StudentassignmentComponent implements OnInit {
     ).subscribe();
   }
 
-  ///////////////////////////////////////////////////////////////////////////////////////////
+  //add a new submission to db.
   onSubmit(assignment_id: any): void {
     if (this.deadLineCheck(assignment_id)) {
       const userId = this.submission.submission_id;
       const storageRef = this.storage.ref(`submission/${userId}`).child(this.file.name);
       const uploadTask = storageRef.put(this.file);
-      const id = localStorage.getItem('id');
-      this.currentID = id;
-      this.submission.submission_student_id = this.currentID;
-      uploadTask.snapshotChanges().pipe(
-        finalize(() => {
-          storageRef.getDownloadURL().subscribe((downloadURL) => {
-            const encodedDownloadURL = (downloadURL);
-            this.submission.answerURL = encodedDownloadURL;
-            this.authService.addSubmission(this.submission).subscribe(
-              () => {
-                this.successMessage = 'submission added successfully';
-                this.errorMessage = '';
-                alert('successfully submitted ');
-                setTimeout(() => {
-                  window.location.reload();
-                }, 2000)
-              },
-              (error) => {
-                if (
-                  error.error &&
-                  error.error.message &&
-                  error.error.message === 'submission already exists'
-                ) {
-                  alert('error ');
-                  this.successMessage = '';
-                  this.errorMessage = 'submission with this name already exists';
-                } else {
-                  alert('error ');
-                  this.successMessage = '';
-                  this.errorMessage = 'An error occurred during submission creation. Please try again later.';
-                }
-              }
-            );
-          });
-        })
-      ).subscribe();
-    }
-    else {
-      this.successMessage = '';
-      this.errorMessage = 'Deadline has passed';
+
+      this.submission.submission_student_id = this.userDetails[0].id!;
+      uploadTask.snapshotChanges()
+        .pipe(
+          finalize(() => {
+            storageRef.getDownloadURL().subscribe((downloadURL) => {
+              const encodedDownloadURL = downloadURL;
+              this.submission.answerURL = encodedDownloadURL;
+              this.authService.addSubmission(this.submission).subscribe();
+            });
+          })
+        )
+        .subscribe();
+    } else {
+      alert('Deadline has passed');
     }
   }
+
+  //check if the submission date has passed
   deadLineCheck(submission_assignment_id: any) {
     for (let assignment of this.assignments) {
       if (assignment.assignment_id === submission_assignment_id) {
@@ -198,39 +125,29 @@ export class StudentassignmentComponent implements OnInit {
     return false;
   }
 
-  ///////////////////////////////////////////////////////////////////////////////////////////
-
+  //get user's submissions
   getMySubmissions() {
-    const id = localStorage.getItem('id');
-    this.currentID = id;
-    this.authService.studentMySubmissions(this.currentID).subscribe(mySubmissions => {
+    this.authService.studentMySubmissions(this.userDetails[0].id).subscribe(mySubmissions => {
       this.mySubmissions = mySubmissions;
     });
   }
 
+  //delete a submission 
   deleteSubmission() {
-    const id = localStorage.getItem('id');
-    this.currentID = id;
-    this.authService.studentDeleteSubmission(this.currentID).subscribe(
+    this.authService.studentDeleteSubmission(this.userDetails[0].id).subscribe(
       () => {
-        this.successMessage = 'Submission deleted successfully';
         window.location.reload();
       },
       (error) => {
-        this.errorMessage = 'An error occurred while deleting the submission. Please try again later.';
+        alert('Error occurred while deleting the submissio , check console');
+        console.log(error);
       }
     );
   }
-
-
-
 
   openWebPage(link: string): void {
     window.open(link, '_blank');
   }
 
 }
-
-
-
 

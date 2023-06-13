@@ -54,6 +54,12 @@
                     <span>Chat</span>
                 </a>
 
+                <a class="menu-item" (click)="toggleComponent('Overview')"
+                    [class.active-link]="activeLink === 'Overview'">
+                    <img src="./assets/svg/chat.svg" alt="Book Icon" style="max-width: 20px; margin-right: 10px;">
+                    <span>Overview</span>
+                </a>
+
 
                 <hr class="myHr">
                 <a class="menu-item-logout" (click)="logOut()">
@@ -112,6 +118,15 @@
                 <br>
                 <br>
                 <app-chat></app-chat>
+            </ng-container>
+
+            <ng-container *ngIf="showOverview">
+                <a class="title">Major: </a>{{major}}
+                <br>
+                <a class="title">Semester: </a>{{semester}}
+                <br>
+                <br>
+                <app-overview></app-overview>
             </ng-container>
 
 

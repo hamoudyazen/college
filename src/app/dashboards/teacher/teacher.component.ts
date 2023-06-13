@@ -18,6 +18,8 @@ export class TeacherComponent implements OnInit {
   showSchedule: boolean = false;
   showProfile: boolean = false;
   showChat: boolean = false;
+  showFinance: boolean = false;
+  showGrades: boolean = true;
   activeLink: string = 'courses';
 
   // Shared properties
@@ -107,6 +109,8 @@ export class TeacherComponent implements OnInit {
     this.showAssignment = false;
     this.showSchedule = false;
     this.showChat = false;
+    this.showFinance = false;
+    this.showGrades = false;
     this.activeLink = component;
 
     if (component === 'Add Course') {
@@ -136,10 +140,21 @@ export class TeacherComponent implements OnInit {
       this.activeLink = 'Schedule';
     } else if (component === 'Chat') {
       this.showChat = true;
-      this.chageStatus();
+      this.changeStatusFalse();
       this.pagename = 'Chat';
       this.activeLink = 'Chat';
+    } else if (component === 'showFinance') {
+      this.showFinance = true;
+      this.changeStatusFalse();
+      this.pagename = 'Finance';
+      this.activeLink = 'Finance';
+    } else if (component === 'Grades') {
+      this.showGrades = true;
+      this.changeStatusFalse();
+      this.pagename = 'Grades';
+      this.activeLink = 'Grades';
     }
+
   }
 
   logOut() {

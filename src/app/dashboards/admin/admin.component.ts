@@ -12,11 +12,12 @@ import { Course, Major, User } from 'src/app/models/allModels';
 export class AdminComponent implements OnInit {
 
   pagename: string = '';
-  showStudents: boolean = true;
+  showStudents: boolean = false;
   showCourses: boolean = false;
   showSchedules: boolean = false;
   showProfile: boolean = false;
   showChat: boolean = false;
+  showOverview: boolean = true;
 
   activeLink: string = 'courses';
 
@@ -90,7 +91,7 @@ export class AdminComponent implements OnInit {
     this.showProfile = false;
     this.showSchedules = false;
     this.showChat = false;
-
+    this.showOverview = false;
     this.activeLink = component;
 
     if (component === 'Students') {
@@ -99,6 +100,7 @@ export class AdminComponent implements OnInit {
       this.showProfile = false;
       this.showSchedules = false;
       this.showChat = false;
+      this.showOverview = false;
       this.pagename = 'Students';
       this.activeLink = 'Students';
     }
@@ -108,6 +110,7 @@ export class AdminComponent implements OnInit {
       this.showProfile = false;
       this.showSchedules = false;
       this.showChat = false;
+      this.showOverview = false;
       this.pagename = 'Courses';
       this.activeLink = 'Courses';
     }
@@ -117,6 +120,7 @@ export class AdminComponent implements OnInit {
       this.showProfile = true;
       this.showSchedules = false;
       this.showChat = false;
+      this.showOverview = false;
       this.pagename = 'Profile';
       this.activeLink = 'Profile';
     } else if (component === 'Schedules') {
@@ -125,6 +129,7 @@ export class AdminComponent implements OnInit {
       this.showProfile = false;
       this.showSchedules = true;
       this.showChat = false;
+      this.showOverview = false;
       this.pagename = 'Profile';
       this.activeLink = 'Profile';
     } else if (component === 'Chat') {
@@ -133,8 +138,18 @@ export class AdminComponent implements OnInit {
       this.showProfile = false;
       this.showSchedules = false;
       this.showChat = true;
+      this.showOverview = false;
       this.pagename = 'Chat';
       this.activeLink = 'Chat';
+    } else if (component === 'Overview') {
+      this.showStudents = false;
+      this.showCourses = false;
+      this.showProfile = false;
+      this.showSchedules = false;
+      this.showChat = false;
+      this.showOverview = true;
+      this.pagename = 'Overview';
+      this.activeLink = 'Overview';
     }
 
   }
